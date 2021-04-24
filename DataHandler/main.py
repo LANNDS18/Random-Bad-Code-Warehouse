@@ -2,7 +2,7 @@
 # Data Importer using TMDB API, then connect to sql server
 import csv
 
-import tmdb_data as tm
+import DataHandler.tmdb_data as tm
 import pymysql
 
 connection = pymysql.connect(host='rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com',
@@ -63,8 +63,8 @@ def insert_cast(cast):
 
 def insert():
 
-    k1 = 100000
-    k5 = 120000
+    k1 = 140000
+    k5 = 200000
     step = 2000
    # k6 = 390000
     #k7 = 393000
