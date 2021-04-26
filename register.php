@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!--图标-->
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="old/css/font-awesome.min.css">
 	<!--布局框架-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="old/css/util.css">
 	<!--主要样式-->
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="old/css/main.css">
 </head>
 
 <?php
@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<div class="container-login100">
 		<div class="wrap-login100">
 			<div class="login100-pic js-tilt" data-tilt>
-				<img src="img/logo.png" alt="IMG">
+				<img src="old/img/logo.png" alt="IMG">
 			</div>
 
 			<form method="post" class="login100-form validate-form">

@@ -6,13 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!--图标-->
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="old/css/font-awesome.min.css">
 
 	<!--布局框架-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="old/css/util.css">
 
 	<!--主要样式-->
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="old/css/main.css">
 </head>
 <?php
 //本文件为重设密码界面
@@ -89,7 +89,7 @@ if(checkEmpty($email,$password,$password2)){
 	<div class="container-login100">
 		<div class="wrap-login100">
 			<div class="login100-pic js-tilt" data-tilt>
-				<img src="img/logo2.png" alt="IMG">
+				<img src="old/img/logo2.png" alt="IMG">
 			</div>
 
 			<form method="post" class="login100-form validate-form">
