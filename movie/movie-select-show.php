@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+session_start();// 存储 session 数据
+?>
 <html>
 <head>
 	<?php
@@ -19,7 +22,7 @@ $opt = array(
   try {
    $pdo = new PDO($dsn,$db_username,$db_password,$opt);
 
-	 $getid=$_GET['v'];
+	 $getid=$_GET['film_id'];
 	 echo "<title>$gettitle</title>";
 	 $sql_get_film="select title,poster_path,vote_average,vote_count,overview from movie where movie_id='$getid'";
 	 $result = $pdo->query($sql_get_film);
@@ -30,10 +33,9 @@ $opt = array(
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
 
-	 $produce_director="Produce: Director";
-	 //$sql_get_director_id="select actor_id from cast where movie_id=$getid AND identity='$produce_director'";
-	 //$result = $pdo->query($sql_get_director_id);
-	 $result = $pdo->query("select actor_id from cast where movie_id=$getid AND identity='$produce_director'");
+
+	 $sql_get_director_id="select actor_id from cast where movie_id=$getid and identity='Produce: Director'";
+	 $result = $pdo->query($sql_get_director_id);
 	 $row = $result ->fetch();
 	 $get_film_director_id=$row['actor_id'];
 
@@ -44,8 +46,8 @@ $opt = array(
 
 	 $sql_get_actor_id="select actor_id from cast where movie_id=$getid and identity like 'Act: %'";
 	 $get_film_actor_id = $pdo->query($sql_get_actor_id);
-	 $row = $result ->fetch();
-	 $get_film_actor_id=$row['actor_id'];
+	 //$row = $result ->fetch();
+	 //$get_film_actor_id=$row['actor_id'];
 
 
 
@@ -166,7 +168,7 @@ $opt = array(
 							<h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
 							<p><?php echo $get_vote_average ?></p>
 							<h4>Director:</h4>
-							<p><?php echo "no";//$director_name; ?></p>
+							<p><?php echo $director_name; ?></p>
 							<h4>Actor:</h4>
 							<?php
 								//$film_name = $pdo->query("select title,vote_average from movie limit 15");
@@ -177,13 +179,10 @@ $opt = array(
 									$line = $result ->fetch();
 									$get_film_actor_name=$line['name'];
 									//echo "<a href='actor.php'>$get_film_actor_name </a>";
-									echo "
-									<a href='actor.php?m=$get_one_actor_id'>",$get_film_actor_name,"</a>
-									";
-									//echo "<form method='get' name='form1' action='actor.php'>
-										//<input type='hidden' name='actor_id' value='$get_one_actor_id'>
-									//</form>
-										//<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
+									echo "<form method='get' name='form1' action='actor.php'>
+										<input type='hidden' name='actor_id' value='$get_one_actor_id'>
+									</form>
+										<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
 
 									}
 									//<a href="actor-information.php">Telugu</a>
@@ -269,6 +268,53 @@ $opt = array(
 					</div>
 				</div>
 				<div class="clearfix"></div>
+				<h1>   </h1>
+				<h1>Leave your Comment ?</h1>
+						<?php
+						if(isset($_SESSION['email'])){
+							$user_email=$_SESSION['email'];
+							if ($_SERVER["REQUEST_METHOD"] == "POST") {
+								$star = $_POST["star"];
+								$comment = $_POST["comment"];
+								  if (isset($star)&&isset($comment)) {
+										$sql_get_user_id="select user_id from user where email='$user_email'";
+								 	 $result = $pdo->query($sql_get_user_id);
+								 	 $row = $result ->fetch();
+								 	 $get_user_id=$row['user_id'];
+									 /*
+									 echo "uid:".$get_user_id;
+									 echo "filmid:".$getid;
+									 echo "comment:".$comment;
+									 echo "rating:".$star;
+									 */
+										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
+				            $sucess_update=$pdo->exec($sql_insert);
+									}
+								}
+							?>
+							<p1>  yeah<p1>
+							<form  method="post">
+								<br>
+								<label>--  Star  -- </label>
+								<select name="star">
+									<?php
+									for ($i=0; $i <11 ; $i++) {
+										echo "<option value=".$i.">".$i."</option>";
+										// code...
+									} ?>
+								</select><br>
+								--  Comment  --: <input type="text"  name="comment"><br>
+								<input type="submit">
+							</form>
+							<?php
+						}else {
+							echo "you have to login to leave a comment!<br>";
+						}
+
+						?>
+
+						<br><br><br>
+						<br>
 			</div>
 		</div>
 	</div>
