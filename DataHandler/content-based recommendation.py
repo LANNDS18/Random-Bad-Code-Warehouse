@@ -47,20 +47,19 @@ def get_recommendation(movie_id):
     id_l = open('id.plk', 'rb')
     id_list = pickle.load(id_l)
     if movie_id in id_list:
-        df2 = pd.read_csv('tmdb_5000_movies.csv')
         try:
             similar_matrix = open('similar_matrix.pkl', 'rb')
             reserve_map = open('reserve.plk', 'rb')
             matrix = pickle.load(similar_matrix)
             indices = pickle.load(reserve_map)
-            df = pd.DataFrame(indices)
             # Get the index of the movie that matches the title
             idx = indices[movie_id]
             a = matrix[idx]
             # Return the top 10 most similar movies
-            return list(df2['id'].iloc[a])
+            return list(id_list.iloc[a])
         except KeyError:
             return None
     else:
         return None
 
+print(get_recommendation(242))
