@@ -30,9 +30,10 @@ $opt = array(
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
 
-
-	 $sql_get_director_id="select actor_id from cast where movie_id=$getid and identity='Produce: Director'";
-	 $result = $pdo->query($sql_get_director_id);
+	 $produce_director="Produce: Director";
+	 //$sql_get_director_id="select actor_id from cast where movie_id=$getid AND identity='$produce_director'";
+	 //$result = $pdo->query($sql_get_director_id);
+	 $result = $pdo->query("select actor_id from cast where movie_id=$getid AND identity='$produce_director'");
 	 $row = $result ->fetch();
 	 $get_film_director_id=$row['actor_id'];
 
@@ -43,8 +44,8 @@ $opt = array(
 
 	 $sql_get_actor_id="select actor_id from cast where movie_id=$getid and identity like 'Act: %'";
 	 $get_film_actor_id = $pdo->query($sql_get_actor_id);
-	 //$row = $result ->fetch();
-	 //$get_film_actor_id=$row['actor_id'];
+	 $row = $result ->fetch();
+	 $get_film_actor_id=$row['actor_id'];
 
 
 
@@ -165,7 +166,7 @@ $opt = array(
 							<h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
 							<p><?php echo $get_vote_average ?></p>
 							<h4>Director:</h4>
-							<p><?php echo $director_name; ?></p>
+							<p><?php echo "no";//$director_name; ?></p>
 							<h4>Actor:</h4>
 							<?php
 								//$film_name = $pdo->query("select title,vote_average from movie limit 15");
