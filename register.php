@@ -34,10 +34,6 @@ $opt = array(
 	 	#echo "<p1>$row["time"]</p1>";
 
 
-
-
-
-
 function checkEmpty($email,$password,$password2){
 	if($email==null||$password==null||$password2==null){
 		echo '<html><head><Script Language="JavaScript">alert("You have enter all info to regist");</Script></head></html>'.
@@ -150,6 +146,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 				<div class="wrap-input100 validate-input">
 					<input class="input100" type="text" name="email" placeholder="email">
+
+
+					<span class="focus-input100"></span>
+					<span class="symbol-input100">
+						<i class="fa fa-envelope" aria-hidden="true"></i>
+					</span>
+				</div>
+
+				<div class="wrap-input100 validate-input">
+					<input class="input100" type="text" name="verification_code" placeholder="verification code">
 
 
 					<span class="focus-input100"></span>

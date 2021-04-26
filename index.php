@@ -128,7 +128,7 @@ if (checkEmpty($email,$password)) {
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
 						<a href="movie/index5.php">
-							Vistor
+							visitor
 						</a>
 					</button>
 				</div>
