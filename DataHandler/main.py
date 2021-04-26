@@ -63,9 +63,9 @@ def insert_cast(cast):
 
 def insert():
 
-    k1 = 300000
-    k5 = 350000
-    step = 2000
+    k1 = 350000
+    k5 = 393000
+    step = 1000
    # k6 = 390000
     #k7 = 393000
 
