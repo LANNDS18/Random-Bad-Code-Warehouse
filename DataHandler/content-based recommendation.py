@@ -61,5 +61,3 @@ def get_recommendation(movie_id):
             return None
     else:
         return None
-
-print(get_recommendation(242))
