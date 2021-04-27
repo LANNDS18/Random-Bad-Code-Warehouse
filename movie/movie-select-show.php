@@ -273,39 +273,59 @@ $opt = array(
 						<?php
 						if(isset($_SESSION['email'])){
 							$user_email=$_SESSION['email'];
-							if ($_SERVER["REQUEST_METHOD"] == "POST") {
-								$star = $_POST["star"];
-								$comment = $_POST["comment"];
-								  if (isset($star)&&isset($comment)) {
-										$sql_get_user_id="select user_id from user where email='$user_email'";
-								 	 $result = $pdo->query($sql_get_user_id);
-								 	 $row = $result ->fetch();
-								 	 $get_user_id=$row['user_id'];
-									 /*
-									 echo "uid:".$get_user_id;
-									 echo "filmid:".$getid;
-									 echo "comment:".$comment;
-									 echo "rating:".$star;
-									 */
+							$sql_get_user_id="select user_id from user where email='$user_email'";
+							$result = $pdo->query($sql_get_user_id);
+							$row = $result ->fetch();
+							$get_user_id=$row['user_id'];
+
+							$sql="select review_id,rating,content from review where user_id='$get_user_id' AND movie_id=$getid";
+							$result = $pdo->query($sql);
+							$row = $result ->fetch();
+							if(!$row){
+								?>
+								<form  method="post">
+									<br>
+									<label>--  Star  -- </label>
+									<select name="star">
+										<?php
+										for ($i=0; $i <11 ; $i++) {
+											echo "<option value=".$i.">".$i."</option>";
+											// code...
+										} ?>
+									</select><br>
+									--  Comment  --: <input type="text"  name="comment"><br>
+									<input type="submit">
+								</form>
+
+								<?php
+
+								if ($_SERVER["REQUEST_METHOD"] == "POST") {
+									$star = $_POST["star"];
+									$comment = $_POST["comment"];
+									if (isset($star)&&isset($comment)) {
 										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
-				            $sucess_update=$pdo->exec($sql_insert);
+										$sucess_insert=$pdo->exec($sql_insert);
+
+										$sql="select vote_count,vote_average from movie where movie_id=$getid";
+										$result = $pdo->query($sql);
+										$row = $result ->fetch();
+										$get_vote_count=$row['vote_count'];
+										$get_vote_average=$row['vote_average'];
+										$new_average=(($get_vote_count*$get_vote_average)+$star)/($get_vote_count);
+										$new_vote_count=$get_vote_count+1;
+										$sql_update= "update movie set vote_average=$new_average and vote_count=$new_vote_count where movie_id=$getid";
+										$sucess_update=$pdo->exec($sql_update);
+
 									}
-								}
+									}
+							}else{
+								echo "Rate: ".$row['rating']."<br>";
+								echo "Comment: ".$row['content']."<br>";
+							}
+
+
 							?>
-							<p1>  yeah<p1>
-							<form  method="post">
-								<br>
-								<label>--  Star  -- </label>
-								<select name="star">
-									<?php
-									for ($i=0; $i <11 ; $i++) {
-										echo "<option value=".$i.">".$i."</option>";
-										// code...
-									} ?>
-								</select><br>
-								--  Comment  --: <input type="text"  name="comment"><br>
-								<input type="submit">
-							</form>
+
 							<?php
 						}else {
 							echo "you have to login to leave a comment!<br>";
