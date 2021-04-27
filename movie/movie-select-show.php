@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+session_start();// 存储 session 数据
+?>
 <html>
 <head>
 	<?php
@@ -19,7 +22,7 @@ $opt = array(
   try {
    $pdo = new PDO($dsn,$db_username,$db_password,$opt);
 
-	 $getid=$_GET['v'];
+	 $getid=$_GET['film_id'];
 	 echo "<title>$gettitle</title>";
 	 $sql_get_film="select title,poster_path,vote_average,vote_count,overview from movie where movie_id='$getid'";
 	 $result = $pdo->query($sql_get_film);
@@ -86,7 +89,7 @@ $opt = array(
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript">
@@ -97,7 +100,7 @@ $opt = array(
 		});
 	});
 </script>
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 </head>
 <body>
 	<!-- header-section-starts -->
@@ -176,13 +179,13 @@ $opt = array(
 									$line = $result ->fetch();
 									$get_film_actor_name=$line['name'];
 									//echo "<a href='actor.php'>$get_film_actor_name </a>";
-									echo "
-									<a href='actor.php?m=$get_one_actor_id'>",$get_film_actor_name,"</a>
-									";
 									//echo "<form method='get' name='form1' action='actor.php'>
 										//<input type='hidden' name='actor_id' value='$get_one_actor_id'>
-									//</form>
+
 										//<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
+										//echo "</form>";
+										echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
+
 
 									}
 									//<a href="actor-information.php">Telugu</a>
@@ -193,6 +196,7 @@ $opt = array(
 						</div>
 					</div>
 				</div>
+				<p><?php echo "hehheheh";?></p>
 				<div class="col-md-8 movies-dates">
 					<div class="movie-date-selection">
 						<div class="comment">
@@ -268,6 +272,73 @@ $opt = array(
 					</div>
 				</div>
 				<div class="clearfix"></div>
+				<h1>   </h1>
+				<h1>Leave your Comment ?</h1>
+						<?php
+						if(isset($_SESSION['email'])){
+							$user_email=$_SESSION['email'];
+							$sql_get_user_id="select user_id from user where email='$user_email'";
+							$result = $pdo->query($sql_get_user_id);
+							$row = $result ->fetch();
+							$get_user_id=$row['user_id'];
+
+							$sql="select review_id,rating,content from review where user_id='$get_user_id' AND movie_id=$getid";
+							$result = $pdo->query($sql);
+							$row = $result ->fetch();
+							if(!$row){
+								?>
+								<form  method="post">
+									<br>
+									<label>--  Star  -- </label>
+									<select name="star">
+										<?php
+										for ($i=0; $i <11 ; $i++) {
+											echo "<option value=".$i.">".$i."</option>";
+											// code...
+										} ?>
+									</select><br>
+									--  Comment  --: <input type="text"  name="comment"><br>
+									<input type="submit">
+								</form>
+
+								<?php
+
+								if ($_SERVER["REQUEST_METHOD"] == "POST") {
+									$star = $_POST["star"];
+									$comment = $_POST["comment"];
+									if (isset($star)&&isset($comment)) {
+										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
+										$sucess_insert=$pdo->exec($sql_insert);
+
+										$sql="select vote_count,vote_average from movie where movie_id=$getid";
+										$result = $pdo->query($sql);
+										$row = $result ->fetch();
+										$get_vote_count=$row['vote_count'];
+										$get_vote_average=$row['vote_average'];
+										$new_average=(($get_vote_count*$get_vote_average)+$star)/($get_vote_count);
+										$new_vote_count=$get_vote_count+1;
+										$sql_update= "update movie set vote_average=$new_average and vote_count=$new_vote_count where movie_id=$getid";
+										$sucess_update=$pdo->exec($sql_update);
+
+									}
+									}
+							}else{
+								echo "Rate: ".$row['rating']."<br>";
+								echo "Comment: ".$row['content']."<br>";
+							}
+
+
+							?>
+
+							<?php
+						}else {
+							echo "you have to login to leave a comment!<br>";
+						}
+
+						?>
+
+						<br><br><br>
+						<br>
 			</div>
 		</div>
 	</div>

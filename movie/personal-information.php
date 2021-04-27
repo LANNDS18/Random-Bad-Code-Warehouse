@@ -184,7 +184,7 @@ if(isset($_SESSION['email'])){
 								$movie_poster = $pdo->query("select poster_path from movie where movie_id = '$movie_id'");#where module='$module'
 								$row = $movie_poster ->fetch();
 								 $poster_path=$row['poster_path'];
-								echo "<a><img src=https://image.tmdb.org/t/p/w500/",$poster_path," height=50 width=200></a>";
+								echo "<a><img src=https://image.tmdb.org/t/p/w500/",$poster_path," height=200 width=150</a>";
  			 				  echo "<div class=\"date-city\">";
  			 				  echo "<div class=\"buy-tickets\">";
  			 					echo "</div></div>";
@@ -192,42 +192,34 @@ if(isset($_SESSION['email'])){
 							}
 								?>
 
-							<figure>
-								<img src="images/ms4.jpg" alt="">
-							</figure>
+
 
 
 						</div>
 						<div class="cinema">
 							<h4 class="show">Watch data</h4>
-							<h5><a href="movie-select-show.php">sloka</a></h5>
-							<h6>watch at 2019-06-15</h6>
-						</div>
-							<?php
+							<div class="show-title">
+							<h5><?php
 							$review_movie_id = $pdo->query("select movie_id from review where user_id = '$id'");#where module='$module'
 							foreach($review_movie_id as $row) {
 							 $movie_id=$row['movie_id'];
 
 							$movie_title = $pdo->query("select title from movie where movie_id = '$movie_id'");#where module='$module'
+							$review_time_stamp = $pdo->query("select time_stamp from review where user_id = '$id'");#where module='$module'
+
 							$row = $movie_title ->fetch();
 							 $title=$row['title'];
 							echo "<a href='movie-select-show.php'>$title</a><br>";
+              echo "<br><br>";
+							$row = $review_time_stamp ->fetch();
+              $time_stamp=$row['time_stamp'];
+              echo "$time_stamp<br>";
+							echo "<br><br><br><br><br><br><br><br>";
+
 						}
-							?>
 
-								<?php
-								$review_time_stamp = $pdo->query("select time_stamp from review where user_id = '$id'");#where module='$module'
-								foreach($review_time_stamp as $row) {
-								 $time_stamp=$row['time_stamp'];
-								// echo "<div class=\"date-city\">";
-								//	 echo "<div class=\"buy-tickets\">";
-									 echo "<a>$time_stamp</a>";
-								//	echo "</div></div>";
-								//	echo "</li>";
-								}
-								?>
-
-
+							?><h5>
+								</div>
 
 
 						</div>
@@ -237,32 +229,26 @@ if(isset($_SESSION['email'])){
 
 								<h5><?php
 								$review_rating = $pdo->query("select rating from review where user_id = '$id'");#where module='$module'
+								$review_content = $pdo->query("select content from review where user_id = '$id'");#where module='$module'
 								foreach($review_rating as $row) {
 								 $rating=$row['rating'];
-								// echo "<div class=\"date-city\">";
-								//	 echo "<div class=\"buy-tickets\">";
-									 echo "<a>$rating</a>";
-								//	echo "</div></div>";
-								//	echo "</li>";
-								}
-								?></h5>
-
-								<h6><?php
-								$review_content = $pdo->query("select content from review where user_id = '$id'");#where module='$module'
-								foreach($review_content as $row) {
+                   echo "$rating<br>";
+									 echo "<br><br>";
+								 $row = $review_content ->fetch();
 								 $content=$row['content'];
 								// echo "<div class=\"date-city\">";
 								//	 echo "<div class=\"buy-tickets\">";
-									 echo "<a>$content</a>";
 								//	echo "</div></div>";
 								//	echo "</li>";
+                   echo "$content<br>";
+									 echo "<br><br><br><br><br><br><br><br>";
 								}
-								?></h6>
+								?><h5>
+
+
 
 							</div>
 							<div class="show-title">
-								<h5>rating 9.1</h5>
-								<h6>nomal</h6>
 							</div>
 
 						</div>
