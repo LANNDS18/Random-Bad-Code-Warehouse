@@ -63,8 +63,8 @@ def insert_cast(cast):
 
 def insert():
 
-    k1 = 350000
-    k5 = 393000
+    k1 = 400000
+    k5 = 450000
     step = 1000
    # k6 = 390000
     #k7 = 393000
@@ -74,7 +74,6 @@ def insert():
         for i in actor_list:
             insert_actor(i)
 
-    '''
         movie_list = tm.import_movie(k, k + step)
         for i in movie_list:
             insert_movie(i)                         #   390000
@@ -87,7 +86,7 @@ def insert():
         for i in cast_list:
             insert_cast(i)
 
-
+    '''
 
     genre_list = tm.import_genre()
     for i in genre_list:
