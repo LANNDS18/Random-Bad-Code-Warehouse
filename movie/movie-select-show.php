@@ -89,7 +89,7 @@ $opt = array(
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript">
@@ -100,7 +100,7 @@ $opt = array(
 		});
 	});
 </script>
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 </head>
 <body>
 	<!-- header-section-starts -->
@@ -179,10 +179,13 @@ $opt = array(
 									$line = $result ->fetch();
 									$get_film_actor_name=$line['name'];
 									//echo "<a href='actor.php'>$get_film_actor_name </a>";
-									echo "<form method='get' name='form1' action='actor.php'>
-										<input type='hidden' name='actor_id' value='$get_one_actor_id'>
-									</form>
-										<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
+									//echo "<form method='get' name='form1' action='actor.php'>
+										//<input type='hidden' name='actor_id' value='$get_one_actor_id'>
+
+										//<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
+										//echo "</form>";
+										echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
+
 
 									}
 									//<a href="actor-information.php">Telugu</a>
@@ -193,6 +196,7 @@ $opt = array(
 						</div>
 					</div>
 				</div>
+				<p><?php echo "hehheheh";?></p>
 				<div class="col-md-8 movies-dates">
 					<div class="movie-date-selection">
 						<div class="comment">
