@@ -20,7 +20,7 @@ def update_score(ids, scores):
         cur.execute(sql, (scores[i], ids[i]))
         sql = 'UPDATE movie set vote_count=%s where movie_id=%s'
         cur.execute(sql, (50, ids[i]))
-    # connection.commit()
+    connection.commit()
     connection.close()
     cur.close()
 
