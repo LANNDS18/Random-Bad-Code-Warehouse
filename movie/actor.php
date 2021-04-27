@@ -18,7 +18,7 @@
 			PDO::ATTR_EMULATE_PREPARES => false);
 			try {
 				$pdo = new PDO($dsn,$db_username,$db_password,$opt);
-       $get_actor_id=$_GET['m'];
+       $get_actor_id=$_GET['act_id'];
 
 	?>
 
@@ -178,7 +178,7 @@
 								$row = $movie_title ->fetch();
 								$title=$row['title'];
 								 echo "<i class='fa fa-star'></i>";
-								 echo "<a href='movie-select-show.php?v=$movie_id'>$title</a><br>";
+								 echo "<a href='movie-select-show.php?film_id=$movie_id'>$title</a><br>";
 								$row = $movie_vote_average ->fetch();
 								$vote_average=$row['vote_average'];
 								echo "Rating: ";
