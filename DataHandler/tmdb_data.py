@@ -188,3 +188,14 @@ def import_movie_genre(start, end):
         except TMDbException:  # if this id is not exist
             pass
     return mg_list
+
+
+def import_review(movie_id,review_count):
+    movie = Movie()
+    try:
+        review = movie.reviews(movie_id)
+        if len(review) < review_count or len(review) == 0: return None
+        return review[review_count-1]
+    except TMDbException:
+        pass
+

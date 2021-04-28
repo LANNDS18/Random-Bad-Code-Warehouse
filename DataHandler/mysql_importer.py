@@ -1,15 +1,21 @@
-# sgwzha23 Wuwei
+# sgwzha23 Wuwei Zhang
+# update the current data include movie and review
 # Data Importer using TMDB API, then connect to sql server
+
+import pymysql
+import pandas
+import pickle
+import DataHandler.tmdb_data as tm
+import random
 import csv
 
-import DataHandler.tmdb_data as tm
-import pymysql
-
+df = pandas.read_csv('tmdb_5000_movies.csv')
+id_list = df['id']
+score_list = df['vote_average']
 connection = pymysql.connect(host='rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com',
                              user='team39',
                              password='Comp20839',
                              db='kiwi_test')
-
 cur = connection.cursor()
 cur.execute("USE kiwi_test")
 
@@ -61,11 +67,56 @@ def insert_cast(cast):
         pass
 
 
+def update_score(ids, scores):
+    for i in range(len(ids)):
+        movie = tm.import_movie(ids[i],ids[i]+1)
+        insert_movie(movie[0])
+        sql = 'UPDATE movie set vote_average=%s where movie_id=%s'
+        cur.execute(sql, (scores[i], ids[i]))
+        sql = 'UPDATE movie set vote_count=%s where movie_id=%s'
+        cur.execute(sql, (50, ids[i]))
+
+
+def add_review():
+    number_test = 50
+    while True:
+        count_sql = 'select count(*) from user where email like %s'
+        cur.execute(count_sql, 'test_user%@test.test')
+        count = cur.fetchall()[0][0]
+        if count < number_test:
+            for i in range(count, number_test):
+                add_user_sql = 'insert into user(nickname,email,gender,password ) ' \
+                               'values (%s,%s,%s,%s)'
+                name = 'test_user' + str(i)
+                mail = name + '@test.test'
+                gender = 'Male' if i % 2 == 0 else 'Female'
+                password = name + str(i)
+                cur.execute(add_user_sql, (name, mail, gender, password))
+        sql_userid = 'select user_id from user where email like %s'
+        cur.execute(sql_userid, 'test_user%@test.test')
+        uid_list = list(cur.fetchall())
+        mid_list = pickle.load(open('id.plk', 'rb'))
+        for mid in mid_list:
+            break
+            random.shuffle(uid_list)
+            for uid in range(len(uid_list)):
+                review = tm.import_review(mid, uid)
+                if review is None:
+                    continue
+                else:
+                    rating = 0 if review['author_details']['rating'] is None else float(review['author_details']['rating'])
+                    content = review['content']
+                    if len(content) > 10000: continue
+                    sql = 'insert into review(movie_id, user_id, rating, content) ' \
+                          'values (%s,%s,%s,%s)'
+                    cur.execute(sql, (mid, uid_list[uid], rating, content))
+        break
+
 def insert():
 
-    k1 = 400000
-    k5 = 450000
-    step = 1000
+    k1 = 450000
+    k5 = 460000
+    step = 5000
    # k6 = 390000
     #k7 = 393000
 
@@ -76,7 +127,7 @@ def insert():
 
         movie_list = tm.import_movie(k, k + step)
         for i in movie_list:
-            insert_movie(i)                         #   390000
+            insert_movie(i)
 
         mg_list = tm.import_movie_genre(k, k + step)
         for i in mg_list:
@@ -93,9 +144,23 @@ def insert():
         insert_genre(i)
 
     '''
-
-insert()
-
+'''
+# ensure the index in pickle
+tm5000 = pickle.load(open('id.plk', 'rb'))
+res = []
+all = []
+with open('movie_id.csv','r') as f:
+    for l in f.readlines():
+        l = l.strip('\n')
+        all.append(l)
+count = 0
+for i in tm5000:
+    if str(i) not in all:
+        m = tm.import_movie(i, i+1)
+        if len(m) == 0: continue
+        insert_movie(m[0])
+'''
 connection.commit()
 connection.close()
 cur.close()
+
