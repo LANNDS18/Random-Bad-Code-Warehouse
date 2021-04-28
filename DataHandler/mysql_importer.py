@@ -22,10 +22,10 @@ cur.execute("USE kiwi_test")
 
 def csv_content_recommend():
     sql = 'SELECT m.movie_id,m.title, GROUP_CONCAT(mg.genre_id) as genres, overview FROM movie m,moviegenre mg ' \
-          'where m.movie_id = mg.movie_id  AND m.release_date > "1980-01-01" ' \
+          'where m.movie_id = mg.movie_id  AND m.release_date > %s ' \
           'AND m.vote_average > 0 AND m.overview is NOT null and m.poster_path is not null ' \
           'GROUP BY movie_id;'
-    cur.execute(sql)
+    cur.execute(sql, '1980-01-01')
     data = cur.fetchall()
     with open('content-based.csv', 'w', newline='', encoding='utf-8') as f:
         a = csv.writer(f, delimiter=',')
@@ -69,8 +69,6 @@ def insert_cast(cast):
 
 def update_score(ids, scores):
     for i in range(len(ids)):
-        movie = tm.import_movie(ids[i],ids[i]+1)
-        insert_movie(movie[0])
         sql = 'UPDATE movie set vote_average=%s where movie_id=%s'
         cur.execute(sql, (scores[i], ids[i]))
         sql = 'UPDATE movie set vote_count=%s where movie_id=%s'
@@ -97,28 +95,34 @@ def add_review():
         uid_list = list(cur.fetchall())
         mid_list = pickle.load(open('id.plk', 'rb'))
         for mid in mid_list:
-            break
             random.shuffle(uid_list)
             for uid in range(len(uid_list)):
                 review = tm.import_review(mid, uid)
                 if review is None:
                     continue
                 else:
+                    print(review)
                     rating = 0 if review['author_details']['rating'] is None else float(review['author_details']['rating'])
                     content = review['content']
                     if len(content) > 10000: continue
                     sql = 'insert into review(movie_id, user_id, rating, content) ' \
                           'values (%s,%s,%s,%s)'
                     cur.execute(sql, (mid, uid_list[uid], rating, content))
+                    '''# select count(distinct content) from review;
+                    # select count(*) from review;
+                    # delete from review where review_id not in 
+                    # (select * from (select min(review_id) from review group by content having count(review_id)>1) as r) 
+                    #  and content 
+                    # in (select * from(select content from review group by content having count(*) > 1) as c);
+'''
         break
 
-def insert():
 
+def insert():
     k1 = 450000
     k5 = 460000
     step = 5000
-   # k6 = 390000
-    #k7 = 393000
+    # k7 = 393000
 
     for k in range(k1, k5, step):
         actor_list = tm.import_actor(k, k+step)  # finish 1-20000
@@ -163,4 +167,3 @@ for i in tm5000:
 connection.commit()
 connection.close()
 cur.close()
-
