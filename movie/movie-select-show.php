@@ -31,6 +31,7 @@ $opt = array(
 	 $get_vote_average=$row['vote_average'];
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
+	 $gettitle=$row['title'];
 	 echo "<title>$gettitle</title>";
 
 

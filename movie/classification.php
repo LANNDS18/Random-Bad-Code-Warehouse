@@ -19,13 +19,101 @@
 			PDO::ATTR_EMULATE_PREPARES => false);
 			try {
 				$pdo = new PDO($dsn,$db_username,$db_password,$opt);
+				$genre_array = array('','Adventure','Fantasy','Animation','Drama'
+				,'Horror','Action','Comedy','History'
+				,'Western','Thriller','Crime','Documentary'
+			,'Science_Fiction','Mystery','Music','Romance'
+		,'Family','War','TV Movie');
+				$region_array = array(0=>'',1=>'China',2=>'UK',3=>'USA',4=>'Japan',
+				5=>'Italy',6=>'France',7=>'Germany',8=>'Spain',9=>'India',10=>'Thailand');
+
+				$year_array1 = array('','2020-01-01','2010-01-01','2000-01-01','1990-0101',
+				'1980-01-01','1970-01-01','1960-01-01','1950-01-01','0');
+				$year_array2 = array('','2030-01-01','2020-01-01','2010-01-01','2000-0101',
+				'1990-01-01','1980-01-01','1970-01-01','1960-01-01','1950-01-01');
 			 	//$get_actor_id=$_GET['act_id'];
+				$get_genre_id=$_GET['genre'];
+				$get_region_id=$_GET['region'];
+				$get_year_id=$_GET['year'];
+
+				$genre=$genre_array[$get_genre_id];
+				$region=$region_array[$get_region_id];
+				$year1=$year_array1[$get_year_id];
+				$year2=$year_array2[$get_year_id];
+				echo "genre: ".$genre."<br>";
+				echo "region: ".$region."<br>";
+				echo "year: ".$year1."<br>";
+				echo "year2:".$year2."<br>";
+
 
 				//$row = $result ->fetch();
 				//$get_one_genre=$row['genre_name'];
+			/**
+			*加入搜索条件
+			*/
+			$where ="1";
 
-
+			if(isset($year)&&($year!=0)) $where .= " AND year=".$year_array[$year];
+			if(isset($ctype)&&($ctype!=0)) $where .= " AND ctype=".$ctype_array[$ctype];
+			if(isset($colors)&&($colors!=0)) $where .= " AND colors=".$colors_array[$colors];
+			if(isset($lengths)&&($lengths!=0)) $where .= " AND lengths=".$lengths_array[$lengths];
+			if(isset($micronaire)&&($micronaire!=0)) $where .= " AND micronaire=".$micronaire_array[$micronaire];
+			/**
+			*加入搜索条件
+			*/
 	?>
+
+	<script language="javascript">
+	function getQueryString(){
+	     var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+","g"));
+	     if(result == null){
+	         return "";
+	     }
+	     for(var i = 0; i < result.length; i++){
+	         result[i] = result[i].substring(1);
+	     }
+	     return result;
+	}
+	function goSort(name,value){
+	    var string_array = getQueryString();
+	    var oldUrl = (document.URL.indexOf("classification.php")==-1)?document.URL+"classification.php":document.URL;
+	    var newUrl;
+	    if(string_array.length>0)//如果已经有筛选条件
+	    {   var repeatField = false;
+	        for(var i=0;i<string_array.length;i++){
+	            if(!(string_array[i].indexOf(name)==-1)){
+	                repeatField = true;//如果有重复筛选条件，替换条件值
+	                newUrl = oldUrl.replace(string_array[i],name+"="+value);
+	            }
+	        }
+	        //如果没有重复的筛选字段
+	        if(repeatField == false){
+	            newUrl = oldUrl+"&"+name+"="+value;
+	        }
+	    }else{//如果还没有筛选条件
+	        newUrl = oldUrl+"?"+name+"="+value;
+	    }
+	    //跳转
+	    window.location = newUrl;
+	}
+	function setSelected(name,value){
+	    var all_li = $("#"+name).find("li");
+	    //清除所有li标签的selected类
+	    all_li.each(function(){
+	        $(this).removeClass("selected");
+	    });
+	    //为选中的li增加selected类
+	    all_li.eq(value).addClass("selected");
+	}
+	$(document).ready(function(){
+	    var string_array = getQueryString();
+	    for(var i=0;i<string_array.length;i++){
+	        var tempArr = string_array[i].split("=");
+	        setSelected(tempArr[0],tempArr[1]);//设置选中的筛选条件
+	    }
+	});
+	</script>
+
 	<title>sort</title>
 	<meta name="author" content="order by womengda.cn/" />
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -111,74 +199,82 @@
 
 			</nav><!-- end navbar navbar-default w3_megamenu -->
 
+
 			<h1>Filter</h1>
 
-			<?php
-			$filter_genre_id='';
-			echo "yeysyes<br>";
-			$filter_genre_id=$_GET['category'];
-			echo $filter_genre_id ?>
 			<div class="type">
 				<ul class="category">
-					<form method='get' name='form_this'>
-					<li><span class="tag">All types</span></li>
-					<?php
-					$sql_get_genre="select genre_name,genre_id from genre";
-					$get_genre = $pdo->query($sql_get_genre);
-
-					foreach($get_genre as $row){
-						//echo "<li><span>ok</span></li>";
-						echo "<li><span><input type='hidden' name='category' value=".$row['genre_name']." onclick=‘sendForm()’>".$row['genre_name']."</input></span></li>";
-					}
-					echo "</form>";
-
-
-					?>
+					<li><span class="tag"><a href="javascript:goSort('genre',0)">All types</a></span></li>
+				        <li><a href="javascript:goSort('genre',1);">Adventure</a></li>
+				        <li><a href="javascript:goSort('genre',2);">Fantasy</a></li>
+				        <li><a href="javascript:goSort('genre',3);">Animation</a></li>
+				        <li><a href="javascript:goSort('genre',4);">Drama</a></li>
+				        <li><a href="javascript:goSort('genre',5);">Horror</a></li>
+				        <li><a href="javascript:goSort('genre',6);">Action</a></li>
+				        <li><a href="javascript:goSort('genre',7);">Comedy</a></li>
+				        <li><a href="javascript:goSort('genre',8);">History</a></li>
+				        <li><a href="javascript:goSort('genre',9);">Western</a></li>
+				        <li><a href="javascript:goSort('genre',10);">Thriller</a></li>
+				        <li><a href="javascript:goSort('genre',11);">Crime</a></li>
+				        <li><a href="javascript:goSort('genre',12);">Documentary</a></li>
+				        <li><a href="javascript:goSort('genre',13);">Science Fiction</a></li>
+				        <li><a href="javascript:goSort('genre',14);">Mystery</a></li>
+				        <li><a href="javascript:goSort('genre',15);">Music</a></li>
+				        <li><a href="javascript:goSort('genre',16);">Romance</a></li>
+				        <li><a href="javascript:goSort('genre',17);">Family</a></li>
+				        <li><a href="javascript:goSort('genre',18);">War</a></li>
+				        <li><a href="javascript:goSort('genre',19);">TV Movie</a></li>
 				</ul>
 				<ul class="category">
-					<form method="get">
-					<li><span class="tag">All regions</span></li>
-					<li><span><button>Chinese Mainland</button></span></li>
-					<li><span><button>U.S.A</button></span></li>
-					<li><span>Hong Kong, China</span></li>
-					<li><span>Taiwan, China</span></li>
-					<li><span>Japan</span></li>
-					<li><span>South Korea</span></li>
-					<li><span>England</span></li>
-					<li><span>France</span></li>
-					<li><span>Germany</span></li>
-					<li><span>Italy</span></li>
-					<li><span>Spain</span></li>
-					<li><span>India</span></li>
-					<li><span>Thailand</span></li>
-					<li><span>Russia</span></li>
-					<li><span>Canada</span></li>
-					<li><span>Australia</span></li>
-					<li><span>Ireland</span></li>
-				</form>
+					<li><span class="tag"><a href="javascript:goSort('region',0)">All regions</a></span></li>
+					<li><span><a href="javascript:goSort('region',1)">China</a></span></li>
+					<li><span><a href="javascript:goSort('region',2);">UK</a></span></li>
+					<li><span><a href="javascript:goSort('region',3);">USA</a></span></li>
+					<li><span><a href="javascript:goSort('region',4);">Japan</a></span></li>
+					<li><span><a href="javascript:goSort('region',5);">Italy</a></span></li>
+					<li><span><a href="javascript:goSort('region',6);">France</a></span></li>
+					<li><span><a href="javascript:goSort('region',7);">Germany</a></span></li>
+					<li><span><a href="javascript:goSort('region',8);">Spain</a></span></li>
+					<li><span><a href="javascript:goSort('region',9);">India</a></span></li>
+					<li><span><a href="javascript:goSort('region',10);">Thailand</a></span></li>
 				</ul>
 				<ul class="category">
-					<li><span class="tag">All years</span></li>
-					<li><span>2021</span></li>
-					<li><span>2020</span></li>
-					<li><span>2019</span></li>
-					<li><span>2010years</span></li>
-					<li><span>2000years</span></li>
-					<li><span>90years</span></li>
-					<li><span>80years</span></li>
-					<li><span>70's</li>
-					<li><span>60's</span></li>
-					<li><span>Earlier</span></li>
+					<li><span class="tag"><a href="javascript:goSort('year',0)">All years</span></li>
+						<li><span><a href="javascript:goSort('year',1)">20's</a></span></li>
+					<li><span><a href="javascript:goSort('year',2)">10's</a></span></li>
+					<li><span><a href="javascript:goSort('year',3)">00's</a></span></li>
+					<li><span><a href="javascript:goSort('year',4)">90's</a></span></li>
+					<li><span><a href="javascript:goSort('year',5)">80's</a></span></li>
+					<li><span><a href="javascript:goSort('year',6)">70's</a></span></li>
+					<li><span><a href="javascript:goSort('year',7)">60's</a></span></li>
+					<li><span><a href="javascript:goSort('year',8)">50's</a></span></li>
+					<li><span><a href="javascript:goSort('year',9)">earlier</a></span></li>
 				</ul>
 			</div>
+			<!--
 			<div class="tag-nav">
 				<div class="tabs">
-					<a href="#" index="0" class="tab tab-checked">Hot near future</a>
-					<a href="#" index="1" class="tab">Highest score</a>
-					<a href="#" index="2" class="tab">Latest release</a>
+					<a href="javascript:goSort('other',7)" index="0" class="tab tab-checked">Hot near future</a>
+					<a href="javascript:goSort('other',7)" index="1" class="tab">Highest score</a>
+					<a href="javascript:goSort('other',7)" index="2" class="tab">Latest release</a>
 				</div>
 			</div>
+			-->
 			<div class="list-wp">
+<?php
+$filter_film = $pdo->query("select * from movie,moviegenre,genre
+where movie.movie_id = moviegenre.movie_id
+and moviegenre.genre_id = genre.genre_id
+and release_date > '$year1' and release_date < '$year2'
+and genre_name like '%'
+and country like '%$region%'");#where module='$module'
+foreach($filter_film as $row) {
+ //$film_poster=$row['poster_path'];
+ //$film_title=$row['title'];
+ //$film_id=$row['movie_id'];
+}
+ ?>
+
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -186,21 +282,13 @@
 						</span>
 					</div>
 					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
+						<span class="title">film1</span>
+						<span class="rate">810.6</span>
 					</p>
 				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
+
+
+
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
