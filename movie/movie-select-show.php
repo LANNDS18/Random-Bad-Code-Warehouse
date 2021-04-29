@@ -23,7 +23,6 @@ $opt = array(
    $pdo = new PDO($dsn,$db_username,$db_password,$opt);
 
 	 $getid=$_GET['film_id'];
-	 echo "<title>$gettitle</title>";
 	 $sql_get_film="select title,poster_path,vote_average,vote_count,overview from movie where movie_id='$getid'";
 	 $result = $pdo->query($sql_get_film);
 	 $row = $result ->fetch();
@@ -32,6 +31,7 @@ $opt = array(
 	 $get_vote_average=$row['vote_average'];
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
+	 echo "<title>$gettitle</title>";
 
 
 	 $sql_get_director_id="select actor_id from cast where movie_id=$getid and identity='Produce: Director'";
@@ -44,7 +44,7 @@ $opt = array(
 	 $row = $result ->fetch();
 	 $director_name=$row['name'];
 
-	 $sql_get_actor_id="select actor_id from cast where movie_id=$getid and identity like 'Act: %'";
+	 $sql_get_actor_id="select distinct actor_id from cast where movie_id=$getid and identity like 'Act: %' limit 8";
 	 $get_film_actor_id = $pdo->query($sql_get_actor_id);
 	 //$row = $result ->fetch();
 	 //$get_film_actor_id=$row['actor_id'];
@@ -170,11 +170,12 @@ $opt = array(
 							<h4>Director:</h4>
 							<p><?php echo $director_name; ?></p>
 							<h4>Actor:</h4>
+
 							<?php
 								//$film_name = $pdo->query("select title,vote_average from movie limit 15");
 								foreach($get_film_actor_id as $row) {
 									$get_one_actor_id=$row['actor_id'];
-									$sql_get_actor_name="select name from actor where actor_id=$get_one_actor_id";
+									$sql_get_actor_name="select distinct name from actor where actor_id=$get_one_actor_id and name is not NULL";
 							 	 	$result = $pdo->query($sql_get_actor_name);
 									$line = $result ->fetch();
 									$get_film_actor_name=$line['name'];
@@ -186,9 +187,9 @@ $opt = array(
 										//echo "</form>";
 										echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
 
-
 									}
 									//<a href="actor-information.php">Telugu</a>
+
 									?>
 
 							<h4>Content Introduce:</h4>
@@ -315,8 +316,10 @@ $opt = array(
 										$row = $result ->fetch();
 										$get_vote_count=$row['vote_count'];
 										$get_vote_average=$row['vote_average'];
-										$new_average=(($get_vote_count*$get_vote_average)+$star)/($get_vote_count);
+										$new_average=(($get_vote_count*$get_vote_average)+$star)/($get_vote_count+1);
+										echo $new_average."<br>";
 										$new_vote_count=$get_vote_count+1;
+										echo $new_vote_count;
 										$sql_update= "update movie set vote_average=$new_average and vote_count=$new_vote_count where movie_id=$getid";
 										$sucess_update=$pdo->exec($sql_update);
 

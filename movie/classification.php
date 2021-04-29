@@ -2,6 +2,30 @@
 <html>
 
 <head>
+	<?php
+			//$link = mysqli_connect('rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com','team39','Comp20839');
+			//var_dump($link);
+
+		//database
+		$db_hostname = "rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com";
+		$db_database = "kiwi_test";
+		$db_username = "team39";
+		$db_password = "Comp20839";
+		$db_charset = "utf8mb4";
+		$dsn = "mysql:host=$db_hostname;dbname=$db_database;charset=$db_charset";
+		$opt = array(
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+			PDO::ATTR_EMULATE_PREPARES => false);
+			try {
+				$pdo = new PDO($dsn,$db_username,$db_password,$opt);
+			 	//$get_actor_id=$_GET['act_id'];
+
+				//$row = $result ->fetch();
+				//$get_one_genre=$row['genre_name'];
+
+
+	?>
 	<title>sort</title>
 	<meta name="author" content="order by womengda.cn/" />
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -12,7 +36,7 @@
 	<script src="js/jquery.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="My Show Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+	<meta name="keywords" content="My Show Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
 	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 	<script
 		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -86,35 +110,36 @@
 				</div><!-- end #navbar-collapse-1 -->
 
 			</nav><!-- end navbar navbar-default w3_megamenu -->
-			
-			<h1>Choose film and television</h1>
+
+			<h1>Filter</h1>
+
+			<?php
+			$filter_genre_id='';
+			echo "yeysyes<br>";
+			$filter_genre_id=$_GET['category'];
+			echo $filter_genre_id ?>
 			<div class="type">
 				<ul class="category">
+					<form method='get' name='form_this'>
 					<li><span class="tag">All types</span></li>
-					<li><span>plot</span></li>
-					<li><span>comedy</span></li>
-					<li><span>action</span></li>
-					<li><span>love</span></li>
-					<li><span>science fiction</span></li>
-					<li><span>animation</span></li>
-					<li><span>Suspense</span></li>
-					<li><span>Thriller</span></li>
-					<li><span>terror</span></li>
-					<li><span>Crime</span></li>
-					<li><span>Same sex</span></li>
-					<li><span>music</span></li>
-					<li><span>song and dance</span></li>
-					<li><span>biography</span></li>
-					<li><span>history</span></li>
-					<li><span>Warfare</span></li>
-					<li><span>west</span></li>
-					<li><span>Fantasy</span></li>
+					<?php
+					$sql_get_genre="select genre_name,genre_id from genre";
+					$get_genre = $pdo->query($sql_get_genre);
+
+					foreach($get_genre as $row){
+						//echo "<li><span>ok</span></li>";
+						echo "<li><span><input type='hidden' name='category' value=".$row['genre_name']." onclick=‘sendForm()’>".$row['genre_name']."</input></span></li>";
+					}
+					echo "</form>";
+
+
+					?>
 				</ul>
 				<ul class="category">
+					<form method="get">
 					<li><span class="tag">All regions</span></li>
-					<li><span>Chinese Mainland</span></li>
-					<li><span>Europe and America</span></li>
-					<li><span>U.S.A</span></li>
+					<li><span><button>Chinese Mainland</button></span></li>
+					<li><span><button>U.S.A</button></span></li>
 					<li><span>Hong Kong, China</span></li>
 					<li><span>Taiwan, China</span></li>
 					<li><span>Japan</span></li>
@@ -130,6 +155,7 @@
 					<li><span>Canada</span></li>
 					<li><span>Australia</span></li>
 					<li><span>Ireland</span></li>
+				</form>
 				</ul>
 				<ul class="category">
 					<li><span class="tag">All years</span></li>
@@ -140,8 +166,8 @@
 					<li><span>2000years</span></li>
 					<li><span>90years</span></li>
 					<li><span>80years</span></li>
-					<li><span>70years</span></li>
-					<li><span>60years</span></li>
+					<li><span>70's</li>
+					<li><span>60's</span></li>
 					<li><span>Earlier</span></li>
 				</ul>
 			</div>
@@ -252,7 +278,7 @@
 						<span class="rate">8.6</span>
 					</p>
 				</a>
-				
+
 			</div>
 		</div>
 	</div>
@@ -270,3 +296,9 @@
 </body>
 
 </html>
+<?php
+$pdo = NULL;
+} catch (PDOException $e) {
+exit("PDO Error: ".$e->getMessage()."<br>");
+}
+?>
