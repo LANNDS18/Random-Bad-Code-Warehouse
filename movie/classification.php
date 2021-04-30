@@ -27,9 +27,9 @@
 				$region_array = array(0=>'',1=>'China',2=>'UK',3=>'USA',4=>'Japan',
 				5=>'Italy',6=>'France',7=>'Germany',8=>'Spain',9=>'India',10=>'Thailand');
 
-				$year_array1 = array('','2020-01-01','2010-01-01','2000-01-01','1990-0101',
-				'1980-01-01','1970-01-01','1960-01-01','1950-01-01','0');
-				$year_array2 = array('','2030-01-01','2020-01-01','2010-01-01','2000-0101',
+				$year_array1 = array('1900-01-01','2020-01-01','2010-01-01','2000-01-01','1990-0101',
+				'1980-01-01','1970-01-01','1960-01-01','1950-01-01','1800-01-01');
+				$year_array2 = array('2030-01-01','2030-01-01','2020-01-01','2010-01-01','2000-01-01',
 				'1990-01-01','1980-01-01','1970-01-01','1960-01-01','1950-01-01');
 			 	//$get_actor_id=$_GET['act_id'];
 				$get_genre_id=$_GET['genre'];
@@ -262,30 +262,34 @@
 			-->
 			<div class="list-wp">
 <?php
-$filter_film = $pdo->query("select * from movie,moviegenre,genre
+$filter_film = $pdo->query("select distinct movie.movie_id,movie.vote_average, movie.title,movie.poster_path  from movie,moviegenre,genre
 where movie.movie_id = moviegenre.movie_id
 and moviegenre.genre_id = genre.genre_id
 and release_date > '$year1' and release_date < '$year2'
-and genre_name like '%'
+and genre_name like '%$genre%'
 and country like '%$region%'");#where module='$module'
 foreach($filter_film as $row) {
  //$film_poster=$row['poster_path'];
  //$film_title=$row['title'];
- //$film_id=$row['movie_id'];
+ $get_vote_average=$row['vote_average'];
+ $get_title=$row['title'];
+ $film_poster=$row['poster_path'];
+
+ echo "<a target='_blank' href='#' class='item'>
+	 <div class='cover-wp'>
+		 <span class='pic'>
+			 <img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130 alt=''>
+		 </span>
+	 </div>
+	 <p>
+		 <span class='title'>$get_title</span>
+		 <span class='rate'>$get_vote_average</span>
+	 </p>
+ </a>";
 }
  ?>
 
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">film1</span>
-						<span class="rate">810.6</span>
-					</p>
-				</a>
+
 
 
 
