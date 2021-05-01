@@ -93,7 +93,7 @@
 			<div class="bootstrap_container">
 				<nav class="navbar navbar-default w3_megamenu" role="navigation">
 					<div class="navbar-header">
-						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
+						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="../../../Desktop/revise/index4.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 					</div><!-- end navbar-header -->
 
 					<div id="defaultmenu" class="navbar-collapse collapse">
