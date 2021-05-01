@@ -55,7 +55,7 @@ def get_recommendation(movie_id):
             # Get the index of the movie that matches the title
             idx = indices[movie_id]
             a = matrix[idx]
-            # Return the top 10 most similar movies
+            # Return the top 21 most similar movies
             return list(id_list.iloc[a])
         except KeyError:
             return None

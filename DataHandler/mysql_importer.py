@@ -119,17 +119,18 @@ def add_review():
 
 
 def insert():
-    k1 = 450000
-    k5 = 460000
+    k1 = 1050000
+    k5 = 1100000
     step = 5000
     # k7 = 393000
 
     for k in range(k1, k5, step):
-        actor_list = tm.import_actor(k, k+step)  # finish 1-20000
+        actor_list = tm.import_actor(k, k+step)  # finish 1-46000,
         for i in actor_list:
             insert_actor(i)
 
-        movie_list = tm.import_movie(k, k + step)
+    '''
+        movie_list = tm.import_movie(k, k + step) # 460000
         for i in movie_list:
             insert_movie(i)
 
@@ -141,13 +142,13 @@ def insert():
         for i in cast_list:
             insert_cast(i)
 
-    '''
-
     genre_list = tm.import_genre()
     for i in genre_list:
         insert_genre(i)
 
     '''
+insert()
+
 '''
 # ensure the index in pickle
 tm5000 = pickle.load(open('id.plk', 'rb'))

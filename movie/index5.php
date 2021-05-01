@@ -104,7 +104,9 @@ echo "--------------------------<br>";
 </head>
 <body>
 	<!-- header-section-starts -->
+	<div id="home"></div>
 </div>
+
 <div class="container">
 	<div class="main-content">
 		<div class="header">
@@ -128,12 +130,17 @@ echo "--------------------------<br>";
 					<button type="button" data-toggle="collapse" data-target="#defaultmenu"
 					class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-					<a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
+					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
+
+				
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class='active'><a href='personal-information.php'>
+						<li>
+							<a href="classification.php">Sort</a>
+						</li>
+						<li><a href='personal-information.php'>
 							<?php
 							if(isset($_SESSION['email'])){
 
@@ -163,8 +170,10 @@ if (isset($_SESSION['email'])) {
 		</div><!-- end container -->
 		<!-- AddThis Smart Layers END -->
 		<div class="review-slider">
-			<a class="sort" href="classification.php?year=0">sort</a>
+			<!--
+			<a class="sort" href="classification.php">sort</a>
 			<a class="user" href="user.php">user</a>
+			-->
 			<ul id="flexiselDemo1">
 
 				<?php
@@ -465,6 +474,7 @@ if(isset($_SESSION['email'])){
 		</div>
 		<div class="clearfix"></div>
 	</div>
+
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
