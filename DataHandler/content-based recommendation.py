@@ -61,3 +61,11 @@ def get_recommendation(movie_id):
             return None
     else:
         return None
+
+param = sys.argv[1]
+list_id = get_recommendation(242)
+res = ''
+for i in list_id:
+    id = str(i)
+    res += id + ','
+print(res)
