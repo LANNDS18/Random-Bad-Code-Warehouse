@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<?php
+session_start();// 存储 session 数据
+?>
 
 <head>
 
@@ -48,15 +51,20 @@
 				$year_array2 = array('2030-01-01','2030-01-01','2020-01-01','2010-01-01','2000-01-01',
 				'1990-01-01','1980-01-01','1970-01-01','1960-01-01','1950-01-01');
 			 	//$get_actor_id=$_GET['act_id'];
-				$get_genre_id=$_GET['genre'];
-				$get_region_id=$_GET['region'];
-				$get_year_id=$_GET['year'];
-				if(empty($get_genre_id)){
+				if(empty($_GET['genre'])){
 					$get_genre_id=0;
+				}else {
+					$get_genre_id=$_GET['genre'];
 				}
-				if(empty($get_region_id)){
+				if(empty($_GET['region'])){
 					$get_region_id=0;
+				}else {
+					$get_region_id=$_GET['region'];
 				}
+
+				//$get_year_id=0;
+				$get_year_id=$_GET['year'];
+
 				$genre=$genre_array[$get_genre_id];
 				$region=$region_array[$get_region_id];
 				$year1=$year_array1[$get_year_id];
@@ -132,7 +140,7 @@
 	});
 	</script>
 
-	<title>sort</title>
+	<title>movie filter</title>
 	<meta name="author" content="order by womengda.cn/" />
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 	<!-- Custom Theme files -->
@@ -184,7 +192,7 @@
 					<button type="button" data-toggle="collapse" data-target="#defaultmenu"
 					class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-					<a href="../../../Desktop/revise/index4.php" class="navbar-brand"><i class="fa fa-home"></i></a>
+					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
@@ -192,7 +200,6 @@
 						<li><a href='personal-information.php'>
 							<?php
 							if(isset($_SESSION['email'])){
-
 								echo $_SESSION['email'];
 							}else {
 								//echo "<li class='active'><a href='../visitor_warning.php'>";
@@ -297,8 +304,9 @@ foreach($filter_film as $row) {
  $get_vote_average=$row['vote_average'];
  $get_title=$row['title'];
  $film_poster=$row['poster_path'];
+ $movie_id=$row['movie_id'];
 
- echo "<a target='_blank' href='#' class='item'>
+ echo "<a target='_blank' href='movie-select-show.php?film_id=$movie_id' class='item'>
 	 <div class='cover-wp'>
 		 <span class='pic'>
 			 <img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130 alt=''>
@@ -312,11 +320,9 @@ foreach($filter_film as $row) {
 }
  ?>
 
-
-
-
-
-
+ <!--
+this is a static example
+ -->
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -324,73 +330,7 @@ foreach($filter_film as $row) {
 						</span>
 					</div>
 					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
-						<span class="rate">8.6</span>
-					</p>
-				</a>
-				<a target="_blank" href="#" class="item">
-					<div class="cover-wp">
-						<span class="pic">
-							<img src="./images/pic-4.jpg" alt="">
-						</span>
-					</div>
-					<p>
-						<span class="title">山河令</span>
+						<span class="title">Shang He Ling</span>
 						<span class="rate">8.6</span>
 					</p>
 				</a>

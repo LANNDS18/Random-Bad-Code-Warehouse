@@ -16,7 +16,7 @@ if(isset($_SESSION['email'])){
 		padding: 3px 10px;
 		font-size: 10px;
 		cursor: pointer;
-		text-align: center;   
+		text-align: center;
 		text-decoration: none;
 		outline: none;
 		color: #fff;
@@ -34,7 +34,7 @@ if(isset($_SESSION['email'])){
 			transform: translateY(4px);
 		}
 	</style>
-	
+
 	<?php
 			//$link = mysqli_connect('rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com','team39','Comp20839');
 			//var_dump($link);
@@ -125,7 +125,7 @@ if(isset($_SESSION['email'])){
 			<div class="bootstrap_container">
 				<nav class="navbar navbar-default w3_megamenu" role="navigation">
 					<div class="navbar-header">
-						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index4.php" class="navbar-brand"><i class="fa fa-home"></i></a>
+						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 					</div><!-- end navbar-header -->
 
 					<div id="defaultmenu" class="navbar-collapse collapse">
@@ -316,6 +316,6 @@ if(isset($_SESSION['email'])){
      <?php
 		 }else {//this is html file, need to be beautified
 			 echo '<html><head><Script Language="JavaScript">alert("You need login to see it!");</Script></head></html>'.
- 			 "<meta http-equiv=\"refresh\" content=\"0;url=index5.php\">";
+ 			 "<meta http-equiv=\"refresh\" content=\"0;url=../index.php\">";
 		 }
      ?>
