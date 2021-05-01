@@ -133,12 +133,12 @@ echo "--------------------------<br>";
 					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
 
-				
+
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="classification.php">Sort</a>
+							<a href="classification.php?year=0">Sort</a>
 						</li>
 						<li><a href='personal-information.php'>
 							<?php
