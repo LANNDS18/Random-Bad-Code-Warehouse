@@ -163,7 +163,7 @@ if (isset($_SESSION['email'])) {
 		</div><!-- end container -->
 		<!-- AddThis Smart Layers END -->
 		<div class="review-slider">
-			<a class="sort" href="classification.php">sort</a>
+			<a class="sort" href="classification.php?year=0">sort</a>
 			<a class="user" href="user.php">user</a>
 			<ul id="flexiselDemo1">
 
