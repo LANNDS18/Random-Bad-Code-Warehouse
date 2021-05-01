@@ -97,8 +97,8 @@ def insert_similarity():
     cur.close()
 
 
-insert_similarity()
-#process_data()
-#print(get_recommendation(19995))
+# insert_similarity()
+# process_data()
+# print(get_recommendation(19995))
 
 
