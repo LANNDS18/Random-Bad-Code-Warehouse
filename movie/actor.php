@@ -168,11 +168,11 @@
 							<li class="location">
 
 									<?php
-								$actor_movie_id = $pdo->query("select movie_id from cast where actor_id = $get_actor_id");#where module='$module'
+								$actor_movie_id = $pdo->query("select distinct movie_id from cast where actor_id = $get_actor_id");#where module='$module'
 								foreach($actor_movie_id as $row) {
 								 $movie_id=$row['movie_id'];
 
-								$movie_title = $pdo->query("select title from movie where movie_id = '$movie_id'");#where module='$module'
+								$movie_title = $pdo->query("select distinct title from movie where movie_id = '$movie_id'");#where module='$module'
 								$movie_vote_average = $pdo->query("select vote_average from movie where movie_id = '$movie_id'");
 								$movie_release_date = $pdo->query("select release_date from movie where movie_id = '$movie_id'");
 								$row = $movie_title ->fetch();

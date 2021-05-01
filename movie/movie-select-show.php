@@ -189,7 +189,6 @@ $opt = array(
 										echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
 
 									}
-									//<a href="actor-information.php">Telugu</a>
 
 									?>
 
@@ -197,38 +196,70 @@ $opt = array(
 						</div>
 					</div>
 				</div>
+
+				<script type="text/javascript" language="javascript">
+
+				</script>
+
 				<div class="col-md-8 movies-dates">
                     <p><?php
                         echo("<h2>Description:</h2>");
                         echo "<h5>$get_film_overview</h5>";
-                        echo ("	<p><a href='#'>stephen</a><i class='fa fa-calendar'></i>10 minutes ago</p>
-							<h6>great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.")
+
+												//database review
+												$sql_get_review="select user_id,content,time_stamp from review where movie_id='$getid'";
+										 	 $review_result= $pdo->query($sql_get_review);
+											 foreach($review_result as $row){
+												 $get_user_id_review=$row['user_id'];
+												 $get_time_review=$row['time_stamp'];
+												 $get_content_review=$row['content'];
+												 $sql_get_user_name="select nickname from user where user_id=$get_user_id_review";
+												 $result = $pdo->query($sql_get_user_name);
+												 $row = $result ->fetch();
+												 $user_name=$row['nickname'];
+												 //$get_content_sub=substr($get_content_review,100);
+												 //echo "id: ".$get_user_id_review."<br>";
+												 //echo "content:".$get_content_review."<br>";
+												 echo "<div class='movie-date-selection'>
+												 	<div class='comment'>
+												 		<div class='client'>
+												 			<img src='images/c2.jpg' alt=''>
+												 		</div>
+												 		<div class='client-message'>
+												 			<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+												 			<h6 overflow: hidden;>
+															<details>
+															<summary>show</summary>
+															<p>$get_content_review</p>
+															</details>
+															</h6>
+												 		</div>
+												 		<div class='clearfix'></div>
+												 	</div>
+												 </div>";
+											 }
+											 //database review
+											 //
+											 echo "</p>";
                         ?>
-                    </p>
-					<div class="movie-date-selection">
-						<div class="comment">
-							<div class="client">
-								<img src="images/c2.jpg" alt="">
-							</div>
-							<div class="client-message">
-								<p><a href="#">stephen</a><i class="fa fa-calendar"></i>10 minutes ago</p>
-								<h6>great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</div>
-					<div class="movie-date-selection">
-						<div class="comment">
-							<div class="client">
-								<img src="images/c3.jpg" alt="">
-							</div>
-							<div class="client-message">
-								<p><a href="#">felps</a><i class="fa fa-calendar"></i>half hours ago</p>
-								<h6>i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.i like it.</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</div>
+<?php
+echo "<div class='movie-date-selection'>
+	<div class='comment'>
+		<div class='client'>
+			<img src='images/c2.jpg' alt=''>
+		</div>
+		<div class='client-message'>
+			<p><a href=''>testphp</a><i class='fa fa-calendar'></i>10 minutes ago</p>
+			<h6>great fun.</h6>
+		</div>
+		<div class='clearfix'></div>
+	</div>
+</div>";
+
+?>
+
+
+
 					<div class="movie-date-selection">
 						<div class="comment">
 							<div class="client">
@@ -237,18 +268,6 @@ $opt = array(
 							<div class="client-message">
 								<p><a href="#">Tompson</a><i class="fa fa-calendar"></i>1 hours ago</p>
 								<h6>have fun.have fun.have fun.have fun.have fun.have fun.have fun.have fun.have fun.have fun.have fun.have fun.</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-					</div>
-					<div class="movie-date-selection">
-						<div class="comment">
-							<div class="client">
-								<img src="images/c1.jpg" alt="">
-							</div>
-							<div class="client-message">
-								<p><a href="#">john doe</a><i class="fa fa-calendar"></i>2 hours ago</p>
-								<h6>the director might be excellent !! While Cameron has had a great night, I suspect his problems in some way have only just begun.</h6>
 							</div>
 							<div class="clearfix"></div>
 						</div>

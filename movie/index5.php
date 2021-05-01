@@ -5,13 +5,8 @@ session_start();// 存储 session 数据
 <html>
 <head>
 	<!-- 导航
-				92行开始转动的电影内容（热评）
-				180行 popular
-				277行 highest score
-				377行 Guess You Like
 	-->
 	<?php
-	echo "session: ",$_SESSION['email'],"<br>";
 	//echo "<a href='javascript:alert(123);'>点我弹出123</a>";
 
 //database
@@ -46,7 +41,6 @@ echo "--------------------------<br>";
 		 #echo "<p1>$row["time"]</p1>";
 		}
 		//
-
 */
 		?>
 
@@ -89,7 +83,7 @@ echo "--------------------------<br>";
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript">
@@ -115,11 +109,15 @@ echo "--------------------------<br>";
 			</div>
 			<div class="search">
 				<div class="search2">
-					<form>
+					<form method="get" action="movie_search.php">
 						<i class="fa fa-search"></i>
-						<input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
-					</form>
+						<input type="text" name="film_id" value="Search for a movie" onFocus="this.value = '';"
+						onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
+						<input type="submit">
+				</form>
 				</div>
+
+
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -177,35 +175,41 @@ if (isset($_SESSION['email'])) {
 			<ul id="flexiselDemo1">
 
 				<?php
+				if (isset($_SESSION['email'])) {
+					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where poster_path is not null limit 7");#where module='$module'
+					foreach($poster_path as $row) {
+					 $film_poster=$row['poster_path'];
+					 $film_title=$row['title'];
+					 $film_id=$row['movie_id'];
+					 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130></a>";
+					 echo "<div class=\"slide-title\"><h4>this is comment </h4></div>";
+					 echo "<div class=\"date-city\">";
+						 echo "<div class=\"buy-tickets\">";
+						 echo"<form method='get' action='movie-select-show.php'>
+						 <input type='hidden' name='film_id' value='$film_id'>";
+						 echo "<input type='submit' value='$film_title'></form>";
+						echo "</div></div>";
+						echo "</li>";
+			}
+				}else {
+					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where poster_path is not null limit 7");#where module='$module'
+					foreach($poster_path as $row) {
+					 $film_poster=$row['poster_path'];
+					 $film_title=$row['title'];
+					 $film_id=$row['movie_id'];
+					 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130></a>";
+					 echo "<div class=\"slide-title\"><h4>this is comment </h4></div>";
+					 echo "<div class=\"date-city\">";
+						 echo "<div class=\"buy-tickets\">";
+						 echo"<form method='get' action='movie-select-show.php'>
+						 <input type='hidden' name='film_id' value='$film_id'>";
+						 echo "<input type='submit' value='$film_title'></form>";
+						echo "</div></div>";
+						echo "</li>";
+			}
+				}
 
-				$poster_path = $pdo->query("select poster_path,title,movie_id from movie where poster_path is not null limit 7");#where module='$module'
-				foreach($poster_path as $row) {
-				 $film_poster=$row['poster_path'];
-				 $film_title=$row['title'];
-				 $film_id=$row['movie_id'];
-				 //echo $film_poster;
-				 //echo "<img src=https://image.tmdb.org/t/p/w500/",$film_poster," height=235 width=290><br>";
-				 //echo $row['poster_path'],"<br>";
-				 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130></a>";
-				 echo "<div class=\"slide-title\"><h4>this is comment </h4></div>";
-				 echo "<div class=\"date-city\">";
-					 echo "<div class=\"buy-tickets\">";
-					 echo"<form method='get' action='movie-select-show.php'>
-					 <input type='hidden' name='film_id' value='$film_id'>";
-					 //这里出了一点问题，我用form之后它不像原来那样显示蓝色的框
-					 echo "<input type='submit' value='$film_title'></form>";
-					  //echo "<a href=\"movie-select-show.php\">$film_title</a></form>";
-					echo "</div></div>";
-					echo "</li>";
-		}
 		?>
-					<li>
-						<a><img src="images/r4.jpg" height=240 width=300></a><div class="slide-title"><h4>TEST</h4></div>
-						<div class="date-city">
-							<div class="buy-tickets">
-								<a href="movie-select-show.html">TEST</a>
-							</div>
-						</div>
 					</li>
 				</ul>
 				<script type="text/javascript">
@@ -242,96 +246,36 @@ if (isset($_SESSION['email'])) {
 					<div class="featured">
 						<h4>Popular</h4>
 						<ul>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f4.jpg" alt="" /></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAIL</a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f5.jpg" alt="" /></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAIL</a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f6.jpg" alt="" /></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAIL</a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f1.jpg" alt=""></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAIL</a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f2.jpg" alt=""></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAIL</a>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="f-movie">
-									<div class="f-movie-img">
-										<a><img src="images/f3.jpg" alt=""></a>
-									</div>
-									<div class="f-movie-name">
-										<a>The movie is directed by xxx</a>
-										<p>Tom:this movie is great</p>
-										<p>Bob:that is so excellent</p>
-									</div>
-									<div class="f-buy-tickets">
-										<a href="movie-select-show.html">DETAILs</a>
-									</div>
-								</div>
-							</li>
+							<?php
+
+							//where vote_average >= (select min(vote_average) from (select top 3 distinct vote_average from movie))order by vote_average desc"
+						 $sql_get_movie_id=$pdo->query("select movie_id from movie where vote_count >= 50 and release_date >= '2006-01-01' order by vote_average desc limit 9");
+						 foreach($sql_get_movie_id as $row) {
+						 $sql_movie_id=$row['movie_id'];
+
+
+						 $poster_path = $pdo->query("select poster_path,movie_id,title from movie where movie_id =$sql_movie_id and poster_path is not null");
+						foreach($poster_path as $row) {
+						 $film_poster=$row['poster_path'];
+						 $film_title=$row['title'];
+						 $film_id=$row['movie_id'];
+						 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=210></a>";
+
+							?>
+							<div class=\"slide-title\"><h4>this is comment </h4></div>
+								<div class=\"date-city\">
+							<div class="f-buy-tickets">
+						<?php
+						echo"<form method='get' action='movie-select-show.php'>
+						<input type='hidden' name='film_id' value='$film_id'>";
+						echo "<input type='submit' value='$film_title'></form>";
+					 echo "</div></div>";
+						 ?>
+
+						 <?php
+						}
+						}
+					?>
 							<div class="clearfix"></div>
 						</ul>
 					</div>
