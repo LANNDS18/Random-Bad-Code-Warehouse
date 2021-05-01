@@ -43,7 +43,7 @@
 				$region_array = array(0=>'',1=>'China',2=>'UK',3=>'USA',4=>'Japan',
 				5=>'Italy',6=>'France',7=>'Germany',8=>'Spain',9=>'India',10=>'Thailand');
 
-				$year_array1 = array('1900-01-01','2020-01-01','2010-01-01','2000-01-01','1990-0101',
+				$year_array1 = array('1900-01-01','2020-01-01','2010-01-01','2000-01-01','1990-01-01',
 				'1980-01-01','1970-01-01','1960-01-01','1950-01-01','1800-01-01');
 				$year_array2 = array('2030-01-01','2030-01-01','2020-01-01','2010-01-01','2000-01-01',
 				'1990-01-01','1980-01-01','1970-01-01','1960-01-01','1950-01-01');
@@ -51,7 +51,12 @@
 				$get_genre_id=$_GET['genre'];
 				$get_region_id=$_GET['region'];
 				$get_year_id=$_GET['year'];
-
+				if(empty($get_genre_id)){
+					$get_genre_id=0;
+				}
+				if(empty($get_region_id)){
+					$get_region_id=0;
+				}
 				$genre=$genre_array[$get_genre_id];
 				$region=$region_array[$get_region_id];
 				$year1=$year_array1[$get_year_id];
@@ -64,9 +69,7 @@
 
 				//$row = $result ->fetch();
 				//$get_one_genre=$row['genre_name'];
-			/**
-			*加入搜索条件
-			*/
+			/*
 			$where ="1";
 
 			if(isset($year)&&($year!=0)) $where .= " AND year=".$year_array[$year];
@@ -74,7 +77,6 @@
 			if(isset($colors)&&($colors!=0)) $where .= " AND colors=".$colors_array[$colors];
 			if(isset($lengths)&&($lengths!=0)) $where .= " AND lengths=".$lengths_array[$lengths];
 			if(isset($micronaire)&&($micronaire!=0)) $where .= " AND micronaire=".$micronaire_array[$micronaire];
-			/**
 			*加入搜索条件
 			*/
 	?>
@@ -277,17 +279,18 @@
 			</div>
 			-->
 			<div class="list-wp">
-				
+
 
 
 				<?php
-				
+
 $filter_film = $pdo->query("select distinct movie.movie_id,movie.vote_average, movie.title,movie.poster_path  from movie,moviegenre,genre
 where movie.movie_id = moviegenre.movie_id
 and moviegenre.genre_id = genre.genre_id
 and release_date > '$year1' and release_date < '$year2'
 and genre_name like '%$genre%'
-and country like '%$region%'");#where module='$module'
+and country like '%$region%'
+and vote_average >0 limit 50");#where module='$module'
 foreach($filter_film as $row) {
  //$film_poster=$row['poster_path'];
  //$film_title=$row['title'];
@@ -313,7 +316,7 @@ foreach($filter_film as $row) {
 
 
 
-				
+
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -368,7 +371,7 @@ foreach($filter_film as $row) {
 						<span class="title">山河令</span>
 						<span class="rate">8.6</span>
 					</p>
-				</a>	
+				</a>
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -392,7 +395,7 @@ foreach($filter_film as $row) {
 					</p>
 				</a>
 
-					
+
 		</div>
 	</div>
 	<script>
