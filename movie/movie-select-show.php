@@ -193,13 +193,18 @@ $opt = array(
 
 									?>
 
-							<h4>Content Introduce:</h4>
-							<p><?php echo $get_film_overview;?></p>
+
 						</div>
 					</div>
 				</div>
-				<p><?php echo "hehheheh";?></p>
 				<div class="col-md-8 movies-dates">
+                    <p><?php
+                        echo("<h2>Description:</h2>");
+                        echo "<h5>$get_film_overview</h5>";
+                        echo ("	<p><a href='#'>stephen</a><i class='fa fa-calendar'></i>10 minutes ago</p>
+							<h6>great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.great fun.")
+                        ?>
+                    </p>
 					<div class="movie-date-selection">
 						<div class="comment">
 							<div class="client">

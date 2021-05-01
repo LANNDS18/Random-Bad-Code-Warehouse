@@ -2,6 +2,22 @@
 <html>
 
 <head>
+
+	<style>
+		.row .col{
+			list-style: none;
+			float: left;
+			width: 25%;
+			height: 100px;
+			position: relative;
+			background-color: white;
+			border: 300px solid #fff;
+			overflow: hidden;
+		}
+	</style>
+
+
+
 	<?php
 			//$link = mysqli_connect('rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com','team39','Comp20839');
 			//var_dump($link);
@@ -166,7 +182,7 @@
 					<button type="button" data-toggle="collapse" data-target="#defaultmenu"
 					class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-					<a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
+					<a href="../../../Desktop/revise/index4.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
@@ -261,7 +277,11 @@
 			</div>
 			-->
 			<div class="list-wp">
-<?php
+				
+
+
+				<?php
+				
 $filter_film = $pdo->query("select distinct movie.movie_id,movie.vote_average, movie.title,movie.poster_path  from movie,moviegenre,genre
 where movie.movie_id = moviegenre.movie_id
 and moviegenre.genre_id = genre.genre_id
@@ -293,6 +313,7 @@ foreach($filter_film as $row) {
 
 
 
+				
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -347,7 +368,7 @@ foreach($filter_film as $row) {
 						<span class="title">山河令</span>
 						<span class="rate">8.6</span>
 					</p>
-				</a>
+				</a>	
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
@@ -371,7 +392,7 @@ foreach($filter_film as $row) {
 					</p>
 				</a>
 
-			</div>
+					
 		</div>
 	</div>
 	<script>

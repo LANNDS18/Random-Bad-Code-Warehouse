@@ -57,6 +57,7 @@ session_start();// 存储 session 数据
 </head>
 <body>
 	<!-- header-section-starts -->
+	<div id="home"></div>
 </div>
 <div class="container">
 	<div class="main-content">
@@ -77,12 +78,12 @@ session_start();// 存储 session 数据
 		<div class="bootstrap_container">
 			<nav class="navbar navbar-default w3_megamenu" role="navigation">
 				<div class="navbar-header">
-					<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
+					<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index4.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a href="personal-information.html">
+						<li class="active"><a href="../../../Desktop/revise/personal-information.html">
 							<?php
 							echo $_SESSION['email'];
 							 ?>

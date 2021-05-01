@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<style>
+		.button {
+		display: inline-block;
+		padding: 3px 10px;
+		font-size: 10px;
+		cursor: pointer;
+		text-align: center;   
+		text-decoration: none;
+		outline: none;
+		color: #fff;
+		background-color: #4CAF50;
+		border: none;
+		border-radius: 15px;
+		box-shadow: 0 9px #999;
+		}
+
+		.button:hover {background-color: #3e8e41}
+
+		.button:active {
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+			transform: translateY(4px);
+		}
+</style>
+
 	<title>Select Show</title>
 	<meta name="author" content="order by womengda.cn/" />
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -103,12 +129,14 @@
 							<h4>description:</h4>
 							<p>I have a calm, meticulous and physical personality, and give full play to my strengths. At work, be careful and responsible. Have a good team spirit, pay attention to the interests of the group, and have a strong collective consciousness. Able to fully cooperate with others, fully listen to the opinions and suggestions of others, and be able to be observant, motivated and easy-going, easy to communicate, and be able to quickly integrate into the work group team and members to give good opinions.</p>
 						</div>
+						<div align="center" position="absoulte"><button class="button" onclick="#">revise</button></div>
 					</div>
 				</div>
 				<div class="col-md-8 movies-dates">	
 					<div class="show-times-with-movies">
 						<div class="movie-show">
-							<h4 class="show">Movie List</h4>
+							<h4 class="show">-------------------------</h4>
+							
 							<figure>
 								<img src="images/ms1.jpg" alt="">
 							</figure>
@@ -135,7 +163,7 @@
 							</figure>
 						</div>
 						<div class="cinema">
-							<h4 class="show">Watch data</h4>
+							<h4 class="show">-----------List------------</h4>
 							<div class="show-title">
 								<h5><a href="movie-select-show.html">Hindi</a></h5>
 								<h6>watch at 2019-06-05</h6>
@@ -170,7 +198,8 @@
 							</div>
 						</div>
 						<div class="cinema">
-							<h4 class="show">your Comment</h4>
+							<h4 class="show">---------------------------</h4>
+							
 							<div class="show-title">
 								<h5>rating 9.0</h5>
 								<h6>i think it is pretty good</h6>
