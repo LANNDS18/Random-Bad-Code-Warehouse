@@ -2,12 +2,12 @@
 # content based recommend
 
 import pandas as pd
+import pymysql
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import pickle
 import numpy as np
-import sys
-import json
+
 
 
 def process_data():
@@ -46,7 +46,9 @@ def process_data():
 def get_recommendation(movie_id):
     id_l = open('id.plk', 'rb')
     id_list = pickle.load(id_l)
-    if movie_id in id_list:
+    for mid in id_list:
+        if movie_id != mid:
+            continue
         try:
             similar_matrix = open('similar_matrix.pkl', 'rb')
             reserve_map = open('reserve.plk', 'rb')
@@ -62,10 +64,41 @@ def get_recommendation(movie_id):
     else:
         return None
 
-param = sys.argv[1]
-list_id = get_recommendation(242)
-res = ''
-for i in list_id:
-    id = str(i)
-    res += id + ','
-print(res)
+
+def insert_similarity():
+    connection = pymysql.connect(host='rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com',
+                                 user='team39',
+                                 password='Comp20839',
+                                 db='kiwi_test')
+    cur = connection.cursor()
+    count = 0
+    cur.execute("USE kiwi_test")
+    id_l = open('id.plk', 'rb')
+    id_list = pickle.load(id_l)
+    sql = 'insert into moviesimilarity values (%s,%s)'
+    for m_id in id_list:
+        list_id = get_recommendation(m_id)
+        count += 1
+        if list_id == None:
+            print(count)
+            continue
+        res = ''
+        for i in range(len(list_id)):
+
+            id = str(list_id[i])
+            if i == len(list_id) - 1:
+                res += id
+            else:
+                res += id + ','
+        print(m_id, res)
+        cur.execute(sql, (m_id, res))
+    connection.commit()
+    connection.close()
+    cur.close()
+
+
+insert_similarity()
+#process_data()
+#print(get_recommendation(19995))
+
+

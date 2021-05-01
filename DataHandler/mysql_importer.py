@@ -9,6 +9,8 @@ import DataHandler.tmdb_data as tm
 import random
 import csv
 
+
+
 df = pandas.read_csv('tmdb_5000_movies.csv')
 id_list = df['id']
 score_list = df['vote_average']
@@ -73,6 +75,7 @@ def update_score(ids, scores):
         cur.execute(sql, (scores[i], ids[i]))
         sql = 'UPDATE movie set vote_count=%s where movie_id=%s'
         cur.execute(sql, (50, ids[i]))
+
 
 
 def add_review():
@@ -147,7 +150,7 @@ def insert():
         insert_genre(i)
 
     '''
-insert()
+#insert()
 
 '''
 # ensure the index in pickle
