@@ -113,7 +113,7 @@ echo "--------------------------<br>";
 			</div>
 			<div class="search">
 				<div class="search2">
-					<form>
+					<form method="get" action="movie_search.php">
 						<i class="fa fa-search"></i>
 						<input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
 					</form>
@@ -125,15 +125,26 @@ echo "--------------------------<br>";
 		<div class="bootstrap_container">
 			<nav class="navbar navbar-default w3_megamenu" role="navigation">
 				<div class="navbar-header">
-					<button type="button" data-toggle="collapse" data-target="#defaultmenu"
-					class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span>
-					<span class="icon-bar"></span></button>
-					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
+
 				</div><!-- end navbar-header -->
 
 
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
+                   <ul class="nav navbar-nav navbar-left">
+                       <li>
+                           <a href='index5.php'><img src="images/logo.png" alt="IMG" width="40" height="40"></a>
+                       </li>
+                       <li>
+                           <a href='index5.php'>Kiwi Box</a>
+                       </li>
+                       <li>
+                           <form method="get" action="movie_search.php">
+                               <i class="fa fa-search"></i>
+                               <input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
+                           </form>
+                       </li>
+                   </ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="classification.php?year=0">Sort</a>
