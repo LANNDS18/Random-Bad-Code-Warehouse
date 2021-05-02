@@ -82,39 +82,55 @@ if(isset($_SESSION['email'])){
 	<!-- header-section-starts -->
 	<div class="container">
 		<div class="main-content">
-			<div class="header">
-				<div class="logo">
-					<img src="images/logo.png" alt="IMG" width="56" height="56">
-				</div>
-				<div class="search">
-					<div class="search2">
-						<form>
-							<i class="fa fa-search"></i>
-							<input type="text" value="Search " onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search ';}"/>
-						</form>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="bootstrap_container">
-				<nav class="navbar navbar-default w3_megamenu" role="navigation">
-					<div class="navbar-header">
-						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
-					</div><!-- end navbar-header -->
+            <div class="bootstrap_container">
+                <nav class="navbar navbar-default py-4 navbar-fixed-top navbar-inverse" role="navigation">
+                    <div class="container">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
+                                                          height="17">Kiwi Box</a>
+                            </li>
+                            <li>
+                                <a href="classification.php?year=0">Movie Filter</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href='personal-information.php'>
+                                    <?php
+                                    if (isset($_SESSION['email'])) {
 
-					<div id="defaultmenu" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
+                                        echo $_SESSION['email'];
+                                    } else {
+                                        //echo "<li class='active'><a href='../visitor_warning.php'>";
+                                        echo "Vistor";
+                                    }
+                                    ?>
+                                </a></li>
+                            <!-- onclick="<script type="text/javascript">
+                                alert("log out successfully");
+                            </script> " <li><a href="../index.php" >Logout</a></li>-->
+                            <?php
+                            if (isset($_SESSION['email'])) {
+                                echo "<li><a href='../logout.php'> Logout</a></li>";
+                            } else {
+                                echo "<li><a href='../index.php'> Login</a></li>";
+                            }
+                            //<li><a href="../logout.php"> Logout</button></li>
+                            ?>
+                        </ul>
 
-						</a></li>
-<!-- onclick="<script type="text/javascript">
-	alert("log out successfully");
-</script> " <li><a href="../index.php" >Logout</a></li>-->
-						<li><a href="../logout.php"> Logout</a></li>
-					</ul>
-				</div><!-- end #navbar-collapse-1 -->
+                        <form class="navbar-form navbar-right" method="get" action="movie_search.php">
+                            <div class="input-group-sm">
+                                <input type="text" name="search_content" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
 
-			</nav><!-- end navbar navbar-default w3_megamenu -->
-		</div><!-- end container -->
+
+                    </div>
+
+
+                </nav><!-- end navbar navbar-default w3_megamenu -->
+            </div><!-- end container -->
 		<!-- AddThis Smart Layers END -->
 		<div class="review-slider">
 
