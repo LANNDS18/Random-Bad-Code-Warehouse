@@ -487,4 +487,3 @@ if(isset($_SESSION['email'])){
 		exit("PDO Error: ".$e->getMessage()."<br>");
 		}
 		 ?>
-
