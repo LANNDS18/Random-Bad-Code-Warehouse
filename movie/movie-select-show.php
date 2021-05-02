@@ -23,7 +23,7 @@ $opt = array(
    $pdo = new PDO($dsn,$db_username,$db_password,$opt);
 
 	 $getid=$_GET['film_id'];
-	 $sql_get_film="select title,poster_path,vote_average,vote_count,overview from movie where movie_id='$getid'";
+	 $sql_get_film="select title,poster_path,vote_average,vote_count,overview,release_date from movie where movie_id='$getid'";
 	 $result = $pdo->query($sql_get_film);
 	 $row = $result ->fetch();
 	 $get_film_title=$row['title'];
@@ -31,7 +31,9 @@ $opt = array(
 	 $get_vote_average=$row['vote_average'];
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
+	 $get_release_date=$row['release_date'];
 	 $gettitle=$row['title'];
+	 $get_release_date_ymd=date('Y-m-d',$get_release_date);
 	 echo "<title>$gettitle</title>";
 
 
@@ -164,12 +166,17 @@ $opt = array(
 	//<img src="images/movie-show.jpg" alt="" />
 						 ?>
 						<div class="bahubali-details">
-							<h4>Movie name:</h4>
-							<p><?php echo $get_film_title;?></p>
+							<h4>Title</h4>
+							<p> </p>
+							<h2><?php echo $get_film_title;?></h2>
+							<h4>Release date: </h4>
+							<p><?php echo $get_release_date_ymd ?></p>
 							<h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
-							<p><?php echo $get_vote_average ?></p>
+							<p><?php echo number_format($get_vote_average,1) ?></p>
 							<h4>Director:</h4>
-							<p><?php echo $director_name; ?></p>
+							<?php
+							echo "<a href='actor.php?act_id=$get_film_director_id'>$director_name</a>";
+							 ?>
 							<h4>Actor:</h4>
 
 							<?php
@@ -213,30 +220,47 @@ $opt = array(
 												 $get_user_id_review=$row['user_id'];
 												 $get_time_review=$row['time_stamp'];
 												 $get_content_review=$row['content'];
-												 $sql_get_user_name="select nickname from user where user_id=$get_user_id_review";
+												 $sql_get_user_name="select nickname,profile_path from user where user_id=$get_user_id_review";
 												 $result = $pdo->query($sql_get_user_name);
 												 $row = $result ->fetch();
 												 $user_name=$row['nickname'];
+												 $user_profile=$row['profile_path'];
 												 //$get_content_sub=substr($get_content_review,100);
 												 //echo "id: ".$get_user_id_review."<br>";
 												 //echo "content:".$get_content_review."<br>";
-												 echo "<div class='movie-date-selection'>
-												 	<div class='comment'>
-												 		<div class='client'>
-												 			<img src='images/c2.jpg' alt=''>
-												 		</div>
-												 		<div class='client-message'>
-												 			<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
-												 			<h6 overflow: hidden;>
-															<details>
-															<summary>show</summary>
-															<p>$get_content_review</p>
-															</details>
-															</h6>
-												 		</div>
-												 		<div class='clearfix'></div>
-												 	</div>
-												 </div>";
+												 if (strlen($get_content_review)>500) {
+													 echo "<div class='movie-date-selection'>
+  												 	<div class='comment'>
+  												 		<div class='client'>
+  												 			<img src='../img/user_profile/$user_profile' alt=''>
+  												 		</div>
+  												 		<div class='client-message'>
+  												 			<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+  												 			<h6 overflow: hidden;>
+  															<details>
+  															<summary>click to see</summary>
+  															<p>$get_content_review</p>
+  															</details>
+  															</h6>
+  												 		</div>
+  												 		<div class='clearfix'></div>
+  												 	</div>
+  												 </div>";
+												 }else {
+													 echo "<div class='movie-date-selection'>
+ 													 <div class='comment'>
+ 														 <div class='client'>
+ 															 <img src='../img/user_profile/$user_profile' alt=''>
+ 														 </div>
+ 														 <div class='client-message'>
+ 															 <p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+ 															 <h6 overflow: hidden;>$get_content_review</h6>
+ 														 </div>
+ 														 <div class='clearfix'></div>
+ 													 </div>
+ 													</div>";
+												 }
+
 											 }
 											 //database review
 											 //
@@ -246,11 +270,11 @@ $opt = array(
 echo "<div class='movie-date-selection'>
 	<div class='comment'>
 		<div class='client'>
-			<img src='images/c2.jpg' alt=''>
+			<img src='../img/user_profile/ud1.jpg' alt=''>
 		</div>
 		<div class='client-message'>
 			<p><a href=''>testphp</a><i class='fa fa-calendar'></i>10 minutes ago</p>
-			<h6>great fun.</h6>
+			<h6>ttttttt</h6>
 		</div>
 		<div class='clearfix'></div>
 	</div>
@@ -313,7 +337,7 @@ echo "<div class='movie-date-selection'>
 							$row = $result ->fetch();
 							if(!$row){
 								?>
-								<form  method="post">
+								<form  method="post" action="movie-select-show.php">
 									<br>
 									<label>--  Star  -- </label>
 									<select name="star">
@@ -323,7 +347,7 @@ echo "<div class='movie-date-selection'>
 											// code...
 										} ?>
 									</select><br>
-									--  Comment  --: <input type="text"  name="comment"><br>
+									--  Comment  --: <input type="text"  name="review"><br>
 									<input type="submit">
 								</form>
 
@@ -331,9 +355,9 @@ echo "<div class='movie-date-selection'>
 
 								if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									$star = $_POST["star"];
-									$comment = $_POST["comment"];
-									if (isset($star)&&isset($comment)) {
-										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
+									$review_content = $_POST["review"];
+									if (isset($star)&&isset($review_content)) {
+										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$review_content','$star')";
 										$sucess_insert=$pdo->exec($sql_insert);
 
 										$sql="select vote_count,vote_average from movie where movie_id=$getid";
@@ -345,8 +369,11 @@ echo "<div class='movie-date-selection'>
 										echo $new_average."<br>";
 										$new_vote_count=$get_vote_count+1;
 										echo $new_vote_count;
-										$sql_update= "update movie set vote_average=$new_average and vote_count=$new_vote_count where movie_id=$getid";
-										$sucess_update=$pdo->exec($sql_update);
+										$sql_update1= "update movie set vote_average=$new_average where movie_id=$getid";
+										$sucess_update1=$pdo->exec($sql_update1);
+
+										$sql_update2= "update movie set vote_count=$new_vote_count where movie_id=$getid";
+										$sucess_update2=$pdo->exec($sql_update2);
 
 									}
 									}

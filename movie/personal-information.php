@@ -174,7 +174,7 @@ if(isset($_SESSION['email'])){
 							$row = $user_registered_time ->fetch();
 							 $time_stamp=$row['time_stamp'];
 							 $now= date("Y-m-d h:i:sa");
-							 $date=floor((strtotime($now)-strtotime($time_stamp))/86400);
+							 $date=floor((strtotime($now)-strtotime($time_stamp))/86400)+1;
 								 echo "$date days";
 							?>
 

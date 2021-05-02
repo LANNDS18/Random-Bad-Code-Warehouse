@@ -154,15 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					</span>
 				</div>
 
-				<div class="wrap-input100 validate-input">
-					<input class="input100" type="text" name="verification_code" placeholder="verification code">
-
-
-					<span class="focus-input100"></span>
-					<span class="symbol-input100">
-						<i class="fa fa-envelope" aria-hidden="true"></i>
-					</span>
-				</div>
 
 				<div class="wrap-input100 validate-input">
 					<input class="input100" type="password" name="password" placeholder="password">

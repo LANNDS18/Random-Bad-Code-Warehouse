@@ -308,6 +308,7 @@ foreach($filter_film as $row) {
  $get_title=$row['title'];
  $film_poster=$row['poster_path'];
  $movie_id=$row['movie_id'];
+ $get_vote=number_format($get_vote_average,1);
 
  echo "<a target='_blank' href='movie-select-show.php?film_id=$movie_id' class='item'>
 	 <div class='cover-wp'>
@@ -317,7 +318,7 @@ foreach($filter_film as $row) {
 	 </div>
 	 <p>
 		 <span class='title'>$get_title</span>
-		 <span class='rate'>$get_vote_average</span>
+		 <span class='rate'>$get_vote</span>
 	 </p>
  </a>";
 }
