@@ -132,10 +132,14 @@ if(isset($_SESSION['email'])){
                 </nav><!-- end navbar navbar-default w3_megamenu -->
             </div><!-- end container -->
 		<!-- AddThis Smart Layers END -->
-		<div class="review-slider">
-
+		<P class="review-slider">
 			<div class="now-showing-list">
 				<div class="col-md-4 movies-by-category movie-booking">
+                    <div>
+                        <h1>
+                            Your Kiwi Profile
+                        </h1>
+                    </div>
 					<div class="movie-ticket-book">
 						<div class="clearfix"></div>
 						<img src="images/person.jpg", alt="" />
@@ -284,6 +288,11 @@ if(isset($_SESSION['email'])){
 					 	});
 					 </script>
 					 <a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+                         <div class="logo">
+                            <img src="images/logo.png" alt="IMG" width="86" height="86">
+                            Welcome to Kiwi Box @COMP208-TEAM39-2021 Thanks for the TMDb API
+                            </div>
+                            <div class="clearfix"></div>
 					</body>
 					</html>
 
