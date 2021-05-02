@@ -37,7 +37,19 @@ session_start();// 存储 session 数据
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 			PDO::ATTR_EMULATE_PREPARES => false);
 			try {
+				$get_serach=$_GET['search_content'];
 				$pdo = new PDO($dsn,$db_username,$db_password,$opt);
+				$search_film = $pdo->query("Select *,case
+when REPLACE(title, ' ', '') LIKE REPLACE('$get_serach', ' ', '') then 5
+when REPLACE(title, ' ', '') LIKE REPLACE('%$get_serach%', ' ', '') then 4
+when REPLACE(original_title,' ','') like replace('%$get_serach%',' ','') then 3
+when overview like '%black panther%'  then 2
+end as priority
+from movie
+where REPLACE(title, ' ', '') LIKE REPLACE('$get_serach', ' ', '')
+or REPLACE(title, ' ', '') LIKE REPLACE('%$get_serach%', ' ', '')
+or REPLACE(original_title,' ','') like replace('%$get_serach%',' ','')
+order by priority desc limit 1000;");
 
 
 	?>
@@ -82,10 +94,13 @@ session_start();// 存储 session 数据
 				</div>
 				<div class="search">
 					<div class="search2">
-						<form>
+						<form method="get" action="movie_search.php">
 							<i class="fa fa-search"></i>
-							<input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
-						</form>
+							<input type="text" name="search_content" placeholder="Search for a movie"
+							value="" onFocus="this.value = '';"
+							/>
+							<input type="submit">
+					</form>
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -146,6 +161,28 @@ session_start();// 存储 session 数据
  <!--
 this is a static example
  -->
+
+ <?php
+ echo "<h1>Search content: \"".$get_serach."\"</h1>";
+ foreach($search_film as $row) {
+  $get_vote_average=$row['vote_average'];
+  $get_title=$row['title'];
+  $film_poster=$row['poster_path'];
+  $movie_id=$row['movie_id'];
+
+	echo "<a target='_blank' href='movie-select-show.php?film_id=$movie_id' class='item'>
+		<div class='cover-wp'>
+			<span class='pic'>
+				<img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130 alt=''>
+			</span>
+		</div>
+		<p>
+			<span class='title'>$get_title</span>
+			<span class='rate'>$get_vote_average</span>
+		</p>
+	</a>";
+ }
+  ?>
 				<a target="_blank" href="#" class="item">
 					<div class="cover-wp">
 						<span class="pic">
