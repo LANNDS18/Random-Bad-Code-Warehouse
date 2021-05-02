@@ -105,12 +105,6 @@ $opt = array(
 <!-- start-smoth-scrolling---->
 </head>
 <body>
-	<?php
-	echo $get_release_date."<br>";
-	echo strlen($get_release_date)."<br>";
-	echo substr($get_release_date,0,10);
-echo date('Y-m-d',$get_release_date);
-	 ?>
 
 	<!-- header-section-starts -->
 	<div class="container">
@@ -340,7 +334,7 @@ echo "<div class='movie-date-selection'>
 							$row = $result ->fetch();
 							if(!$row){
 								?>
-								<form  method="post">
+								<form  method="post" action="movie-select-show.php?film_id=<?php echo $getid;?>">
 									<br>
 									<label>--  Star  -- </label>
 									<select name="star">
