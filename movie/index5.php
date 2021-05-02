@@ -561,6 +561,11 @@ session_start();// 存储 session 数据
 </script>
 <a href="#home" class="scroll" id="toTop" style="display: block;"> <span id="toTopHover"
                                                                          style="opacity: 1;"> </span></a>
+<div class="logo" align="center">
+    <img src="images/logo.png" alt="IMG" width="86" height="86">
+    Welcome to Kiwi Box @COMP208-TEAM39-2021 Thanks for the TMDb API
+</div>
+<div class="clearfix"></div>
 
 </body>
 </html>
