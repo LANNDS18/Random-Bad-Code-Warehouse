@@ -58,6 +58,7 @@ session_start();// 存储 session 数据
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <!-- Custom Theme files -->
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+
     <!-- Custom Theme files -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -75,10 +76,10 @@ session_start();// 存储 session 数据
         } </script>
 
     <!-- start menu -->
-    <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all"/>
-    <script type="text/javascript" src="js/megamenu.js"></script>
+    <link href="css/menu.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="js/menu.js"></script>
     <script>$(document).ready(function () {
-            $(".megamenu").megamenu();
+            $(".menu").megamenu();
         });</script>
     <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
     <link rel="stylesheet" href="css/font-awesome.min.css"/>
@@ -93,6 +94,7 @@ session_start();// 存储 session 数据
         });
     </script>
     <link rel="stylesheet" href="css/menu.css"/>
+    <link rel="stylesheet" href="css/rating_for_user.css"/>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -294,7 +296,7 @@ session_start();// 存储 session 数据
 
                     ?>
 
-
+                    <!--
                     <div class="movie-date-selection">
                         <div class="comment">
                             <div class="client">
@@ -333,84 +335,110 @@ session_start();// 存储 session 数据
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                    </div>
+                    </div>-->
 
-                </div>
-                <div class="clearfix"></div>
-                <h1></h1>
-                <h1>Leave your Comment ?</h1>
-                <?php
-                if (isset($_SESSION['email'])) {
-                    $user_email = $_SESSION['email'];
-                    $sql_get_user_id = "select user_id from user where email='$user_email'";
-                    $result = $pdo->query($sql_get_user_id);
-                    $row = $result->fetch();
-                    $get_user_id = $row['user_id'];
-
-                    $sql = "select review_id,rating,content from review where user_id='$get_user_id' AND movie_id=$getid";
-                    $result = $pdo->query($sql);
-                    $row = $result->fetch();
-                    if (!$row) {
-                        ?>
-                        <form method="post" action="movie-select-show.php?film_id=<?php echo $getid; ?>">
-                            <br>
-                            <label>-- Star -- </label>
-                            <select name="star">
-                                <?php
-                                for ($i = 0; $i < 11; $i++) {
-                                    echo "<option value=" . $i . ">" . $i . "</option>";
-                                    // code...
-                                } ?>
-                            </select><br>
-                            -- Comment --: <input type="text" name="comment"><br>
-                            <input type="submit">
-                        </form>
-
+                    <div>
+                        <h1>Leave your Review?</h1>
                         <?php
+                        if (isset($_SESSION['email'])) {
+                            $user_email = $_SESSION['email'];
+                            $sql_get_user_id = "select user_id from user where email='$user_email'";
+                            $result = $pdo->query($sql_get_user_id);
+                            $row = $result->fetch();
+                            $get_user_id = $row['user_id'];
 
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            $star = $_POST["star"];
-                            $comment = $_POST["comment"];
-                            if (isset($star) && isset($comment)) {
-                                $sql_insert = "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
-                                $sucess_insert = $pdo->exec($sql_insert);
+                            $sql = "select review_id,rating,content from review where user_id='$get_user_id' AND movie_id=$getid";
+                            $result = $pdo->query($sql);
+                            $row = $result->fetch();
+                            if (!$row) {
+                                ?>
+                                <form method="post" action="movie-select-show.php?film_id=<?php echo $getid; ?>">
+                                    <p><H3>Rating</H3></p>
+                                    <div class="rating">
+                                        <input type="radio" id="star10" name="rating" value="10" hidden/>
+                                        <label for="star10"></label>
+                                        <input type="radio" id="star9" name="rating" value="9" hidden/>
+                                        <label for="star9"></label>
+                                        <input type="radio" id="star8" name="rating" value="8" hidden/>
+                                        <label for="star8"></label>
+                                        <input type="radio" id="star7" name="rating" value="7" hidden/>
+                                        <label for="star7"></label>
+                                        <input type="radio" id="star6" name="rating" value="6" hidden/>
+                                        <label for="star6"></label>
+                                        <input type="radio" id="star5" name="rating" value="5" hidden/>
+                                        <label for="star5"></label>
+                                        <input type="radio" id="star4" name="rating" value="4" hidden/>
+                                        <label for="star4"></label>
+                                        <input type="radio" id="star3" name="rating" value="3" hidden/>
+                                        <label for="star3"></label>
+                                        <input type="radio" id="star2" name="rating" value="2" hidden/>
+                                        <label for="star2"></label>
+                                        <input type="radio" id="star1" name="rating" value="1" hidden/>
+                                        <label for="star1"></label>
+                                    </div>
+                                    <select name="star">
+                                        <?php
+                                        for ($i = 0; $i < 11; $i++) {
+                                            echo "<option value=" . $i . ">" . $i . "</option>";
+                                            // code...
+                                        } ?>
+                                    </select><br>
+                                    -- Comment --: <input type="text" name="comment"><br>
+                                    <input type="submit">
+                                </form>
 
-                                $sql = "select vote_count,vote_average from movie where movie_id=$getid";
-                                $result = $pdo->query($sql);
-                                $row = $result->fetch();
-                                $get_vote_count = $row['vote_count'];
-                                $get_vote_average = $row['vote_average'];
-                                $new_average = (($get_vote_count * $get_vote_average) + $star) / ($get_vote_count + 1);
-                                echo $new_average . "<br>";
-                                $new_vote_count = $get_vote_count + 1;
-                                echo $new_vote_count;
-                                $sql_update1 = "update movie set vote_average=$new_average where movie_id=$getid";
-                                $sucess_update1 = $pdo->exec($sql_update1);
+                                <?php
 
-                                $sql_update2 = "update movie set vote_count=$new_vote_count where movie_id=$getid";
-                                $sucess_update2 = $pdo->exec($sql_update2);
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    $star = $_POST["star"];
+                                    $comment = $_POST["comment"];
+                                    if (isset($star) && isset($comment)) {
+                                        $sql_insert = "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
+                                        $sucess_insert = $pdo->exec($sql_insert);
 
+                                        $sql = "select vote_count,vote_average from movie where movie_id=$getid";
+                                        $result = $pdo->query($sql);
+                                        $row = $result->fetch();
+                                        $get_vote_count = $row['vote_count'];
+                                        $get_vote_average = $row['vote_average'];
+                                        $new_average = (($get_vote_count * $get_vote_average) + $star) / ($get_vote_count + 1);
+                                        echo $new_average . "<br>";
+                                        $new_vote_count = $get_vote_count + 1;
+                                        echo $new_vote_count;
+                                        $sql_update1 = "update movie set vote_average=$new_average where movie_id=$getid";
+                                        $sucess_update1 = $pdo->exec($sql_update1);
+
+                                        $sql_update2 = "update movie set vote_count=$new_vote_count where movie_id=$getid";
+                                        $sucess_update2 = $pdo->exec($sql_update2);
+
+                                    }
+                                }
+                            } else {
+                                echo "Rate: " . $row['rating'] . "<br>";
+                                echo "Comment: " . $row['content'] . "<br>";
                             }
+
+
+                            ?>
+
+                            <?php
+                        } else {
+                            echo "you have to login to leave a Review!<br>";
                         }
-                    } else {
-                        echo "Rate: " . $row['rating'] . "<br>";
-                        echo "Comment: " . $row['content'] . "<br>";
-                    }
+
+                        ?>
+
+                        <br>
+                    </div>
+                </div>
+                <div class="clearfix">
+                </div>
 
 
-                    ?>
-
-                    <?php
-                } else {
-                    echo "you have to login to leave a comment!<br>";
-                }
-
-                ?>
-
-                <br><br><br>
-                <br>
             </div>
+
         </div>
+
     </div>
 </div>
 <script type="text/javascript">
