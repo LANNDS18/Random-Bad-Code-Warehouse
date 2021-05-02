@@ -206,7 +206,7 @@ this is a static example
 	</script>
         <div class="logo">
             <img src="images/logo.png" alt="IMG" width="86" height="86">
-            Welcome to Kiwi Box @2021 Thanks for the TMDb API
+            Welcome to Kiwi Box @COMP208-TEAM39-2021 Thanks for the TMDb API
         </div>
         <div class="clearfix"></div>
 </body>
