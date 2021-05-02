@@ -88,60 +88,55 @@ order by priority desc limit 1000;");
 <body>
 	<div class="container">
 		<div class="main-content">
-			<div class="header">
-				<div class="logo">
-					<img src="images/logo.png" alt="IMG" width="56" height="56">
-				</div>
-				<div class="search">
-					<div class="search2">
-						<form method="get" action="movie_search.php">
-							<i class="fa fa-search"></i>
-							<input type="text" name="search_content" placeholder="Search for a movie"
-							value="" onFocus="this.value = '';"
-							/>
-							<input type="submit">
-					</form>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<nav class="navbar navbar-default w3_megamenu" role="navigation">
-				<div class="navbar-header">
-					<button type="button" data-toggle="collapse" data-target="#defaultmenu"
-					class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span>
-					<span class="icon-bar"></span></button>
-					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
-				</div><!-- end navbar-header -->
+            <div class="bootstrap_container">
+                <nav class="navbar navbar-default py-4 navbar-fixed-top navbar-inverse" role="navigation">
+                    <div class="container">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
+                                                          height="17">Kiwi Box</a>
+                            </li>
+                            <li>
+                                <a href="classification.php?year=0">Movie Filter</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href='personal-information.php'>
+                                    <?php
+                                    if (isset($_SESSION['email'])) {
 
-				<div id="defaultmenu" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href='personal-information.php'>
-							<?php
-							if(isset($_SESSION['email'])){
-								echo $_SESSION['email'];
-							}else {
-								//echo "<li class='active'><a href='../visitor_warning.php'>";
-								echo "Vistor";
-							}
-							?>
-						</a></li>
-						<!-- onclick="<script type="text/javascript">
-							alert("log out successfully");
-						</script> " <li><a href="../index.php" >Logout</a></li>-->
-						<?php
-						if (isset($_SESSION['email'])) {
-							echo "<li><a href='../logout.php'> Logout</a></li>";
-						}else {
-							echo "<li><a href='../visitor_logout.php'> Logout</a></li>";
-						}
-						//<li><a href="../logout.php"> Logout</button></li>
-						?>
+                                        echo $_SESSION['email'];
+                                    } else {
+                                        //echo "<li class='active'><a href='../visitor_warning.php'>";
+                                        echo "Vistor";
+                                    }
+                                    ?>
+                                </a></li>
+                            <!-- onclick="<script type="text/javascript">
+                                alert("log out successfully");
+                            </script> " <li><a href="../index.php" >Logout</a></li>-->
+                            <?php
+                            if (isset($_SESSION['email'])) {
+                                echo "<li><a href='../logout.php'> Logout</a></li>";
+                            } else {
+                                echo "<li><a href='../index.php'> Login</a></li>";
+                            }
+                            //<li><a href="../logout.php"> Logout</button></li>
+                            ?>
+                        </ul>
 
-					</ul>
-				</div><!-- end #navbar-collapse-1 -->
+                        <form class="navbar-form navbar-right" method="get" action="movie_search.php">
+                            <div class="input-group-sm">
+                                <input type="text" name="search_content" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
 
-			</nav><!-- end navbar navbar-default w3_megamenu -->
 
+                    </div>
+
+
+                </nav><!-- end navbar navbar-default w3_megamenu -->
+            </div><!-- end container -->
 
 
 			<!--
@@ -161,7 +156,6 @@ order by priority desc limit 1000;");
  <!--
 this is a static example
  -->
-
  <?php
  echo "<h1>Search content: \"".$get_serach."\"</h1>";
  foreach($search_film as $row) {
@@ -210,6 +204,11 @@ this is a static example
 			$(this).addClass('tab-checked').siblings().removeClass('tab-checked');
 		})
 	</script>
+        <div class="logo">
+            <img src="images/logo.png" alt="IMG" width="86" height="86">
+            <p>Welcome to Kiwi Box</p>
+        </div>
+        <div class="clearfix"></div>
 </body>
 
 </html>
