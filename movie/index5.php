@@ -111,14 +111,17 @@ echo "--------------------------<br>";
 			<div class="logo">
 				<img src="images/logo.png" alt="IMG" width="56" height="56">
 			</div>
-			<div class="search">
-				<div class="search2">
-					<form method="get" action="movie_search.php">
-						<i class="fa fa-search"></i>
-						<input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
-					</form>
-				</div>
-			</div>
+            <div class="search">
+                <div class="search2">
+                    <form method="get" action="movie_search.php">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="search_content" placeholder="Search for a movie"
+                               value="" onFocus="this.value = '';"
+                        />
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
 			<div class="clearfix"></div>
 		</div>
 
@@ -141,7 +144,9 @@ echo "--------------------------<br>";
                        <li>
                            <form method="get" action="movie_search.php">
                                <i class="fa fa-search"></i>
-                               <input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
+                               <input type="text" name="search_content" placeholder="Search for a movie"
+                                      value="" onFocus="this.value = '';"
+                               />
                            </form>
                        </li>
                    </ul>
