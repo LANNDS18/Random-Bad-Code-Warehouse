@@ -5,6 +5,10 @@ session_start();// 存储 session 数据
 <html>
 <head>
 	<!-- 导航
+				92行开始转动的电影内容（热评）
+				180行 popular
+				277行 highest score
+				377行 Guess You Like
 	-->
 	<?php
 	//echo "<a href='javascript:alert(123);'>点我弹出123</a>";
@@ -83,7 +87,7 @@ echo "--------------------------<br>";
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-<!-- start-smoth-scrolling---->
+<!---- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript">
@@ -109,17 +113,11 @@ echo "--------------------------<br>";
 			</div>
 			<div class="search">
 				<div class="search2">
-					<form method="get" action="movie_search.php">
+					<form>
 						<i class="fa fa-search"></i>
-						<input type="text" name="search_content" placeholder="Search for a movie"
-						value=""
-						/>
-						</div>
-						<input type="submit">
-				</form>
-
-
-
+						<input type="text" value="Search for a movie" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
+					</form>
+				</div>
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -132,6 +130,7 @@ echo "--------------------------<br>";
 					<span class="icon-bar"></span></button>
 					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
+
 
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
@@ -176,39 +175,70 @@ if (isset($_SESSION['email'])) {
 			<ul id="flexiselDemo1">
 
 				<?php
+				//$Session_email1 = $_SESSION['email'];
+				//$user_id1 = $pdo->query("select user_id from user where email = '$Session_email1'");
+				//$row1 = $user_id1 ->fetch();
+				//$id1=$row1['user_id'];
+        //$user_id2 = $pdo->query("select user_id from user where user_id =$id1 and user_id not in (select distinct user_id from review)");
+				//$row2 = $user_id2 ->fetch();
+				//$id2=$row2['user_id'];
+                //&& !$id2
 				if (isset($_SESSION['email'])) {
-					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where poster_path is not null limit 7");#where module='$module'
+					$Session_email = $_SESSION['email'];
+				 $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
+				 $row = $user_id ->fetch();
+				 $id=$row['user_id'];
+				  $similar_list = $pdo->query("select similar_list from moviesimilarity where movie_id in (select movie_id from review where rating > 6 and user_id = $id order by time_stamp, rating)limit 3");
+
+          foreach($similar_list as $row ){
+					$similar_row=$row['similar_list'];
+					$similar_id = explode(',',$similar_row);
+
+          for($index=0;$index<count($similar_id);$index++){
+					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where movie_id =$similar_id[$index] and poster_path is not null");#where module='$module'
+
 					foreach($poster_path as $row) {
 					 $film_poster=$row['poster_path'];
 					 $film_title=$row['title'];
 					 $film_id=$row['movie_id'];
-					 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130></a>";
-					 echo "<div class=\"slide-title\"><h4>this is comment </h4></div>";
+					 echo "<li><a></a>","<a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w300",$film_poster," height=270 width=130></a><br>";
+          //echo "<a href='movie-select-show.php?film_id=$film_id'>$film_poster</a><br>";
+					 echo "<div class=\"slide-title\"><h4>$film_title </h4></div>";
 					 echo "<div class=\"date-city\">";
 						 echo "<div class=\"buy-tickets\">";
-						 echo"<form method='get' action='movie-select-show.php'>
-						 <input type='hidden' name='film_id' value='$film_id'>";
-						 echo "<input type='submit' value='$film_title'></form>";
 						echo "</div></div>";
 						echo "</li>";
-			}
+					}
+					}
+     }
+
 				}else {
-					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where poster_path is not null limit 7");#where module='$module'
-					foreach($poster_path as $row) {
-					 $film_poster=$row['poster_path'];
-					 $film_title=$row['title'];
-					 $film_id=$row['movie_id'];
-					 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=130></a>";
-					 echo "<div class=\"slide-title\"><h4>this is comment </h4></div>";
-					 echo "<div class=\"date-city\">";
-						 echo "<div class=\"buy-tickets\">";
-						 echo"<form method='get' action='movie-select-show.php'>
-						 <input type='hidden' name='film_id' value='$film_id'>";
-						 echo "<input type='submit' value='$film_title'></form>";
-						echo "</div></div>";
-						echo "</li>";
-			}
-				}
+
+					  $similar_list = $pdo->query("select moviesimilarity.movie_id, similar_list from moviesimilarity, movie where moviesimilarity.movie_id = movie.movie_id order by vote_average desc ,release_date desc limit 3");
+
+	          foreach($similar_list as $row ){
+						$similar_row=$row['similar_list'];
+						$similar_id = explode(',',$similar_row);
+
+	          for($index=0;$index<count($similar_id);$index++){
+						$poster_path = $pdo->query("select poster_path,title,movie_id from movie where movie_id =$similar_id[$index] and poster_path is not null");#where module='$module'
+
+						foreach($poster_path as $row) {
+						 $film_poster=$row['poster_path'];
+						 $film_title=$row['title'];
+						 $film_id=$row['movie_id'];
+						 echo "<li><a></a>","<a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w300",$film_poster," height=270 width=130></a><br>";
+	          //echo "<a href='movie-select-show.php?film_id=$film_id'>$film_poster</a><br>";
+						 echo "<div class=\"slide-title\"><h4>$film_title </h4></div>";
+						 echo "<div class=\"date-city\">";
+							 echo "<div class=\"buy-tickets\">";
+							echo "</div></div>";
+							echo "</li>";
+						}
+						}
+	}
+}
+
 
 		?>
 					</li>
@@ -245,7 +275,7 @@ if (isset($_SESSION['email'])) {
 			<div class="footer-top-grid">
 				<div class="list-of-movies col-md-8">
 					<div class="featured">
-						<h4>Popular</h4>
+						<h4>High Score</h4>
 						<ul>
 							<?php
 
@@ -261,7 +291,6 @@ if (isset($_SESSION['email'])) {
 						 $film_title=$row['title'];
 						 $film_id=$row['movie_id'];
 						 echo "<li><a><img src=https://image.tmdb.org/t/p/w500",$film_poster," height=270 width=210></a>";
-
 							?>
 							<div class=\"slide-title\"><h4>this is comment </h4></div>
 								<div class=\"date-city\">
@@ -447,3 +476,4 @@ if(isset($_SESSION['email'])){
 		exit("PDO Error: ".$e->getMessage()."<br>");
 		}
 		 ?>
+
