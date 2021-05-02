@@ -31,7 +31,6 @@ $opt = array(
 	 $get_vote_average=$row['vote_average'];
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
-	 $get_release_date=$row['release_date'];
 	 $gettitle=$row['title'];
 	 $get_release_date_ymd=date('Y-m-d',$get_release_date);
 	 echo "<title>$gettitle</title>";
@@ -174,9 +173,7 @@ $opt = array(
 							<h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
 							<p><?php echo number_format($get_vote_average,1) ?></p>
 							<h4>Director:</h4>
-							<?php
-							echo "<a href='actor.php?act_id=$get_film_director_id'>$director_name</a>";
-							 ?>
+							<p><?php echo $director_name; ?></p>
 							<h4>Actor:</h4>
 
 							<?php
@@ -230,37 +227,36 @@ $opt = array(
 												 //echo "content:".$get_content_review."<br>";
 												 if (strlen($get_content_review)>500) {
 													 echo "<div class='movie-date-selection'>
-  												 	<div class='comment'>
-  												 		<div class='client'>
-  												 			<img src='../img/user_profile/$user_profile' alt=''>
-  												 		</div>
-  												 		<div class='client-message'>
-  												 			<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
-  												 			<h6 overflow: hidden;>
-  															<details>
-  															<summary>click to see</summary>
-  															<p>$get_content_review</p>
-  															</details>
-  															</h6>
-  												 		</div>
-  												 		<div class='clearfix'></div>
-  												 	</div>
-  												 </div>";
+														<div class='comment'>
+															<div class='client'>
+																<img src='../img/user_profile/$user_profile' alt=''>
+															</div>
+															<div class='client-message'>
+																<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+																<h6 overflow: hidden;>
+																<details>
+																<summary>click to see</summary>
+																<p>$get_content_review</p>
+																</details>
+																</h6>
+															</div>
+															<div class='clearfix'></div>
+														</div>
+													 </div>";
 												 }else {
 													 echo "<div class='movie-date-selection'>
- 													 <div class='comment'>
- 														 <div class='client'>
- 															 <img src='../img/user_profile/$user_profile' alt=''>
- 														 </div>
- 														 <div class='client-message'>
- 															 <p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
- 															 <h6 overflow: hidden;>$get_content_review</h6>
- 														 </div>
- 														 <div class='clearfix'></div>
- 													 </div>
- 													</div>";
+														 <div class='comment'>
+															 <div class='client'>
+																 <img src='../img/user_profile/$user_profile' alt=''>
+															 </div>
+															 <div class='client-message'>
+																 <p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+																 <h6 overflow: hidden;>$get_content_review</h6>
+															 </div>
+															 <div class='clearfix'></div>
+														 </div>
+														</div>";
 												 }
-
 											 }
 											 //database review
 											 //
@@ -270,11 +266,11 @@ $opt = array(
 echo "<div class='movie-date-selection'>
 	<div class='comment'>
 		<div class='client'>
-			<img src='../img/user_profile/ud1.jpg' alt=''>
+			<img src='images/c2.jpg' alt=''>
 		</div>
 		<div class='client-message'>
 			<p><a href=''>testphp</a><i class='fa fa-calendar'></i>10 minutes ago</p>
-			<h6>ttttttt</h6>
+			<h6>great fun.</h6>
 		</div>
 		<div class='clearfix'></div>
 	</div>
@@ -337,7 +333,7 @@ echo "<div class='movie-date-selection'>
 							$row = $result ->fetch();
 							if(!$row){
 								?>
-								<form  method="post" action="movie-select-show.php">
+								<form  method="post">
 									<br>
 									<label>--  Star  -- </label>
 									<select name="star">
@@ -347,7 +343,7 @@ echo "<div class='movie-date-selection'>
 											// code...
 										} ?>
 									</select><br>
-									--  Comment  --: <input type="text"  name="review"><br>
+									--  Comment  --: <input type="text"  name="comment"><br>
 									<input type="submit">
 								</form>
 
@@ -355,9 +351,9 @@ echo "<div class='movie-date-selection'>
 
 								if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									$star = $_POST["star"];
-									$review_content = $_POST["review"];
-									if (isset($star)&&isset($review_content)) {
-										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$review_content','$star')";
+									$comment = $_POST["comment"];
+									if (isset($star)&&isset($comment)) {
+										$sql_insert= "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
 										$sucess_insert=$pdo->exec($sql_insert);
 
 										$sql="select vote_count,vote_average from movie where movie_id=$getid";
