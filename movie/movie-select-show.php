@@ -207,9 +207,12 @@ $opt = array(
 				</script>
 
 				<div class="col-md-8 movies-dates">
-                    <p><?php
+						<div class='movie-date-selection'>
+
+                    <?php
                         echo("<h2>Description:</h2>");
-                        echo "<h5>$get_film_overview</h5>";
+												echo "<div class='comment'>";
+                        echo "<pstyle='line-height:5'>$get_film_overview</p></div></div><br>";
 
 												//database review
 												$sql_get_review="select user_id,content,time_stamp from review where movie_id='$getid'";

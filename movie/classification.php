@@ -69,11 +69,12 @@ session_start();// 存储 session 数据
 				$region=$region_array[$get_region_id];
 				$year1=$year_array1[$get_year_id];
 				$year2=$year_array2[$get_year_id];
+				/*
 				echo "genre: ".$genre."<br>";
 				echo "region: ".$region."<br>";
 				echo "year: ".$year1."<br>";
 				echo "year2:".$year2."<br>";
-
+*/
 
 				//$row = $result ->fetch();
 				//$get_one_genre=$row['genre_name'];
@@ -278,6 +279,13 @@ session_start();// 存储 session 数据
 					<li><span><a href="javascript:goSort('year',8)">50's</a></span></li>
 					<li><span><a href="javascript:goSort('year',9)">earlier</a></span></li>
 				</ul>
+				<?php
+				echo "Genre: ".$genre."<br>";
+				echo "Region: ".$region."<br>";
+				$echo_year1=substr($year1,0,4);
+				$echo_year2=substr($year2,0,4);
+				echo "Year: from ".$echo_year1." to ".$echo_year2."<br>";
+				 ?>
 			</div>
 			<!--
 			<div class="tag-nav">
@@ -288,6 +296,7 @@ session_start();// 存储 session 数据
 				</div>
 			</div>
 			-->
+
 			<div class="list-wp">
 
 
