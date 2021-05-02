@@ -176,7 +176,7 @@ if(isset($_SESSION['email'])){
 						$row = $result ->fetch();
 						$title=$row['title'];
 						$movie_poster=$row['poster_path'];
-						if (strlen($get_content_review)>500){
+						if (strlen($review_content)>500){
 							echo "
 							<div class='movie-date-selection'>
 								<div class='comment'>
