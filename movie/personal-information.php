@@ -200,7 +200,9 @@ if(isset($_SESSION['email'])){
 							echo "
 							<div class='movie-date-selection'>
 								<div class='comment'>
+										<a href='movie-select-show.php?film_id=$movie_id'>
 										<img src=https://image.tmdb.org/t/p/w500/",$movie_poster," height=120 width=90>
+										</a>
 									<div class='client-message'>
 										<p>
 										<a href='movie-select-show.php?film_id=$movie_id'>$title</a>
