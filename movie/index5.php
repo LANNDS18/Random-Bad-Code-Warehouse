@@ -191,15 +191,105 @@ if (isset($_SESSION['email'])) {
 			<ul id="flexiselDemo1">
 
 				<?php
-				//$Session_email1 = $_SESSION['email'];
-				//$user_id1 = $pdo->query("select user_id from user where email = '$Session_email1'");
-				//$row1 = $user_id1 ->fetch();
-				//$id1=$row1['user_id'];
-        //$user_id2 = $pdo->query("select user_id from user where user_id =$id1 and user_id not in (select distinct user_id from review)");
-				//$row2 = $user_id2 ->fetch();
-				//$id2=$row2['user_id'];
-                //&& !$id2
-				if (isset($_SESSION['email'])) {
+
+
+				if (!isset($_SESSION['email'])) {//vistor
+					$similar_list = $pdo->query("select moviesimilarity.movie_id, similar_list from moviesimilarity, movie where moviesimilarity.movie_id = movie.movie_id order by vote_average desc ,release_date desc limit 3");
+
+					foreach($similar_list as $row ){
+					$similar_row=$row['similar_list'];
+					$similar_id = explode(',',$similar_row);
+
+					for($index=0;$index<count($similar_id);$index++){
+					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where movie_id =$similar_id[$index] and poster_path is not null");#where module='$module'
+
+					foreach($poster_path as $row) {
+					 $film_poster=$row['poster_path'];
+					 $film_title=$row['title'];
+					 $film_id=$row['movie_id'];
+					 echo "<li><a></a>","<a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w300",$film_poster," height=270 width=130></a><br>";
+					//echo "<a href='movie-select-show.php?film_id=$film_id'>$film_poster</a><br>";
+					 echo "<div class=\"slide-title\"><h4>$film_title</h4></div>";
+					 echo "<div class=\"date-city\">";
+						 echo "<div class=\"buy-tickets\">";
+						echo "</div></div>";
+						echo "</li>";
+					}
+					}
+				}
+					// vistor
+				}else{//login
+					$Session_email = $_SESSION['email'];
+					$get_user_id = $pdo->query("select user_id from user where email = '$Session_email'");
+					$row1 = $get_user_id ->fetch();
+					$id=$row1['user_id'];//user_id
+					$get_user_id2 = $pdo->query("select user_id from user where user_id =$id and user_id not in (select distinct user_id from review)");
+					$row2 = $get_user_id2 ->fetch();
+					//$id2=$row2['user_id'];
+					if($row2){//login but no review
+						$similar_list = $pdo->query("select moviesimilarity.movie_id, similar_list from moviesimilarity, movie where moviesimilarity.movie_id = movie.movie_id order by vote_average desc ,release_date desc limit 3");
+
+						foreach($similar_list as $row ){
+						$similar_row=$row['similar_list'];
+						$similar_id = explode(',',$similar_row);
+
+						for($index=0;$index<count($similar_id);$index++){
+						$poster_path = $pdo->query("select poster_path,title,movie_id from movie where movie_id =$similar_id[$index] and poster_path is not null");#where module='$module'
+
+						foreach($poster_path as $row) {
+						 $film_poster=$row['poster_path'];
+						 $film_title=$row['title'];
+						 $film_id=$row['movie_id'];
+						 echo "<li><a></a>","<a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w300",$film_poster," height=270 width=130></a><br>";
+						//echo "<a href='movie-select-show.php?film_id=$film_id'>$film_poster</a><br>";
+						 echo "<div class=\"slide-title\"><h4>$film_title</h4></div>";
+						 echo "<div class=\"date-city\">";
+							 echo "<div class=\"buy-tickets\">";
+							echo "</div></div>";
+							echo "</li>";
+						}
+						}
+					}
+				}else{//login and have review
+					$Session_email = $_SESSION['email'];
+				 $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
+				 $row = $user_id ->fetch();
+				 $id=$row['user_id'];
+					$similar_list = $pdo->query("select similar_list from moviesimilarity where movie_id in (select movie_id from review where rating > 6 and user_id = $id order by time_stamp, rating)limit 3");
+
+					foreach($similar_list as $row ){
+					$similar_row=$row['similar_list'];
+					$similar_id = explode(',',$similar_row);
+
+					for($index=0;$index<count($similar_id);$index++){
+					$poster_path = $pdo->query("select poster_path,title,movie_id from movie where movie_id =$similar_id[$index] and poster_path is not null");#where module='$module'
+
+					foreach($poster_path as $row) {
+					 $film_poster=$row['poster_path'];
+					 $film_title=$row['title'];
+					 $film_id=$row['movie_id'];
+					 echo "<li><a></a>","<a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w300",$film_poster," height=270 width=130></a><br>";
+					//echo "<a href='movie-select-show.php?film_id=$film_id'>$film_poster</a><br>";
+					 echo "<div class=\"slide-title\"><h4>$film_title</h4></div>";
+					 echo "<div class=\"date-city\">";
+						 echo "<div class=\"buy-tickets\">";
+						echo "</div></div>";
+						echo "</li>";
+					}
+					}
+		 }
+
+					}
+				}
+				/*
+				$Session_email = $_SESSION['email'];
+				$user_id1 = $pdo->query("select user_id from user where email = '$Session_email'");
+				$row1 = $user_id1 ->fetch();
+				$id1=$row1['user_id'];
+        $user_id2 = $pdo->query("select user_id from user where user_id =$id1 and user_id not in (select distinct user_id from review)");
+				$row2 = $user_id2 ->fetch();
+				$id2=$row2['user_id'];
+				if (isset($_SESSION['email'])&& !$id2) {
 					$Session_email = $_SESSION['email'];
 				 $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
 				 $row = $user_id ->fetch();
@@ -229,7 +319,7 @@ if (isset($_SESSION['email'])) {
      }
 
 				}else {
-
+					//Vistor
 					  $similar_list = $pdo->query("select moviesimilarity.movie_id, similar_list from moviesimilarity, movie where moviesimilarity.movie_id = movie.movie_id order by vote_average desc ,release_date desc limit 3");
 
 	          foreach($similar_list as $row ){
@@ -254,6 +344,8 @@ if (isset($_SESSION['email'])) {
 						}
 	}
 }
+
+*/
 
 
 		?>
