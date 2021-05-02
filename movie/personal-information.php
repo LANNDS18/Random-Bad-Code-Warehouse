@@ -217,11 +217,18 @@ if(isset($_SESSION['email'])){
  			 					echo "</li>";
 							}
 								?>
-
-
-
-
 						</div>
+
+						<ul class="mov_list">
+							<li><i class="fa fa-star"></i></li>
+							<li><h1>film_nameLonglonglong</h1></li>
+							<li><a href="movie-select-show.html">TEST</a></li>
+						</ul>
+						<ul class="mov_list">
+							<li><i class="fa fa-star"></i></li>
+							<li><h1>film_name</h1></li>
+							<li><a href="movie-select-show.html">TEST</a></li>
+						</ul>
 						<div class="cinema">
 							<h4 class="show">Watch data</h4>
 							<div class="show-title">

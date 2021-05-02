@@ -31,9 +31,9 @@ $opt = array(
 	 $get_vote_average=$row['vote_average'];
 	 $get_vote_count=$row['vote_count'];
 	 $get_film_overview=$row['overview'];
-	 $gettitle=$row['title'];
-	 $get_release_date_ymd=date('Y-m-d',$get_release_date);
-	 echo "<title>$gettitle</title>";
+	 $get_release_date=$row['release_date'];
+	 //$get_release_date_ymd=date('Y-m-d',$get_release_date);
+	 echo "<title>$get_film_title</title>";
 
 
 	 $sql_get_director_id="select actor_id from cast where movie_id=$getid and identity='Produce: Director'";
@@ -105,6 +105,7 @@ $opt = array(
 <!-- start-smoth-scrolling---->
 </head>
 <body>
+
 	<!-- header-section-starts -->
 	<div class="container">
 		<div class="main-content">
@@ -169,7 +170,7 @@ $opt = array(
 							<p> </p>
 							<h2><?php echo $get_film_title;?></h2>
 							<h4>Release date: </h4>
-							<p><?php echo $get_release_date_ymd ?></p>
+							<p><?php echo substr($get_release_date,0,10); ?></p>
 							<h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
 							<p><?php echo number_format($get_vote_average,1) ?></p>
 							<h4>Director:</h4>
@@ -333,7 +334,7 @@ echo "<div class='movie-date-selection'>
 							$row = $result ->fetch();
 							if(!$row){
 								?>
-								<form  method="post">
+								<form  method="post" action="movie-select-show.php?film_id=<?php echo $getid;?>">
 									<br>
 									<label>--  Star  -- </label>
 									<select name="star">
