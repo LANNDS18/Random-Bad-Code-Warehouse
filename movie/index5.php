@@ -371,31 +371,24 @@ session_start();// 存储 session 数据
 
                         //where vote_average >= (select min(vote_average) from (select top 3 distinct vote_average from movie))order by vote_average desc"
                         $sql_get_movie_id = $pdo->query("select movie_id from movie where vote_count >= 50 and release_date >= '2006-01-01' order by vote_average desc limit 9");
-                        foreach ($sql_get_movie_id
-
-                        as $row) {
+                        foreach ($sql_get_movie_id as $row) {
                         $sql_movie_id = $row['movie_id'];
 
 
-                        $poster_path = $pdo->query("select poster_path,movie_id,title from movie where movie_id =$sql_movie_id and poster_path is not null");
-                        foreach ($poster_path
-
-                        as $row) {
+                        $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
+                        foreach ($poster_path as $row) {
                         $film_poster = $row['poster_path'];
                         $film_title = $row['title'];
                         $film_id = $row['movie_id'];
-                        echo "<li><a><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
+                        $film_rating = $row['vote_average'];
+                        echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
+                        echo "<div class=\"slide-title\"><h4>".$film_title.": ".$film_rating."</h4></div>";
                         ?>
-                        <div class=\"slide-title\"><h4>this is comment </h4></div>
                         <div class=\"date-city\">
                             <div class="f-buy-tickets">
-                                <?php
-                                echo "<form method='get' action='movie-select-show.php'>
-						<input type='hidden' name='film_id' value='$film_id'>";
-                                echo "<input type='submit' value='$film_title'></form>";
-                                echo "</div></div>";
-                                ?>
-
+                                <?php echo $film_rating;?>
+                              </div>
+                        </div>
                                 <?php
                                 }
                                 }
@@ -509,32 +502,75 @@ session_start();// 存储 session 数据
                     ?>
                     <h4>Guess You Like</h4>
                     <?php
-                    if (isset($_SESSION['email'])) {
-                        $film_name = $pdo->query("select title,vote_average from movie limit 15");
-                        foreach ($film_name as $row) {//
-                            //echo "___film__     ",$row["title"],"<br>";
-                            //echo "year:",$row["title"],"";
-                            #echo "<p1>$row["time"]</p1>";
-                            echo "
+                    if (!isset($_SESSION['email'])) {
+                        echo "<h3><font color=red>you need login to see it</font></h3>";
+                    } else {//this is html file, need to be beautified
+                        $Session_email = $_SESSION['email'];
+                        $get_user_id = $pdo->query("select user_id from user where email = '$Session_email'");
+                        $row1 = $get_user_id->fetch();
+                        $id1 = $row1['user_id'];
+                        $user_id2 = $pdo->query("select user_id from user where user_id =$id1 and user_id not in (select distinct user_id from review)");
+                        $row2 = $user_id2->fetch();
+                        if ($row2) {
+                            echo "<h3><font color=red>Insufficient data<br>Let's continue watching the movie!</font></h3>";
+                        } else {
+                            $Session_email = $_SESSION['email'];
+                            $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
+                            $row = $user_id->fetch();
+                            $id = $row['user_id'];
+
+                            $users = '{';
+                            $review_user_id = $pdo->query("select distinct user_id from review");
+                            foreach ($review_user_id as $row) {
+                                $userid = $row['user_id'];
+                                $users = $users . '"' . $userid . '"' . ': ' . '{';
+                                $review_movie_id = $pdo->query("select rating,movie_id from review where user_id = $userid ");
+                                foreach ($review_movie_id as $row) {
+                                    $movie_id = $row['movie_id'];
+                                    $rating = $row['rating'];
+                                    $users = $users . '"' . $movie_id . '"' . ': ' . $rating;
+                                    $users = $users . ", ";
+                                }
+                                $users = substr($users, 0, -2);
+                                $users = $users . '}' . ', ';
+                            }
+                            $users = substr($users, 0, -2);
+                            $users = $users . '}';
+
+
+                            require_once('manhattanRecommend.php');
+
+                            $usersArray = json_decode($users, true);
+
+                            $recommend = new manhattanRecommend;
+                            $recommend = $recommend->recommend($id, $usersArray);
+                            $film_id = NULL;
+                            for ($index = 0; $index < count($recommend); $index++) {
+                                $film_id = $recommend[$index]['name'];
+
+
+                                $film_name = $pdo->query("select title,vote_average from movie where movie_id=$film_id limit 1");
+                                foreach ($film_name as $row) {//
+                                    //echo "___film__     ",$row["title"],"<br>";
+                                    //echo "year:",$row["title"],"";
+                                    #echo "<p1>$row["time"]</p1>";
+                                    echo "
 	 <ul class=\"mov_list\">
 		<li><i class=\"fa fa-star\"></i></li>
 		<li>", $row["vote_average"], "</li>
-		<li><a href=\"movie-select-show.html\">", $row["title"], "</a></li>
+		<li><a href=\"movie-select-show.php?film_id=$film_id\">", $row["title"], "</a></li>
 	 </ul>
 	 ";
+                                }
+                            }
+
 
                         }
-                    } else {//this is html file, need to be beautified
-                        echo "<h3><font color=red>you need login to see it</font></h3>";
+
+
                     }
 
                     ?>
-                    <ul class="mov_list">
-                        <li><i class="fa fa-star"></i></li>
-                        <li>100</li>
-                        <li><a href="movie-select-show.html">TEST</a></li>
-                    </ul>
-
                 </div>
             </div>
             <div class="clearfix"></div>
