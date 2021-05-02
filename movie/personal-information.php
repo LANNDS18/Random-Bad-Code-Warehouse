@@ -194,8 +194,7 @@ if(isset($_SESSION['email'])){
 								  echo "$description";
 							?>
 
-						</div>
-						<div align="center" position="absoulte"><button class="button" onclick="#">revise</button></div>
+						</div><div align="center" position="absoulte"><button class="button" onclick="">revise</button></div>
 					</div>
 				</div>
 				<div class="col-md-8 movies-dates">
