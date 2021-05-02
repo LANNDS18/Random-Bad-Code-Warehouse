@@ -317,6 +317,7 @@ echo "<div class='movie-date-selection'>
 							<div class="clearfix"></div>
 						</div>
 					</div>
+
 				</div>
 				<div class="clearfix"></div>
 				<h1>   </h1>

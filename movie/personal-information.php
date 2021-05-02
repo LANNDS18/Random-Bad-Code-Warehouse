@@ -9,32 +9,6 @@ if(isset($_SESSION['email'])){
 <!DOCTYPE html>
 <html>
 <head>
-
-	<style>
-		.button {
-		display: inline-block;
-		padding: 3px 10px;
-		font-size: 10px;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		outline: none;
-		color: #fff;
-		background-color: #4CAF50;
-		border: none;
-		border-radius: 15px;
-		box-shadow: 0 9px #999;
-		}
-
-		.button:hover {background-color: #3e8e41}
-
-		.button:active {
-			background-color: #3e8e41;
-			box-shadow: 0 5px #666;
-			transform: translateY(4px);
-		}
-	</style>
-
 	<?php
 			//$link = mysqli_connect('rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com','team39','Comp20839');
 			//var_dump($link);
@@ -91,7 +65,7 @@ if(isset($_SESSION['email'])){
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript">
@@ -102,7 +76,7 @@ if(isset($_SESSION['email'])){
 		});
 	});
 </script>
-<!---- start-smoth-scrolling---->
+<!-- start-smoth-scrolling---->
 </head>
 <body>
 	<!-- header-section-starts -->
@@ -125,7 +99,7 @@ if(isset($_SESSION['email'])){
 			<div class="bootstrap_container">
 				<nav class="navbar navbar-default w3_megamenu" role="navigation">
 					<div class="navbar-header">
-						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
+						<button type="button" data-toggle="collapse" data-target="#defaultmenu" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><i class="fa fa-home"></i></a>
 					</div><!-- end navbar-header -->
 
 					<div id="defaultmenu" class="navbar-collapse collapse">
@@ -174,7 +148,7 @@ if(isset($_SESSION['email'])){
 							$row = $user_registered_time ->fetch();
 							 $time_stamp=$row['time_stamp'];
 							 $now= date("Y-m-d h:i:sa");
-							 $date=floor((strtotime($now)-strtotime($time_stamp))/86400)+1;
+							 $date=floor((strtotime($now)-strtotime($time_stamp))/86400);
 								 echo "$date days";
 							?>
 
@@ -186,105 +160,88 @@ if(isset($_SESSION['email'])){
 								 echo "$id";
 							?>
 
-							<h4>description:</h4>
-							<?php
-							$user_description = $pdo->query("select description from user where email = '$Session_email'");#where module='$module'
-							$row = $user_description ->fetch();
-							 $description=$row['description'];
-								  echo "$description";
-							?>
-
-						</div><div align="center" position="absoulte"><button class="button" onclick="">revise</button></div>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-8 movies-dates">
-					<div class="show-times-with-movies">
-						<div class="movie-show">
-							<h4 class="show">Movie List</h4>
+					<?php
+					$review_movie_id = $pdo->query("select movie_id,time_stamp,content,rating from review where user_id = '$id'");
+					foreach($review_movie_id as $row) {
+						$movie_id=$row['movie_id'];
+					 	$time_stamp=$row['time_stamp'];
+						$review_content=$row['content'];
+						$review_rating=$row['rating'];
+						//$review_time_stamp=substr($time_stamp,0,10);
+						$result = $pdo->query("select title,poster_path from movie where movie_id = '$movie_id'");
+						$row = $result ->fetch();
+						$title=$row['title'];
+						$movie_poster=$row['poster_path'];
+						if (strlen($get_content_review)>500){
+							echo "
+							<div class='movie-date-selection'>
+								<div class='comment'>
+										<img src=https://image.tmdb.org/t/p/w500/",$movie_poster," height=120 width=90>
+									<div class='client-message'>
+										<p>
+										<a href='movie-select-show.php?film_id=$movie_id'>$title</a>
+										<i class='fa fa-calendar'>$time_stamp</i></p>
+										<h6 overflow: hidden;>
+										<details>
+										<summary>click to see</summary>
+										<p>$review_content</p>
+										</details>
+										</h6>
+									</div>
+									<div class='clearfix'>Rating: $review_rating / 10</div>
+								</div>
+							</div>
+							";
+						}else {
+							echo "
+							<div class='movie-date-selection'>
+								<div class='comment'>
+										<img src=https://image.tmdb.org/t/p/w500/",$movie_poster," height=120 width=90>
+									<div class='client-message'>
+										<p>
+										<a href='movie-select-show.php?film_id=$movie_id'>$title</a>
+										<i class='fa fa-calendar'>$time_stamp</i></p>
+										<h6>$review_content</h6>
+									</div>
+									<div class='clearfix'>Rating: $review_rating / 10</div>
+								</div>
+							</div>
+							";
+						}
+					}
+?>
 
-								<?php
-								$review_movie_id = $pdo->query("select movie_id from review where user_id = '$id'");#where module='$module'
-								foreach($review_movie_id as $row) {
-								 $movie_id=$row['movie_id'];
-
-								$movie_poster = $pdo->query("select poster_path from movie where movie_id = '$movie_id'");#where module='$module'
-								$row = $movie_poster ->fetch();
-								 $poster_path=$row['poster_path'];
-								echo "<a><img src=https://image.tmdb.org/t/p/w500/",$poster_path," height=200 width=150</a>";
- 			 				  echo "<div class=\"date-city\">";
- 			 				  echo "<div class=\"buy-tickets\">";
- 			 					echo "</div></div>";
- 			 					echo "</li>";
-							}
-								?>
 						</div>
 
-						<ul class="mov_list">
-							<li><i class="fa fa-star"></i></li>
-							<li><h1>film_nameLonglonglong</h1></li>
-							<li><a href="movie-select-show.html">TEST</a></li>
-						</ul>
-						<ul class="mov_list">
-							<li><i class="fa fa-star"></i></li>
-							<li><h1>film_name</h1></li>
-							<li><a href="movie-select-show.html">TEST</a></li>
-						</ul>
-						<div class="cinema">
-							<h4 class="show">Watch data</h4>
-							<div class="show-title">
-							<h5><?php
+							<?php
 							$review_movie_id = $pdo->query("select movie_id from review where user_id = '$id'");#where module='$module'
 							foreach($review_movie_id as $row) {
 							 $movie_id=$row['movie_id'];
-
 							$movie_title = $pdo->query("select title from movie where movie_id = '$movie_id'");#where module='$module'
-							$review_time_stamp = $pdo->query("select time_stamp from review where user_id = '$id'");#where module='$module'
-
 							$row = $movie_title ->fetch();
 							 $title=$row['title'];
-							echo "<a href='movie-select-show.php'>$title</a><br>";
-              echo "<br><br>";
-							$row = $review_time_stamp ->fetch();
-              $time_stamp=$row['time_stamp'];
-              echo "$time_stamp<br>";
-							echo "<br><br><br><br><br><br><br><br>";
-
+							//echo "<a href='movie-select-show.php'>$title</a><br>";
 						}
+							?>
 
-							?><h5>
-								</div>
-
-
-						</div>
-						<div class="cinema">
-							<h4 class="show">Your Comment</h4>
-							<div class="show-title">
-
-								<h5><?php
-								$review_rating = $pdo->query("select rating from review where user_id = '$id'");#where module='$module'
-								$review_content = $pdo->query("select content from review where user_id = '$id'");#where module='$module'
-								foreach($review_rating as $row) {
-								 $rating=$row['rating'];
-                   echo "$rating<br>";
-									 echo "<br><br>";
-								 $row = $review_content ->fetch();
-								 $content=$row['content'];
-								// echo "<div class=\"date-city\">";
-								//	 echo "<div class=\"buy-tickets\">";
-								//	echo "</div></div>";
-								//	echo "</li>";
-                   echo "$content<br>";
-									 echo "<br><br><br><br><br><br><br><br>";
+								<?php
+								$review_time_stamp = $pdo->query("select time_stamp from review where user_id = '$id'");#where module='$module'
+								foreach($review_time_stamp as $row) {
+								 $time_stamp=$row['time_stamp'];
+									 //echo "<a>$time_stamp</a>";
 								}
-								?><h5>
+								?>
 
 
 
-							</div>
-							<div class="show-title">
-							</div>
 
 						</div>
+
+
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -322,6 +279,6 @@ if(isset($_SESSION['email'])){
      <?php
 		 }else {//this is html file, need to be beautified
 			 echo '<html><head><Script Language="JavaScript">alert("You need login to see it!");</Script></head></html>'.
- 			 "<meta http-equiv=\"refresh\" content=\"0;url=../index.php\">";
+ 			 "<meta http-equiv=\"refresh\" content=\"0;url=index5.php\">";
 		 }
      ?>
