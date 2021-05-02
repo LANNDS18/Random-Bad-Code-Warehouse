@@ -111,11 +111,13 @@ echo "--------------------------<br>";
 				<div class="search2">
 					<form method="get" action="movie_search.php">
 						<i class="fa fa-search"></i>
-						<input type="text" name="film_id" value="Search for a movie" onFocus="this.value = '';"
-						onBlur="if (this.value == '') {this.value = 'Search for a movie';}"/>
+						<input type="text" name="search_content" placeholder="Search for a movie"
+						value=""
+						/>
+						</div>
 						<input type="submit">
 				</form>
-				</div>
+
 
 
 			</div>
@@ -130,7 +132,6 @@ echo "--------------------------<br>";
 					<span class="icon-bar"></span></button>
 					<a href="index5.php" class="navbar-brand"><i class="fa fa-home"></i></a>
 				</div><!-- end navbar-header -->
-
 
 
 				<div id="defaultmenu" class="navbar-collapse collapse">
