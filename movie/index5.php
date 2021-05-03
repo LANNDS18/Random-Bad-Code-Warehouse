@@ -381,12 +381,13 @@ session_start();// 存储 session 数据
                         $film_title = $row['title'];
                         $film_id = $row['movie_id'];
                         $film_rating = $row['vote_average'];
+                        $get_rating=number_format($film_rating,1);
                         echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
-                        echo "<div class=\"slide-title\"><h4>".$film_title.": ".$film_rating."</h4></div>";
+                        echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
                         ?>
                         <div class=\"date-city\">
                             <div class="f-buy-tickets">
-                                <?php echo $film_rating;?>
+                                <?php echo $get_rating;?>
                               </div>
                         </div>
                                 <?php
@@ -551,13 +552,15 @@ session_start();// 存储 session 数据
 
                                 $film_name = $pdo->query("select title,vote_average from movie where movie_id=$film_id limit 1");
                                 foreach ($film_name as $row) {//
+                                  $get_vote_average=$row["vote_average"];
+                                  $vote=number_format($get_vote_average,1);
                                     //echo "___film__     ",$row["title"],"<br>";
                                     //echo "year:",$row["title"],"";
                                     #echo "<p1>$row["time"]</p1>";
                                     echo "
 	 <ul class=\"mov_list\">
 		<li><i class=\"fa fa-star\"></i></li>
-		<li>", $row["vote_average"], "</li>
+		<li>", $vote, "</li>
 		<li><a href=\"movie-select-show.php?film_id=$film_id\">", $row["title"], "</a></li>
 	 </ul>
 	 ";
