@@ -166,7 +166,12 @@ if (isset($_SESSION['email'])) {
                                 $row = $user_nickname->fetch();
                                 $nickname = $row['nickname'];
                                 echo "$nickname";
+                                echo "<form action='editnickname.php' method='get'>
+                                  <input class='btn' type='submit' value='Edit nickname'>
+                                       </form>";
                                 ?>
+
+
 
                                 <h4>Gender:</h4>
                                 <?php
@@ -174,6 +179,10 @@ if (isset($_SESSION['email'])) {
                                 $row = $user_gender->fetch();
                                 $gender = $row['gender'];
                                 echo "$gender";
+                                echo "<form action='editgender.php' method='get'>
+                                  <input class='btn' type='submit' value='Edit gender'>
+                                       </form>";
+
                                 ?>
 
                                 <h4>Registered time:</h4>
@@ -207,10 +216,16 @@ if (isset($_SESSION['email'])) {
                                 $user_des = $pdo->query("select description from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_des->fetch();
                                 $description = $row['description'];
-                                echo "$description<br>";
+                                echo "$description<br><br>";
+                                echo "<form action='editdescription.php' method='get'>
+                                  <input class='btn' type='submit' value='Edit description'>
+                                       </form>";
+
+
                                 ?>
 
-                                <div align="center" position="absoulte"><button class="button" onclick="">Edit profile</button></div>
+
+
 
                             </div>
                         </div>
