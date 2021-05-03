@@ -193,14 +193,14 @@ if (isset($_SESSION['email'])) {
                     </div>
                     <div class="col-md-8 movies-dates">
                         <?php
-                        $review_movie_id = $pdo->query("select movie_id,time_stamp,content,rating from review where user_id = '$id'");
+                        $review_movie_id = $pdo->query("select movie_id,time_stamp,content,rating from review where user_id = '$id' order by time_stamp desc");
                         foreach ($review_movie_id as $row) {
                             $movie_id = $row['movie_id'];
                             $time_stamp = $row['time_stamp'];
                             $review_content = $row['content'];
                             $review_rating = $row['rating'];
                             //$review_time_stamp=substr($time_stamp,0,10);
-                            $result = $pdo->query("select title,poster_path from movie where movie_id = '$movie_id'");
+                            $result = $pdo->query("select title,poster_path from movie where movie_id = '$movie_id' ");
                             $row = $result->fetch();
                             $title = $row['title'];
                             $movie_poster = $row['poster_path'];
