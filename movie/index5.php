@@ -403,11 +403,6 @@ session_start();// store session data
                                 }
                                 }
                                 ?>
-                                <div class=\"date-city\">
-                                    <div class="f-buy-tickets">
-                                        <?php echo $get_rating; ?>
-                                    </div>
-                                </div>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
