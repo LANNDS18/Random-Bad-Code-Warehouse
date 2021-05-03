@@ -1,5 +1,5 @@
 <?php
-session_start();// 存储 session 数据
+session_start();// store session data
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,6 @@ session_start();// 存储 session 数据
                 377行 Guess You Like
     -->
     <?php
-    //echo "<a href='javascript:alert(123);'>点我弹出123</a>";
 
     //database
     $db_hostname = "rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com";
@@ -48,7 +47,7 @@ session_start();// 存储 session 数据
     */
     ?>
 
-    <title>Homeyeap</title>
+    <title>Kiwi_Home</title>
     <meta name="author" content="order by womengda.cn/"/>
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <!-- Custom Theme files -->
@@ -95,7 +94,7 @@ session_start();// 存储 session 数据
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <!---- start-smoth-scrolling---->
+    <!-- start-smoth-scrolling---->
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
     <script type="text/javascript">
@@ -399,8 +398,9 @@ session_start();// 存储 session 数据
                 </div>
                 <div class="clearfix"></div>
                 <div class="featured">
-                    <h4>Highest Score</h4>
+                    <h4>Popular</h4>
                     <ul>
+
                         <li>
                             <div class="f-movie">
                                 <div class="f-movie-img">
@@ -416,81 +416,7 @@ session_start();// 存储 session 数据
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f5.jpg" alt=""/></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f6.jpg" alt=""/></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f1.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f2.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f3.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
+
                         <div class="clearfix"></div>
                     </ul>
                 </div>
