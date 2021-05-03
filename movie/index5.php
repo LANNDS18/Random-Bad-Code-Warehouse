@@ -1,5 +1,5 @@
 <?php
-session_start();// 存储 session 数据
+session_start();// store session data
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,6 @@ session_start();// 存储 session 数据
                 377行 Guess You Like
     -->
     <?php
-    //echo "<a href='javascript:alert(123);'>点我弹出123</a>";
 
     //database
     $db_hostname = "rm-d7oxcn1pw78ncu9952o.mysql.eu-west-1.rds.aliyuncs.com";
@@ -48,7 +47,7 @@ session_start();// 存储 session 数据
     */
     ?>
 
-    <title>Homeyeap</title>
+    <title>Kiwi_Home</title>
     <meta name="author" content="order by womengda.cn/"/>
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <!-- Custom Theme files -->
@@ -95,7 +94,7 @@ session_start();// 存储 session 数据
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <!---- start-smoth-scrolling---->
+    <!-- start-smoth-scrolling---->
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
     <script type="text/javascript">
@@ -118,50 +117,55 @@ session_start();// 存储 session 数据
         <div class="bootstrap_container">
             <nav class="navbar navbar-default py-4 navbar-fixed-top navbar-inverse" role="navigation">
                 <div class="container">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
-                                                      height="17">Kiwi Box</a>
-                        </li>
-                        <li>
-                            <a href="classification.php?year=0">Movie Filter</a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href='personal-information.php'>
-                                <?php
-                                if (isset($_SESSION['email'])) {
+                    <div class="navbar-header">
+                        <button class = "navbar-toggle" data-toggle = "collapse" data-target="#navbar1">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div id="navbar1" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
+                                                          height="17">Kiwi Box</a>
+                            </li>
+                            <li>
+                                <a href="classification.php?year=0">Movie Filter</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href='personal-information.php'>
+                                    <?php
+                                    if (isset($_SESSION['email'])) {
 
-                                    echo $_SESSION['email'];
-                                } else {
-                                    //echo "<li class='active'><a href='../visitor_warning.php'>";
-                                    echo "Vistor";
-                                }
-                                ?>
-                            </a></li>
-                        <!-- onclick="<script type="text/javascript">
-                            alert("log out successfully");
-                        </script> " <li><a href="../index.php" >Logout</a></li>-->
-                        <?php
-                        if (isset($_SESSION['email'])) {
-                            echo "<li><a href='../logout.php'> Logout</a></li>";
-                        } else {
-                            echo "<li><a href='../index.php'> Login</a></li>";
-                        }
-                        //<li><a href="../logout.php"> Logout</button></li>
-                        ?>
-                    </ul>
+                                        echo $_SESSION['email'];
+                                    } else {
+                                        //echo "<li class='active'><a href='../visitor_warning.php'>";
+                                        echo "Vistor";
+                                    }
+                                    ?>
+                                </a></li>
+                            <!-- onclick="<script type="text/javascript">
+                                alert("log out successfully");
+                            </script> " <li><a href="../index.php" >Logout</a></li>-->
+                            <?php
+                            if (isset($_SESSION['email'])) {
+                                echo "<li><a href='../logout.php'> Logout</a></li>";
+                            } else {
+                                echo "<li><a href='../index.php'> Login</a></li>";
+                            }
+                            //<li><a href="../logout.php"> Logout</button></li>
+                            ?>
+                        </ul>
 
-                    <form class="navbar-form navbar-right" method="get" action="movie_search.php">
-                        <div class="input-group-sm">
-                            <input type="text" name="search_content" class="form-control" placeholder="Search">
-                        </div>
-                    </form>
-
-
+                        <form class="navbar-form navbar-right" method="get" action="movie_search.php">
+                            <div class="input-group-sm">
+                                <input type="text" name="search_content" class="form-control" placeholder="Search">
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-
             </nav><!-- end navbar navbar-default w3_megamenu -->
         </div><!-- end container -->
         <!-- AddThis Smart Layers END -->
@@ -237,7 +241,7 @@ session_start();// 存储 session 数据
                         $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
                         $row = $user_id->fetch();
                         $id = $row['user_id'];
-                        $similar_list = $pdo->query("select similar_list 
+                        $similar_list = $pdo->query("select similar_list
                                                                from moviesimilarity as s,review as r
                                                                where user_id = $id and s.movie_id = r.movie_id
                                                                order by time_stamp desc
@@ -369,132 +373,75 @@ session_start();// 存储 session 数据
         <div class="footer-top-grid">
             <div class="list-of-movies col-md-8">
                 <div class="featured">
-                    <h4>High Score</h4>
+                    <h4>Highest Score</h4>
                     <ul>
                         <?php
-
                         //where vote_average >= (select min(vote_average) from (select top 3 distinct vote_average from movie))order by vote_average desc"
                         $sql_get_movie_id = $pdo->query("select movie_id from movie where vote_count >= 50 and release_date >= '2006-01-01' order by vote_average desc limit 9");
                         foreach ($sql_get_movie_id as $row) {
-                            $sql_movie_id = $row['movie_id'];
+                        $sql_movie_id = $row['movie_id'];
 
 
-                            $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
-                            foreach ($poster_path as $row) {
-                                $film_poster = $row['poster_path'];
-                                $film_title = $row['title'];
-                                $film_id = $row['movie_id'];
-                                $film_rating = $row['vote_average'];
-                                $get_rating = number_format($film_rating, 1);
-                                echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
-                                echo "<div class=\"slide-title\"><h4>" . $film_title . ": " . $get_rating . "</h4></div>";
+                        $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
+                        foreach ($poster_path as $row) {
+                        $film_poster = $row['poster_path'];
+                        $film_title = $row['title'];
+                        $film_id = $row['movie_id'];
+                        $film_rating = $row['vote_average'];
+                        $get_rating=number_format($film_rating,1);
+                        echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
+                        //echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
+                        ?>
+                        <div class="f-movie-name">
+                            <a><?php echo $film_title;?></a>
+                            <p><?php echo "Rating: ".$get_rating ?></p>
+                        </div>
+                        <div class="f-buy-tickets">
+                            <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
+                        </div>
+                                <?php
+                                }
+                                }
                                 ?>
                                 <div class=\"date-city\">
                                     <div class="f-buy-tickets">
                                         <?php echo $get_rating; ?>
                                     </div>
                                 </div>
-                                <?php
-                            }
-                        }
-                        ?>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
+
+
                 <div class="featured">
-                    <h4>Highest Score</h4>
+                    <h4>Popular</h4>
                     <ul>
+                      <?php
+                      $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie order by vote_count desc limit 6");
+                      foreach ($sql_get_movie_id as $row) {
+                      $film_poster = $row['poster_path'];
+                      $film_title = $row['title'];
+                      $film_id = $row['movie_id'];
+                      $film_rating = $row['vote_average'];
+                      $get_rating=number_format($film_rating,1);
+                       ?>
                         <li>
                             <div class="f-movie">
                                 <div class="f-movie-img">
-                                    <a><img src="images/f4.jpg" alt=""/></a>
+                                    <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>
+                                      <img src=https://image.tmdb.org/t/p/w500<?php echo $film_poster;?> height=270 width=210></a>
                                 </div>
                                 <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
+                                    <a><?php echo $film_title;?></a>
+                                    <p><?php echo "Rating: ".$get_rating ?></p>
                                 </div>
                                 <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
+                                    <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f5.jpg" alt=""/></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f6.jpg" alt=""/></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f1.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f2.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="f-movie">
-                                <div class="f-movie-img">
-                                    <a><img src="images/f3.jpg" alt=""></a>
-                                </div>
-                                <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
-                                </div>
-                                <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
-                                </div>
-                            </div>
-                        </li>
+                      <?php } ?>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -507,6 +454,7 @@ session_start();// 存储 session 数据
                     ?>
                     <h4>Guess You Like</h4>
                     <?php
+
                     if (!isset($_SESSION['email'])) {
                         echo "<h3><font color=red>you need login to see it</font></h3>";
                     } else {//this is html file, need to be beautified
@@ -561,13 +509,9 @@ session_start();// 存储 session 数据
                                     //echo "___film__     ",$row["title"],"<br>";
                                     //echo "year:",$row["title"],"";
                                     #echo "<p1>$row["time"]</p1>";
-                                    echo "
-	 <ul class=\"mov_list\">
-		<li><i class=\"fa fa-star\"></i></li>
-		<li>", $vote, "</li>
-		<li><a href=\"movie-select-show.php?film_id=$film_id\">", $row["title"], "</a></li>
-	 </ul>
-	 ";
+                                    echo "<ul class=\"mov_list\"><li><i class=\"fa fa-star\"></i></li>
+                                    <li>", $vote, "</li><li><a href=\"movie-select-show.php?film_id=$film_id\">
+                                    ", $row["title"], "</a></li></ul>";
                                 }
                             }
 

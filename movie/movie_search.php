@@ -18,6 +18,8 @@ session_start();// 存储 session 数据
 			overflow: hidden;
 		}
 	</style>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -91,50 +93,55 @@ order by priority desc limit 1000;");
             <div class="bootstrap_container">
                 <nav class="navbar navbar-default py-4 navbar-fixed-top navbar-inverse" role="navigation">
                     <div class="container">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li>
-                                <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
-                                                          height="17">Kiwi Box</a>
-                            </li>
-                            <li>
-                                <a href="classification.php?year=0">Movie Filter</a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href='personal-information.php'>
-                                    <?php
-                                    if (isset($_SESSION['email'])) {
+                        <div class="navbar-header">
+                            <button class = "navbar-toggle" data-toggle = "collapse" data-target="#navbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li>
+                                    <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
+                                                              height="17">Kiwi Box</a>
+                                </li>
+                                <li>
+                                    <a href="classification.php?year=0">Movie Filter</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href='personal-information.php'>
+                                        <?php
+                                        if (isset($_SESSION['email'])) {
 
-                                        echo $_SESSION['email'];
-                                    } else {
-                                        //echo "<li class='active'><a href='../visitor_warning.php'>";
-                                        echo "Vistor";
-                                    }
-                                    ?>
-                                </a></li>
-                            <!-- onclick="<script type="text/javascript">
-                                alert("log out successfully");
-                            </script> " <li><a href="../index.php" >Logout</a></li>-->
-                            <?php
-                            if (isset($_SESSION['email'])) {
-                                echo "<li><a href='../logout.php'> Logout</a></li>";
-                            } else {
-                                echo "<li><a href='../index.php'> Login</a></li>";
-                            }
-                            //<li><a href="../logout.php"> Logout</button></li>
-                            ?>
-                        </ul>
+                                            echo $_SESSION['email'];
+                                        } else {
+                                            //echo "<li class='active'><a href='../visitor_warning.php'>";
+                                            echo "Vistor";
+                                        }
+                                        ?>
+                                    </a></li>
+                                <!-- onclick="<script type="text/javascript">
+                                    alert("log out successfully");
+                                </script> " <li><a href="../index.php" >Logout</a></li>-->
+                                <?php
+                                if (isset($_SESSION['email'])) {
+                                    echo "<li><a href='../logout.php'> Logout</a></li>";
+                                } else {
+                                    echo "<li><a href='../index.php'> Login</a></li>";
+                                }
+                                //<li><a href="../logout.php"> Logout</button></li>
+                                ?>
+                            </ul>
 
-                        <form class="navbar-form navbar-right" method="get" action="movie_search.php">
-                            <div class="input-group-sm">
-                                <input type="text" name="search_content" class="form-control" placeholder="Search">
-                            </div>
-                        </form>
-
-
+                            <form class="navbar-form navbar-right" method="get" action="movie_search.php">
+                                <div class="input-group-sm">
+                                    <input type="text" name="search_content" class="form-control" placeholder="Search">
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-
                 </nav><!-- end navbar navbar-default w3_megamenu -->
             </div><!-- end container -->
 
