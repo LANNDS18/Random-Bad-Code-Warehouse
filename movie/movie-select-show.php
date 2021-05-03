@@ -402,21 +402,25 @@ session_start();// 存储 session 数据
                                         $get_vote_count = $row['vote_count'];
                                         $get_vote_average = $row['vote_average'];
                                         $new_average = (($get_vote_count * $get_vote_average) + $star) / ($get_vote_count + 1);
-                                        echo $new_average . "<br>";
+                                        //echo $new_average . "<br>";
                                         $new_vote_count = $get_vote_count + 1;
-                                        echo $new_vote_count;
+                                        //echo $new_vote_count;
                                         $sql_update1 = "update movie set vote_average=$new_average where movie_id=$getid";
                                         $sucess_update1 = $pdo->exec($sql_update1);
 
                                         $sql_update2 = "update movie set vote_count=$new_vote_count where movie_id=$getid";
                                         $sucess_update2 = $pdo->exec($sql_update2);
-                                    }
-                                    else{
-                                        echo 0;
+                                        echo '<html><head><Script Language="JavaScript">alert("Review successfully! redirecting...");</Script></head></html>'.
+                                         "<meta http-equiv=\"refresh\" content=\"0;url=movie-select-show.php?film_id=$getid\">";
+                                    }else{
+                                      echo '<html><head><Script Language="JavaScript">alert("you have to enter both rate and review, pleae try again");</Script></head></html>'.
+                                       "<meta http-equiv=\"refresh\" content=\"0;url=movie-select-show.php?film_id=$getid\">";
                                     }
                                 }
                             } else {
-                                echo "<H1>Your have reviewed this movie :) Thank U!</H1>";
+                              echo "<br>";
+                              echo "<h4 align='center'>~</h2><br>";
+                                echo "<h1 align='center'>Your have reviewed this movie :) Thank U!</h1>";
                             }
 
 
@@ -424,6 +428,7 @@ session_start();// 存储 session 数据
 
                             <?php
                         } else {
+                            echo "<br>";
                             echo "you have to login to leave a Review!<br>";
                         }
 
