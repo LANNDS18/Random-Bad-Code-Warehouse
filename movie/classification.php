@@ -364,8 +364,6 @@ and vote_average >0 limit 200");#where module='$module'
                 </p>
             </a>
             -->
-
-
         </div>
     </div>
     <script>
