@@ -338,7 +338,7 @@ session_start();// 存储 session 数据
                     </div>-->
 
                     <div>
-                        <h1>Leave your Review?</h1>
+
                         <?php
                         if (isset($_SESSION['email'])) {
                             $user_email = $_SESSION['email'];
@@ -352,8 +352,12 @@ session_start();// 存储 session 数据
                             $row = $result->fetch();
                             if (!$row) {
                                 ?>
-                                <form method="post" action="movie-select-show.php?film_id=<?php echo $getid; ?>">
-                                    <p><H3>Rating</H3></p>
+
+                                <form method="post" action="movie-select-show.php?film_id=<?php echo $getid; ?>"
+
+                                <div class="comment">
+                                    <H1>Leave your Review ?</H1>
+
                                     <div class="rating">
                                         <input type="radio" id="star10" name="rating" value="10" hidden/>
                                         <label for="star10"></label>
@@ -376,23 +380,19 @@ session_start();// 存储 session 数据
                                         <input type="radio" id="star1" name="rating" value="1" hidden/>
                                         <label for="star1"></label>
                                     </div>
-                                    <select name="star">
-                                        <?php
-                                        for ($i = 0; $i < 11; $i++) {
-                                            echo "<option value=" . $i . ">" . $i . "</option>";
-                                            // code...
-                                        } ?>
-                                    </select><br>
-                                    -- Comment --: <input type="text" name="comment"><br>
-                                    <input type="submit">
+                                </div>
+                                <textarea name="review" style="resize:none;width:600px;height:300px;"placeholder="Text the review here!"></textarea>
+                                <input class="btn" type="submit" value="submit">
+
                                 </form>
+
 
                                 <?php
 
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    $star = $_POST["star"];
-                                    $comment = $_POST["comment"];
-                                    if (isset($star) && isset($comment)) {
+                                    if (isset($_POST["rating"]) && isset($_POST["review"]) && strlen($_POST["review"]) > 0) {
+                                        $star = $_POST["rating"];
+                                        $comment = $_POST["review"];
                                         $sql_insert = "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
                                         $sucess_insert = $pdo->exec($sql_insert);
 
@@ -410,12 +410,13 @@ session_start();// 存储 session 数据
 
                                         $sql_update2 = "update movie set vote_count=$new_vote_count where movie_id=$getid";
                                         $sucess_update2 = $pdo->exec($sql_update2);
-
+                                    }
+                                    else{
+                                        echo 0;
                                     }
                                 }
                             } else {
-                                echo "Rate: " . $row['rating'] . "<br>";
-                                echo "Comment: " . $row['content'] . "<br>";
+                                echo "<H1>Your have reviewed this movie :) Thank U!</H1>";
                             }
 
 
