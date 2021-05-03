@@ -364,7 +364,7 @@ session_start();// store session data
         <div class="footer-top-grid">
             <div class="list-of-movies col-md-8">
                 <div class="featured">
-                    <h4>High Score</h4>
+                    <h4>Highest Score</h4>
                     <ul>
                         <?php
 
@@ -382,12 +382,14 @@ session_start();// store session data
                         $film_rating = $row['vote_average'];
                         $get_rating=number_format($film_rating,1);
                         echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
-                        echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
+                        //echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
                         ?>
-                        <div class=\"date-city\">
-                            <div class="f-buy-tickets">
-                                <?php echo $get_rating;?>
-                              </div>
+                        <div class="f-movie-name">
+                            <a><?php echo $film_title;?></a>
+                            <p><?php echo "Rating: ".$get_rating ?></p>
+                        </div>
+                        <div class="f-buy-tickets">
+                            <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
                         </div>
                                 <?php
                                 }
@@ -397,26 +399,36 @@ session_start();// store session data
                     </ul>
                 </div>
                 <div class="clearfix"></div>
+
+
                 <div class="featured">
                     <h4>Popular</h4>
                     <ul>
-
+                      <?php
+                      $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie order by vote_count desc limit 6");
+                      foreach ($sql_get_movie_id as $row) {
+                      $film_poster = $row['poster_path'];
+                      $film_title = $row['title'];
+                      $film_id = $row['movie_id'];
+                      $film_rating = $row['vote_average'];
+                      $get_rating=number_format($film_rating,1);
+                       ?>
                         <li>
                             <div class="f-movie">
                                 <div class="f-movie-img">
-                                    <a><img src="images/f4.jpg" alt=""/></a>
+                                    <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>
+                                      <img src=https://image.tmdb.org/t/p/w500<?php echo $film_poster;?> height=270 width=210></a>
                                 </div>
                                 <div class="f-movie-name">
-                                    <a>The movie is directed by xxx</a>
-                                    <p>Tom:this movie is great</p>
-                                    <p>Bob:that is so excellent</p>
+                                    <a><?php echo $film_title;?></a>
+                                    <p><?php echo "Rating: ".$get_rating ?></p>
                                 </div>
                                 <div class="f-buy-tickets">
-                                    <a href="movie-select-show.html">DETAIL</a>
+                                    <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
                                 </div>
                             </div>
                         </li>
-
+                      <?php } ?>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -429,6 +441,7 @@ session_start();// store session data
                     ?>
                     <h4>Guess You Like</h4>
                     <?php
+
                     if (!isset($_SESSION['email'])) {
                         echo "<h3><font color=red>you need login to see it</font></h3>";
                     } else {//this is html file, need to be beautified
@@ -483,13 +496,9 @@ session_start();// store session data
                                     //echo "___film__     ",$row["title"],"<br>";
                                     //echo "year:",$row["title"],"";
                                     #echo "<p1>$row["time"]</p1>";
-                                    echo "
-	 <ul class=\"mov_list\">
-		<li><i class=\"fa fa-star\"></i></li>
-		<li>", $vote, "</li>
-		<li><a href=\"movie-select-show.php?film_id=$film_id\">", $row["title"], "</a></li>
-	 </ul>
-	 ";
+                                    echo "<ul class=\"mov_list\"><li><i class=\"fa fa-star\"></i></li>
+                                    <li>", $vote, "</li><li><a href=\"movie-select-show.php?film_id=$film_id\">
+                                    ", $row["title"], "</a></li></ul>";
                                 }
                             }
 
