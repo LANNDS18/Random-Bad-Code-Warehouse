@@ -237,7 +237,11 @@ session_start();// 存储 session 数据
                         $user_id = $pdo->query("select user_id from user where email = '$Session_email'");
                         $row = $user_id->fetch();
                         $id = $row['user_id'];
-                        $similar_list = $pdo->query("select similar_list from moviesimilarity where movie_id in (select movie_id from review where rating > 6 and user_id = $id order by time_stamp, rating)limit 3");
+                        $similar_list = $pdo->query("select similar_list 
+                                                               from moviesimilarity as s,review as r
+                                                               where user_id = $id and s.movie_id = r.movie_id
+                                                               order by time_stamp desc
+                                                               limit 3;");
 
                         foreach ($similar_list as $row) {
                             $similar_row = $row['similar_list'];
@@ -372,29 +376,29 @@ session_start();// 存储 session 数据
                         //where vote_average >= (select min(vote_average) from (select top 3 distinct vote_average from movie))order by vote_average desc"
                         $sql_get_movie_id = $pdo->query("select movie_id from movie where vote_count >= 50 and release_date >= '2006-01-01' order by vote_average desc limit 9");
                         foreach ($sql_get_movie_id as $row) {
-                        $sql_movie_id = $row['movie_id'];
+                            $sql_movie_id = $row['movie_id'];
 
 
-                        $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
-                        foreach ($poster_path as $row) {
-                        $film_poster = $row['poster_path'];
-                        $film_title = $row['title'];
-                        $film_id = $row['movie_id'];
-                        $film_rating = $row['vote_average'];
-                        $get_rating=number_format($film_rating,1);
-                        echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
-                        echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
-                        ?>
-                        <div class=\"date-city\">
-                            <div class="f-buy-tickets">
-                                <?php echo $get_rating;?>
-                              </div>
-                        </div>
-                                <?php
-                                }
-                                }
+                            $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
+                            foreach ($poster_path as $row) {
+                                $film_poster = $row['poster_path'];
+                                $film_title = $row['title'];
+                                $film_id = $row['movie_id'];
+                                $film_rating = $row['vote_average'];
+                                $get_rating = number_format($film_rating, 1);
+                                echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
+                                echo "<div class=\"slide-title\"><h4>" . $film_title . ": " . $get_rating . "</h4></div>";
                                 ?>
-                                <div class="clearfix"></div>
+                                <div class=\"date-city\">
+                                    <div class="f-buy-tickets">
+                                        <?php echo $get_rating; ?>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+                        <div class="clearfix"></div>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -552,8 +556,8 @@ session_start();// 存储 session 数据
 
                                 $film_name = $pdo->query("select title,vote_average from movie where movie_id=$film_id limit 1");
                                 foreach ($film_name as $row) {//
-                                  $get_vote_average=$row["vote_average"];
-                                  $vote=number_format($get_vote_average,1);
+                                    $get_vote_average = $row["vote_average"];
+                                    $vote = number_format($get_vote_average, 1);
                                     //echo "___film__     ",$row["title"],"<br>";
                                     //echo "year:",$row["title"],"";
                                     #echo "<p1>$row["time"]</p1>";
