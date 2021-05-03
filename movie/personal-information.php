@@ -207,9 +207,10 @@ if (isset($_SESSION['email'])) {
                                 $user_des = $pdo->query("select description from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_des->fetch();
                                 $description = $row['description'];
-                                echo "$description";
+                                echo "$description<br>";
                                 ?>
 
+                                <div align="center" position="absoulte"><button class="button" onclick="">Edit profile</button></div>
 
                             </div>
                         </div>
