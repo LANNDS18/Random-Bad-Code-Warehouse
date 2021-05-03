@@ -150,19 +150,25 @@ if (isset($_SESSION['email'])) {
                         </div>
                         <div class="movie-ticket-book">
                             <div class="clearfix"></div>
-                            <img src="images/img-01.png" , alt=""/>
+                            <?php
+                            $Session_email = $_SESSION['email'];
+                            $user_profile = $pdo->query("select profile_path from user where email = '$Session_email'");#where module='$module'
+                            $row = $user_profile->fetch();
+                            $profile = $row['profile_path'];
+                            echo "<img src='../img/user_profile/$profile' alt=''>";
+                            ?>
+
                             <div class="bahubali-details">
 
-                                <h4>nickname:</h4>
+                                <h4>Nickname:</h4>
                                 <?php
-                                $Session_email = $_SESSION['email'];
                                 $user_nickname = $pdo->query("select nickname from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_nickname->fetch();
                                 $nickname = $row['nickname'];
                                 echo "$nickname";
                                 ?>
 
-                                <h4>gender:</h4>
+                                <h4>Gender:</h4>
                                 <?php
                                 $user_gender = $pdo->query("select gender from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_gender->fetch();
@@ -170,7 +176,7 @@ if (isset($_SESSION['email'])) {
                                 echo "$gender";
                                 ?>
 
-                                <h4>registered time:</h4>
+                                <h4>Registered time:</h4>
                                 <?php
                                 $user_registered_time = $pdo->query("select time_stamp from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_registered_time->fetch();
@@ -180,13 +186,30 @@ if (isset($_SESSION['email'])) {
                                 echo "$date days";
                                 ?>
 
-                                <h4>user id:</h4>
+                                <h4>User id:</h4>
                                 <?php
                                 $user_id = $pdo->query("select user_id from user where email = '$Session_email'");#where module='$module'
                                 $row = $user_id->fetch();
                                 $id = $row['user_id'];
                                 echo "$id";
                                 ?>
+
+                                <h4>Review counter:</h4>
+                                <?php
+                                $review_id = $pdo->query("select count(movie_id) from review where user_id = '$id'");#where module='$module'
+                                $row = $review_id->fetch();
+                                $review_id = $row['count(movie_id)'];
+                                echo "$review_id";
+                                ?>
+
+                                <h4>Description:</h4>
+                                <?php
+                                $user_des = $pdo->query("select description from user where email = '$Session_email'");#where module='$module'
+                                $row = $user_des->fetch();
+                                $description = $row['description'];
+                                echo "$description";
+                                ?>
+
 
                             </div>
                         </div>
