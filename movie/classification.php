@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-session_start();// 存储 session 数据
+session_start();// store session data
 ?>
 
 <head>
@@ -42,8 +42,10 @@ session_start();// 存储 session 数据
     , 'Western', 'Thriller', 'Crime', 'Documentary'
     , 'Science_Fiction', 'Mystery', 'Music', 'Romance'
     , 'Family', 'War', 'TV Movie');
-    $region_array = array(0 => '', 1 => 'China', 2 => 'UK', 3 => 'USA', 4 => 'Japan',
-        5 => 'Italy', 6 => 'France', 7 => 'Germany', 8 => 'Spain', 9 => 'India', 10 => 'Thailand');
+    $region_array = array(0 => '', 1 => 'China', 2 => 'UK', 3 => 'United States of America', 4 => 'Japan',
+        5 => 'Italy', 6 => 'France', 7 => 'Germany', 8 => 'Spain', 9 => 'India', 10 => 'Thailand',11 => 'Poland',
+      12 => 'Austria', 13 => 'New Zealand', 14 => 'Mexico', 15 => 'Denmark', 16 => 'Canada', 17 => 'Sweden'
+    , 18 => 'Portugal');
 
     $year_array1 = array('1900-01-01', '2020-01-01', '2010-01-01', '2000-01-01', '1990-01-01',
         '1980-01-01', '1970-01-01', '1960-01-01', '1950-01-01', '1800-01-01');
@@ -270,6 +272,17 @@ session_start();// 存储 session 数据
                 <li><span><a href="javascript:goSort('region',8);">Spain</a></span></li>
                 <li><span><a href="javascript:goSort('region',9);">India</a></span></li>
                 <li><span><a href="javascript:goSort('region',10);">Thailand</a></span></li>
+                <li><span><a href="javascript:goSort('region',11);">Poland</a></span></li>
+                <li><span><a href="javascript:goSort('region',12);">Austria</a></span></li>
+                <li><span><a href="javascript:goSort('region',13);">New Zealand</a></span></li>
+                <li><span><a href="javascript:goSort('region',14);">Mexico</a></span></li>
+                <li><span><a href="javascript:goSort('region',15);">Denmark</a></span></li>
+                <li><span><a href="javascript:goSort('region',16);">Canada</a></span></li>
+                <li><span><a href="javascript:goSort('region',17);">Sweden</a></span></li>
+                <li><span><a href="javascript:goSort('region',18);">Portugal</a></span></li>
+
+
+
             </ul>
             <ul class="category">
                 <li><span class="tag"><a href="javascript:goSort('year',0)">All years</span></li>
@@ -312,7 +325,7 @@ and moviegenre.genre_id = genre.genre_id
 and release_date > '$year1' and release_date < '$year2'
 and genre_name like '%$genre%'
 and country like '%$region%'
-and vote_average >0 limit 50");#where module='$module'
+and vote_average >0 limit 200");#where module='$module'
             foreach ($filter_film as $row) {
                 //$film_poster=$row['poster_path'];
                 //$film_title=$row['title'];
