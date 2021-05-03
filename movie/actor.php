@@ -213,10 +213,12 @@
                                     $title = $row['title'];
                                     echo "<i class='fa fa-star'></i>";
                                     echo "<a href='movie-select-show.php?film_id=$movie_id'>$title</a><br>";
+
                                     $row = $movie_vote_average->fetch();
                                     $vote_average = $row['vote_average'];
                                     echo "Rating: ";
-                                    echo "$vote_average<br>";
+                                    $average=number_format($vote_average,1);
+                                    echo "$average<br>";
                                     $row = $movie_release_date->fetch();
                                     $release_date = $row['release_date'];
                                     $release_date = date('Y-m-d', strtotime($release_date));
