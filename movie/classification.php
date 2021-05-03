@@ -338,7 +338,7 @@ and vote_average >0 limit 50");#where module='$module'
 
             <!--
            this is a static example
-            -->
+
             <a target="_blank" href="#" class="item">
                 <div class="cover-wp">
 						<span class="pic">
@@ -350,6 +350,7 @@ and vote_average >0 limit 50");#where module='$module'
                     <span class="rate">8.6</span>
                 </p>
             </a>
+            -->
 
 
         </div>

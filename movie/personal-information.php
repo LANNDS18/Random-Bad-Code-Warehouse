@@ -150,7 +150,7 @@ if (isset($_SESSION['email'])) {
                         </div>
                         <div class="movie-ticket-book">
                             <div class="clearfix"></div>
-                            <img src="images/person.jpg" , alt=""/>
+                            <img src="images/img-01.png" , alt=""/>
                             <div class="bahubali-details">
 
                                 <h4>nickname:</h4>
