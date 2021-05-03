@@ -203,7 +203,13 @@ session_start();// 存储 session 数据
                             $sql_get_actor_name = "select distinct name from actor where actor_id=$get_one_actor_id and name is not NULL";
                             $result = $pdo->query($sql_get_actor_name);
                             $line = $result->fetch();
-                            $get_film_actor_name = $line['name'];
+                            if (isset($line['name'])){
+                                $get_film_actor_name = $line['name'];
+                            }
+                            else{
+                                $get_film_actor_name = '';
+                            }
+
                             //echo "<a href='actor.php'>$get_film_actor_name </a>";
                             //echo "<form method='get' name='form1' action='actor.php'>
                             //<input type='hidden' name='actor_id' value='$get_one_actor_id'>
@@ -234,9 +240,10 @@ session_start();// 存储 session 数据
                     echo "<pstyle='line-height:5'>$get_film_overview</p></div></div><br>";
 
                     //database review
-                    $sql_get_review = "select user_id,content,time_stamp from review where movie_id='$getid' order by time_stamp desc";
+                    $sql_get_review = "select user_id,content,time_stamp,rating from review where movie_id='$getid'";
                     $review_result = $pdo->query($sql_get_review);
                     foreach ($review_result as $row) {
+                        $get_user_rating = $row['rating'];
                         $get_user_id_review = $row['user_id'];
                         $get_time_review = $row['time_stamp'];
                         $get_content_review = $row['content'];
@@ -256,6 +263,7 @@ session_start();// 存储 session 数据
 															</div>
 															<div class='client-message'>
 																<p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+																<h4>RATING: $get_user_rating</h4>
 																<h6 overflow: hidden;>
 																<details>
 																<summary>click to see</summary>
@@ -274,6 +282,7 @@ session_start();// 存储 session 数据
 															 </div>
 															 <div class='client-message'>
 																 <p><a href=''>$user_name</a><i class='fa fa-calendar'></i>$get_time_review</p>
+																 <h4>RATING: $get_user_rating</h4>
 																 <h6 overflow: hidden;>$get_content_review</h6>
 															 </div>
 															 <div class='clearfix'></div>
