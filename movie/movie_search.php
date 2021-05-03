@@ -18,6 +18,8 @@ session_start();// 存储 session 数据
 			overflow: hidden;
 		}
 	</style>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -92,13 +94,13 @@ order by priority desc limit 1000;");
                 <nav class="navbar navbar-default py-4 navbar-fixed-top navbar-inverse" role="navigation">
                     <div class="container">
                         <div class="navbar-header">
-                            <button class = "navbar-toggle" data-toggle = "collapse" data-target="#navbar1">
+                            <button class = "navbar-toggle" data-toggle = "collapse" data-target="#navbar">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
                         </div>
-                        <div id="navbar1" class="navbar-collapse collapse">
+                        <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-left">
                                 <li>
                                     <a href='index5.php'><img alt="Brand" src="images/logo.png" alt="IMG" width="22"
