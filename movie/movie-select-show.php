@@ -240,7 +240,7 @@ session_start();// 存储 session 数据
                     echo "<pstyle='line-height:5'>$get_film_overview</p></div></div><br>";
 
                     //database review
-                    $sql_get_review = "select user_id,content,time_stamp,rating from review where movie_id='$getid'";
+                    $sql_get_review = "select user_id,content,time_stamp,rating from review where movie_id='$getid' order by time_stamp desc ";
                     $review_result = $pdo->query($sql_get_review);
                     foreach ($review_result as $row) {
                         $get_user_rating = $row['rating'];
