@@ -251,7 +251,8 @@ session_start();// 存储 session 数据
                         $get_user_rating = $row['rating'];
                         $get_user_id_review = $row['user_id'];
                         $get_time_review = $row['time_stamp'];
-                        $get_content_review = $row['content'];
+                        $get_content_review_temp = $row['content'];
+                        $get_content_review=stripslashes($get_content_review_temp);
                         $sql_get_user_name = "select nickname,profile_path from user where user_id=$get_user_id_review";
                         $result = $pdo->query($sql_get_user_name);
                         $row = $result->fetch();
@@ -411,7 +412,8 @@ session_start();// 存储 session 数据
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     if (isset($_POST["rating"]) && isset($_POST["review"]) && strlen($_POST["review"]) > 0) {
                                         $star = $_POST["rating"];
-                                        $comment = $_POST["review"];
+                                        $comment_temp = $_POST["review"];
+                                        $comment=addslashes($comment_temp);
                                         $sql_insert = "insert into review(movie_id,user_id,content,rating) values('$getid','$get_user_id','$comment','$star')";
                                         $sucess_insert = $pdo->exec($sql_insert);
 

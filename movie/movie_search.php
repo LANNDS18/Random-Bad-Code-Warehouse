@@ -39,7 +39,8 @@ session_start();// 存储 session 数据
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 			PDO::ATTR_EMULATE_PREPARES => false);
 			try {
-				$get_serach=$_GET['search_content'];
+				$get_serach_temp=$_GET['search_content'];
+				$get_serach=addslashes($get_serach_temp);
 				$pdo = new PDO($dsn,$db_username,$db_password,$opt);
 				$search_film = $pdo->query("Select *,case
 when REPLACE(title, ' ', '') LIKE REPLACE('$get_serach', ' ', '') then 5
@@ -164,7 +165,7 @@ order by priority desc limit 1000;");
 this is a static example
  -->
  <?php
- echo "<h1>Search content: \"".$get_serach."\"</h1>";
+ echo "<h1>Search content: \"".$get_serach_temp."\"</h1>";
  foreach($search_film as $row) {
   $get_vote_average=$row['vote_average'];
   $get_title=$row['title'];
