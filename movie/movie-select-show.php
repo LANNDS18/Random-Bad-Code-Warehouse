@@ -39,15 +39,19 @@ session_start();// 存储 session 数据
     $sql_get_director_id = "select actor_id from cast where movie_id=$getid and identity='Produce: Director'";
     $result = $pdo->query($sql_get_director_id);
     $row = $result->fetch();
-    $get_film_director_id = $row['actor_id'];
+    if (isset($row['actor_id'])){
+        $get_film_director_id = $row['actor_id'];
+        $sql_get_director = "select name from actor where actor_id=$get_film_director_id";
+        $result = $pdo->query($sql_get_director);
+        $row = $result->fetch();
+        $director_name = $row['name'];
+        $sql_get_actor_id = "select distinct actor_id from cast where movie_id=$getid and identity like 'Act: %' limit 8";
+        $get_film_actor_id = $pdo->query($sql_get_actor_id);
+    }
 
-    $sql_get_director = "select name from actor where actor_id=$get_film_director_id";
-    $result = $pdo->query($sql_get_director);
-    $row = $result->fetch();
-    $director_name = $row['name'];
 
-    $sql_get_actor_id = "select distinct actor_id from cast where movie_id=$getid and identity like 'Act: %' limit 8";
-    $get_film_actor_id = $pdo->query($sql_get_actor_id);
+
+
     //$row = $result ->fetch();
     //$get_film_actor_id=$row['actor_id'];
 
@@ -193,33 +197,34 @@ session_start();// 存储 session 数据
                         <h4>Score(based on <?php echo $get_vote_count ?> votes):</h4>
                         <p><?php echo number_format($get_vote_average, 1) ?></p>
                         <h4>Director:</h4>
-                        <p><?php echo $director_name; ?></p>
+                        <p><?php if (isset($director_name)) echo $director_name; ?></p>
                         <h4>Actor:</h4>
 
                         <?php
-                        //$film_name = $pdo->query("select title,vote_average from movie limit 15");
-                        foreach ($get_film_actor_id as $row) {
-                            $get_one_actor_id = $row['actor_id'];
-                            $sql_get_actor_name = "select distinct name from actor where actor_id=$get_one_actor_id and name is not NULL";
-                            $result = $pdo->query($sql_get_actor_name);
-                            $line = $result->fetch();
-                            if (isset($line['name'])){
-                                $get_film_actor_name = $line['name'];
+                        if (isset($get_film_actor_id)){
+                            foreach ($get_film_actor_id as $row) {
+                                $get_one_actor_id = $row['actor_id'];
+                                $sql_get_actor_name = "select distinct name from actor where actor_id=$get_one_actor_id and name is not NULL";
+                                $result = $pdo->query($sql_get_actor_name);
+                                $line = $result->fetch();
+                                if (isset($line['name'])){
+                                    $get_film_actor_name = $line['name'];
+                                }
+                                else{
+                                    $get_film_actor_name = '';
+                                }
+
+                                //echo "<a href='actor.php'>$get_film_actor_name </a>";
+                                //echo "<form method='get' name='form1' action='actor.php'>
+                                //<input type='hidden' name='actor_id' value='$get_one_actor_id'>
+
+                                //<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
+                                //echo "</form>";
+                                echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
+
                             }
-                            else{
-                                $get_film_actor_name = '';
-                            }
-
-                            //echo "<a href='actor.php'>$get_film_actor_name </a>";
-                            //echo "<form method='get' name='form1' action='actor.php'>
-                            //<input type='hidden' name='actor_id' value='$get_one_actor_id'>
-
-                            //<a href='javascript:form1.submit();'>",$get_film_actor_name,"</a>";
-                            //echo "</form>";
-                            echo "<a href='actor.php?act_id=$get_one_actor_id'>$get_film_actor_name</a><br>";
-
                         }
-
+                        //$film_name = $pdo->query("select title,vote_average from movie limit 15");
                         ?>
 
 
