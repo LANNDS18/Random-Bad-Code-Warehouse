@@ -118,7 +118,7 @@ if (isset($_SESSION['email'])) {
                                                 echo $_SESSION['email'];
                                             } else {
                                                 //echo "<li class='active'><a href='../visitor_warning.php'>";
-                                                echo "Vistor";
+                                                echo "Visitor";
                                             }
                                             ?>
                                         </a></li>

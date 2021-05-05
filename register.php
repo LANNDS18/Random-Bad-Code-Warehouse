@@ -55,8 +55,7 @@ function checkpwd($password,$password2){
 	    "<meta http-equiv=\"refresh\" content=\"0;url=register.php\">";
 		}
 	}else {
-		echo '<html><head><Script Language="JavaScript">alert("
-		The password should contain at least one number and one character and should be 6-20 in length,pls try again");</Script></head></html>'.
+		echo '<html><head><Script Language="JavaScript">alert("The password should contain at least one number and one character and should be 6-20 in length,pls try again");</Script></head></html>'.
 		"<meta http-equiv=\"refresh\" content=\"0;url=register.php\">";
 	}
 
@@ -74,7 +73,7 @@ function checkEmail($email){
 }
 //方法：将数据插入数据库中
 function insert($name,$email,$password){//$verify_code
-  $sql="insert into user(email,password) VALUES ('$name','$email',$password')";
+  $sql="insert into user(name,email,password) VALUES ('$name','$email','$password')";
 	$sucess_update=$pdo->exec($sql);
   //$result=$conn->sql($sql);
   if($sucess_update){
@@ -176,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 				<div class="container-login100-form-btn">
 					<button type="submit" class="login100-form-btn" >
-						Regist
+						Register
 					</button>
 				</div>
 
