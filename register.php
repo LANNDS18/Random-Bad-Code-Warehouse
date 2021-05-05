@@ -36,7 +36,7 @@ $opt = array(
 
 function checkEmpty($email,$password,$password2){
 	if($email==null||$password==null||$password2==null){
-		echo '<html><head><Script Language="JavaScript">alert("You have enter all info to regist");</Script></head></html>'.
+		echo '<html><head><Script Language="JavaScript">alert("You have enter all info to register");</Script></head></html>'.
 		 "<meta http-equiv=\"refresh\" content=\"0;url=register.php\">";//redirect to register.html
 	}
 	else{
@@ -67,7 +67,7 @@ function checkEmail($email){
     return true;
   }else{
     echo '<html><head>
-		<Script Language="JavaScript">alert("wrong email adress,pls try again");</Script
+		<Script Language="JavaScript">alert("wrong email address,pls try again");</Script
 		></head></html>'.
     "<meta http-equiv=\"refresh\" content=\"0;url=register.php\">";
   }

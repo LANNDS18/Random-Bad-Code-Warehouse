@@ -37,7 +37,7 @@ $opt = array(
 
 function checkEmpty($email,$password){
 	if($email==null||$password==null){
-		echo '<html><head><Script Language="JavaScript">alert("you have enter all info to regist:(");</Script></head></html>'.
+		echo '<html><head><Script Language="JavaScript">alert("you have to enter all info to Login:(");</Script></head></html>'.
 		 "<meta http-equiv=\"refresh\" content=\"0;url=index.php\">";//redirect
 	}
 	else{
@@ -50,7 +50,7 @@ function checkEmail($email){
   if(preg_match($preg, $email)){
     return true;
   }else{
-    echo '<html><head><Script Language="JavaScript">alert("wrong email adress");
+    echo '<html><head><Script Language="JavaScript">alert("wrong email address");
     </Script></head></html>'.
     "<meta http-equiv=\"refresh\" content=\"0;url=index.php\">";
   }
@@ -70,7 +70,7 @@ if (checkEmpty($email,$password)) {
 		echo "password: ",$password,".<br>";
 		if(!$row){
 			echo '<html><head><Script Language="JavaScript">
-			alert("wrong or email or password, please try agai");
+			alert("wrong or email or password, please try again");
 			</Script></head></html>'."<meta http-equiv=\"refresh\" content=\"0;url=index.php\">";
 		 }else{
 			 	//$_SESSION['name']=$name;
@@ -120,33 +120,35 @@ if (checkEmpty($email,$password)) {
 				<div class="container-login100-form-btn">
 					<button type="submit" class="login100-form-btn" >
 						<a>Login</a>
-
 					</button>
 
 				</div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" formaction=movie/index5.php>
+                        <a href="movie/index5.php">
+                            visitor
+                        </a>
+                    </button>
+                </div>
+                <div class="text-center p-t-12">
+                    <a class="txt2" href="index2.php">
+                        Forget Password？
+                    </a>
+                </div>
 
-				<div class="container-login100-form-btn">
-					<button class="login100-form-btn">
-						<a href="movie/index5.php">
-							visitor
-						</a>
-					</button>
-				</div>
+                <div class="text-center p-t-136">
+                    <a class="txt2" href="register.php">
+                        "No Account？Lets Register"
+                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                    </a>
+                </div>
+        </div>
 
-				<div class="text-center p-t-12">
-					<a class="txt2" href="index2.php">
-						Forget Password？
-					</a>
-				</div>
 
-				<div class="text-center p-t-136">
-					<a class="txt2" href="register.php">
-							 "No Account？Lets Regist"
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-					</a>
-				</div>
 </form>
-		</div>
+
+
+
 	</div>
 </div>
 
