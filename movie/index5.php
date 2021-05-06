@@ -378,6 +378,7 @@ session_start();// store session data
                         <?php
                         $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie
                                                                   where vote_count >= 50 and release_date >= '2006-01-01' 
+                                                                  and length(title) < 20
                                                                   and poster_path is not null
                                                                   order by vote_average desc limit 9");
                         foreach ($sql_get_movie_id as $row) {
@@ -413,7 +414,8 @@ session_start();// store session data
                     <h4>Popular</h4>
                     <ul>
                       <?php
-                      $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie order by vote_count desc limit 6");
+                      $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie
+                                                    where length(title) < 25 order by vote_count desc limit 6");
                       foreach ($sql_get_movie_id as $row) {
                       $film_poster = $row['poster_path'];
                       $film_title = $row['title'];
