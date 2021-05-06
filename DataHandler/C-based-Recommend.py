@@ -9,7 +9,6 @@ import pickle
 import numpy as np
 
 
-
 def process_data():
     df2 = pd.read_json('kiwi_box_5000.json')
     # read data
@@ -39,9 +38,6 @@ def process_data():
     pickle.dump(matrix, similar_matrix)
     pickle.dump(indices, reserve_map)
     pickle.dump(id_list, id_l)
-
-
-
 
 
 # Function that takes in movie title as input and outputs most similar movies
