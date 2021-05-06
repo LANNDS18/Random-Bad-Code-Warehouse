@@ -376,33 +376,33 @@ session_start();// store session data
                     <h4>Highest Score</h4>
                     <ul>
                         <?php
-                        //where vote_average >= (select min(vote_average) from (select top 3 distinct vote_average from movie))order by vote_average desc"
-                        $sql_get_movie_id = $pdo->query("select movie_id from movie where vote_count >= 50 and release_date >= '2006-01-01' order by vote_average desc limit 9");
+                        $sql_get_movie_id = $pdo->query("select poster_path,movie_id,title,vote_average from movie
+                                                                  where vote_count >= 50 and release_date >= '2006-01-01' 
+                                                                  and poster_path is not null
+                                                                  order by vote_average desc limit 9");
                         foreach ($sql_get_movie_id as $row) {
-                        $sql_movie_id = $row['movie_id'];
-
-
-                        $poster_path = $pdo->query("select poster_path,movie_id,title,vote_average from movie where movie_id =$sql_movie_id and poster_path is not null");
-                        foreach ($poster_path as $row) {
-                        $film_poster = $row['poster_path'];
-                        $film_title = $row['title'];
-                        $film_id = $row['movie_id'];
-                        $film_rating = $row['vote_average'];
-                        $get_rating=number_format($film_rating,1);
-                        echo "<li><a href='movie-select-show.php?film_id=$film_id'><img src=https://image.tmdb.org/t/p/w500", $film_poster, " height=270 width=210></a>";
-                        //echo "<div class=\"slide-title\"><h4>".$film_title.": ".$get_rating."</h4></div>";
-                        ?>
-                        <div class="f-movie-name">
-                            <a><?php echo $film_title;?></a>
-                            <p><?php echo "Rating: ".$get_rating ?></p>
-                        </div>
-                        <div class="f-buy-tickets">
-                            <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
-                        </div>
-                                <?php
-                                }
-                                }
-                                ?>
+                            $film_poster = $row['poster_path'];
+                            $film_title = $row['title'];
+                            $film_id = $row['movie_id'];
+                            $film_rating = $row['vote_average'];
+                            $get_rating=number_format($film_rating,1);
+                            ?>
+                            <li>
+                                <div class="f-movie">
+                                    <div class="f-movie-img">
+                                        <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>
+                                            <img src=https://image.tmdb.org/t/p/w500<?php echo $film_poster;?> height=270 width=210></a>
+                                    </div>
+                                    <div class="f-movie-name">
+                                        <a><?php echo $film_title;?></a>
+                                        <p><?php echo "Rating: ".$get_rating ?></p>
+                                    </div>
+                                    <div class="f-buy-tickets">
+                                        <a href='movie-select-show.php?film_id=<?php echo $film_id;?>'>DETAIL</a>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php } ?>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
