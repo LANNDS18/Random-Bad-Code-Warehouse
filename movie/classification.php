@@ -337,7 +337,7 @@ and moviegenre.genre_id = genre.genre_id
 and release_date > '$year1' and release_date < '$year2'
 and genre_name like '%$genre%'
 and country like '%$region%'
-and vote_average >0 limit 200");#where module='$module'
+and vote_average >0 limit 700");#where module='$module'
             foreach ($filter_film as $row) {
                 //$film_poster=$row['poster_path'];
                 //$film_title=$row['title'];
