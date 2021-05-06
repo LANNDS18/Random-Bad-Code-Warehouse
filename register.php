@@ -71,9 +71,10 @@ function checkEmail($email){
     "<meta http-equiv=\"refresh\" content=\"0;url=register.php\">";
   }
 }
+/*
 //方法：将数据插入数据库中
 function insert($name,$email,$password){//$verify_code
-  $sql="insert into user(name,email,password) VALUES ('$name','$email','$password')";
+  $sql="insert into user(nickname,email,password) VALUES ('$name','$email','$password')";
 	$sucess_update=$pdo->exec($sql);
   //$result=$conn->sql($sql);
   if($sucess_update){
@@ -86,6 +87,7 @@ function insert($name,$email,$password){//$verify_code
   }
   //$conn->close();
 }
+*/
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$name=$_POST['name'];
