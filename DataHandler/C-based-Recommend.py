@@ -11,8 +11,7 @@ import numpy as np
 
 
 def process_data():
-    df2 = pd.read_csv('tmdb_5000_movies.csv')
-    # df2 = pd.read_csv('content-based.csv',names=['id','title','genres','overview'])
+    df2 = pd.read_json('kiwi_box_5000.json')
     # read data
     # Define a TF-IDF Vectorizer Object. Remove all english stop words such as 'the', 'a'
     tfidf = TfidfVectorizer(stop_words='english')
@@ -28,11 +27,11 @@ def process_data():
     # Compute the cosine similarity matrix
     cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
     # Construct a reverse map of indices and movie titles
-    indices = pd.Series(df2.index, index=df2['id']).drop_duplicates()
+    indices = pd.Series(df2.index, index=df2['movie_id']).drop_duplicates()
     cos = np.array(cosine_sim)
     matrix = cos.argsort()[:, ::-1]
     matrix = matrix[:, 1:21]
-    id_list = df2['id']
+    id_list = df2['movie_id']
     # save models
     similar_matrix = open('similar_matrix.pkl', 'wb')
     reserve_map = open('reserve.plk', 'wb')
@@ -40,6 +39,9 @@ def process_data():
     pickle.dump(matrix, similar_matrix)
     pickle.dump(indices, reserve_map)
     pickle.dump(id_list, id_l)
+
+
+
 
 
 # Function that takes in movie title as input and outputs most similar movies
@@ -75,7 +77,7 @@ def insert_similarity():
     cur.execute("USE kiwi_test")
     id_l = open('id.plk', 'rb')
     id_list = pickle.load(id_l)
-    sql = 'insert into moviesimilarity values (%s,%s)'
+    sql = 'insert ignore into moviesimilarity values (%s,%s)'
     for m_id in id_list:
         list_id = get_recommendation(m_id)
         count += 1
@@ -97,8 +99,8 @@ def insert_similarity():
     cur.close()
 
 
-# insert_similarity()
+insert_similarity()
 # process_data()
-# print(get_recommendation(19995))
+# print(get_recommendation(242))
 
 
